@@ -361,7 +361,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
                             Pour ce faire, cliquez sur le bouton “vérifier le centre de vaccination”.
                           </p>
                           <p class="fst-italic">Pour recevoir une notification quand de nouveaux créneaux seront disponibles,
-                            nous vous invitons à utiliser les applications mobiles “Vite Ma Dose !” pour
+                            nous vous invitons à utiliser les applications mobiles Trouver une Fresque” pour
                             <u><a href="https://play.google.com/store/apps/details?id=com.cvtracker.vmd2" target="_blank" rel="noopener">Android</a></u>
                             et <u><a href="http://apple.co/3dFMGy3" target="_blank" rel="noopener">iPhone</a></u>.
                           </p>

@@ -1,8 +1,8 @@
 ![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)
 
-# Guide de contribution Vite Ma Dose (web)
+# Guide de contribution Trouver une Fresque (web)
 
-Bonjour ! Bienvenue sur le dépôt de code de l'application web [_Vite Ma Dose_](https://vitemadose.covidtracker.fr/).
+Bonjour ! Bienvenue sur le dépôt de code de l'application web [_Trouver une Fresque_](https://trouverunefresque.fr/).
 
 C'est ici que se développent les prochaines fonctionnalités à ajouter au front et tu as peut-être
 envie de participer à l'aventure. Nous accueillons ta contribution avec plaisir et ce document
@@ -14,14 +14,12 @@ Mais d'abord, quelques indications sur ce que contient ce dépôt :
   des composants [lit-elements](https://lit-element.polymer-project.org/guide/templates), [lit-html](https://lit-html.polymer-project.org/guide)
   et compilée avec [vite](vitejs.dev)
 + Les ressources (images, logo, etc.) qui sont utilisées exclusivement par cette application
-+ Le contenu SEO en relation avec _Vite Ma Dose._
++ Le contenu SEO en relation avec _Trouver une Fresque_.
 
-D'autres dépôts participent au fonctionnement de Vite Ma Dose :
+D'autres dépôts participent au fonctionnement de Trouver une Fresque :
 
-+ [CovidTrackerFr/vitemadose](https://github.com/CovidTrackerFr/vitemadose) : Le scrapper qui récupère et agrège les données
-+ [CovidTrackerFr/vitemadose-android](https://github.com/CovidTrackerFr/vitemadose-android) : L'application Android
-+ [CovidTrackerFr/vitemadose-ios](https://github.com/CovidTrackerFr/vitemadose-ios) : L'application iOS
-+ [CovidTrackerFr/vitemadose-firebase](https://github.com/CovidTrackerFr/vitemadose-firebase) : Les actions FireBase pour les notifications
++ [trouver-une-fresque/trouver-une-fresque](https://github.com/trouver-une-fresque/trouver-une-fresque) : Le scrapper qui récupère et agrège les données
++ [trouver-une-fresque/trouver-une-fresque-android](https://github.com/trouver-une-fresque/trouver-une-fresque-android) : L'application Android
 
 
 ## Proposer une implémentation de fonctionnalité
@@ -32,7 +30,7 @@ Rien de bien exceptionnel mais voici les quelques points importants :
 + Avant de commencer à coder, clone le dépôt, en particulier la branche `dev`
 + Crée une nouvelle branche à partir de cette branche `dev`
 + Ajoute la nouvelle fonctionnalité ou corrige le bug. Les tests et les petits commits réguliers sont très encouragés.
-+ Si tu cherches à résoudre une [issue](https://github.com/CovidTrackerFr/vitemadose-front/issues), pense à indiquer son numéro dans le message de commit
++ Si tu cherches à résoudre une [issue](https://github.com/trouver-une-fresque/trouver-une-fresque-front/issues), pense à indiquer son numéro dans le message de commit
 + Pousse ta branche sur github
 + Ouvre une merge request qui cible la branche `dev`
 + Assure-toi que tout est vert sur l'interface !
@@ -42,7 +40,7 @@ Rien de bien exceptionnel mais voici les quelques points importants :
 
 Regulièrement, nous mettons en prod le code prêt qui se trouve sur la branche `dev`. Pour faire ceci :
 
-+ Prépare une _Release Note._ Le plus facile est de s'inspirer de [la précédente](https://github.com/CovidTrackerFr/vitemadose-front/releases)
++ Prépare une _Release Note._ Le plus facile est de s'inspirer de [la précédente](https://github.com/trouver-une-fresque/trouver-une-fresque-front/releases)
 + Cible la branche `main` avec un nom de tag qui comprend la date du jour au format `YYYYMMDD`.
 + Enregistre en brouillon et demande une revue !
 + Localement, merge `dev` dans `main` avec ces commandes:

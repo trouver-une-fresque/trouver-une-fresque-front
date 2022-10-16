@@ -48,9 +48,6 @@ export class VmdAppComponent extends LitElement {
                             <div class="col-auto">
                                 <a href="${Router.basePath}apropos">À propos</a>
                             </div>
-                            <div class="col-auto border-start">
-                                <a href="https://covidtracker.fr/" target="_blank" rel="noreferrer">CovidTracker&nbsp;<i class="bi vmdicon-arrow-up-right"></i></a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,8 +62,8 @@ export class VmdAppComponent extends LitElement {
 
             <footer class="row justify-content-between">
                 <div class="col-auto">
-                    Vite Ma Dose&nbsp;! par CovidTracker -
-                    <a href="https://github.com/CovidTrackerFr/vitemadose-front/blob/main/LICENSE">(CC BY-NC-SA 4.0)</a>
+                    Trouver une Fresque par Thomas Bouvier -
+                    <a href="https://github.com/trouver-une-fresque/trouver-une-fresque-front/blob/main/LICENSE">(CC BY-NC-SA 4.0)</a>
                 </div>
                 <div class="col-auto">
                     <div class="row">
@@ -77,7 +74,7 @@ export class VmdAppComponent extends LitElement {
                             <a href="https://covidtracker.fr/contact" target="_blank" rel="noreferrer">Contactez-nous</a>
                         </div>
                         <div class="col-auto">
-                            <a href="https://twitter.com/vitemadose_off" target="_blank" rel="noreferrer">Twitter</a>
+                            <a href="https://twitter.com/tbouvier_" target="_blank" rel="noreferrer">Twitter</a>
                         </div>
                     </div>
                 </div>

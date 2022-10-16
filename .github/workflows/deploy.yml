@@ -1,4 +1,4 @@
-name: Déploiement Vite ma dose
+name: Déploiement
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Déploiement Vite ma dose (branches & PR)
+name: Déploiement (branches & PR)
 
 on:
   push:
