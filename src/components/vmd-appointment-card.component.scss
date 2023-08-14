@@ -6,30 +6,7 @@
 .rdvPlatformLogo {
   max-width: 8rem;
   max-height: 5rem;
-
-  &._fresqueClimat {
-  }
-
-  &._2tonnes {
-    max-width: 7rem;
-  }
-
-  &._fresqueBiodiversite {
-    max-width: 8.2rem;
-  }
-
-  &._fresqueOceane {
-  }
-
-  &._fresqueAgriAlim {
-  }
-
-  &._fresqueNumerique {
-    max-width: 10rem;
-  }
-  &._fresqueNouveauRevits {
-    max-width: 11rem;
-  }
+  margin: 0 auto;
 }
 
 .card {

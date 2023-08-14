@@ -28,6 +28,10 @@ export class VmdAppointmentCardComponent extends LitElement {
         CSS_Global,
         css`${unsafeCSS(appointmentCardCss)}`,
         css`
+        .col-logo {
+            max-width: 125px;
+            display: flex;
+        }
         `
     ];
 
@@ -99,14 +103,6 @@ export class VmdAppointmentCardComponent extends LitElement {
                       </button>
                       <div class="row align-items-center justify-content-center mt-3 text-gray-700">
                         ${atelier.nom?html`
-                        |
-                        <div class="col-auto">
-                            ${atelier?html`
-                            <img class="rdvPlatformLogo ${atelier.styleCode}" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Créneau de vaccination ${atelier.nom}">
-                            `:html`
-                            ???
-                            `}
-                        </div>
                         `:html``}
                       </div>
                     `
@@ -120,13 +116,18 @@ export class VmdAppointmentCardComponent extends LitElement {
                 })}">
                 <div class="card-body p-4">
                     <div class="row align-items-center ">
+                        <div class="col col-logo">
+                          ${atelier?html`
+                          <img class="rdvPlatformLogo ${atelier.styleCode}" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Créneau de vaccination ${atelier.nom}">
+                          `:html``}
+                        </div>
                         <div class="col">
-                            <div class="card-title h5">
+                            <div class="col card-title h5">
                               ${cardConfig.cardTitle}
                               <small class="distance">${distance ? `- ${distance} km` : ''}</small>
                             </div>
                             <div class="row">
-                              <vmd-appointment-metadata class="mb-2" widthType="full-width" icon="vmdicon-geo-alt-fill">
+                              <vmd-appointment-metadata class="mb-2" widthType="full-width">
                                 <div slot="content">
                                   <span class="fw-bold">${this.workshop.title}</span>
                                   <br/>
