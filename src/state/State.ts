@@ -91,36 +91,21 @@ export type Atelier = {
     // Used for specific styling on logos, see for example _searchAppointment.scss
     styleCode: string;
 };
-export const PLATEFORMES: Record<TypePlateforme, Plateforme> = {
-    'Doctolib': { code: 'Doctolib', logo: 'logo_doctolib.png', nom: 'Doctolib', promoted: true,  website: 'https://www.doctolib.fr/',  styleCode: '_doctolib'},
-    'Maiia':    { code: 'Maiia',    logo: 'logo_maiia.png',    nom: 'Maiia',    promoted: true,  website: 'https://www.maiia.com/', styleCode: '_maiia'},
-    'Ordoclic': { code: 'Ordoclic', logo: 'logo_ordoclic.png', nom: 'Ordoclic', promoted: true,  website: 'https://covid-pharma.fr/', styleCode: '_ordoclic'},
-    'Keldoc':   { code: 'Keldoc',   logo: 'logo_keldoc.png',   nom: 'Keldoc',   promoted: true,  website: 'https://www.keldoc.com/', styleCode: '_keldoc'},
-    'Pandalab': { code: 'Pandalab', logo: 'logo_pandalab.png', nom: 'Pandalab', promoted: false, website: 'https://masante.pandalab.eu/welcome', styleCode: '_pandalab'},
-    'Mapharma': { code: 'Mapharma', logo: 'logo_mapharma.png', nom: 'Mapharma', promoted: true,  website: 'https://mapharma.net/login', styleCode: '_mapharma'},
-    'AvecMonDoc': { code: 'AvecMonDoc', logo: 'logo_avecmondoc.png', nom: 'AvecMonDoc', promoted: true,  website: 'https://www.avecmondoc.com/', styleCode: '_avecmondoc'},
-    'Clikodoc': { code: 'Clikodoc', logo: 'logo_clikodoc.png', nom: 'Clikodoc', promoted: false,  website: 'https://www.clikodoc.com/', styleCode: '_clikodoc'},
-    'mesoigner': { code: 'mesoigner', logo: 'logo_mesoigner.svg', nom: 'MeSoigner', promoted: true, website: 'https://www.mesoigner.fr/', styleCode: '_mesoigner'},
-    'Bimedoc': { code: 'Bimedoc', logo: 'logo_bimedoc.svg', nom: 'Bimedoc', promoted: true, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
-    'Valwin': { code: 'Valwin', logo: 'logo_valwin.png', nom: 'Valwin', promoted: true, website: 'https://www.valwin.fr/', styleCode: '_valwin' },
-    // Beware: if you add a new plateform, don't forget to update 'hardcoded' (indexable) content
-    // in index.html page, referencing the list of supported plateforms
-};
 
 export const ATELIERS: Record<number, Atelier> = {
     200: { code: 'FresqueClimat', logo: 'logo_fresqueClimat.png', nom: 'Fresque du Climat', promoted: true, website: 'https://fresqueduclimat.org/', styleCode: '_fresqueClimat' },
     100: { code: '2tonnes', logo: 'logo_2tonnes.webp', nom: 'Atelier 2tonnes', promoted: true, website: 'https://www.2tonnes.org/', styleCode: '_2tonnes' },
-    2: { code: 'FresqueOceane', logo: 'logo_ordoclic.png', nom: 'Fresque de la Biodiversité', promoted: false, website: 'https://covid-pharma.fr/', styleCode: '_ordoclic' },
-    1: { code: 'FresqueOceane', logo: 'logo_keldoc.png', nom: 'Fresque Océane', promoted: false, website: 'https://www.keldoc.com/', styleCode: '_keldoc' },
-    4: { code: 'FresqueAgriAlim', logo: 'logo_pandalab.png', nom: 'Fresque Agri\'Alim', promoted: false, website: 'https://masante.pandalab.eu/welcome', styleCode: '_pandalab' },
-    3: { code: 'FresqueNumerique', logo: 'logo_mapharma.png', nom: 'Fresque du Numérique', promoted: false, website: 'https://mapharma.net/login', styleCode: '_mapharma' },
-    0: { code: 'FresqueNouveauxRecits', logo: 'logo_avecmondoc.png', nom: 'Fresque des Nouveaux Récits', promoted: false, website: 'https://www.avecmondoc.com/', styleCode: '_avecmondoc' },
-    7: { code: 'FresqueMobilite', logo: 'logo_clikodoc.png', nom: 'Fresque de la Mobilité', promoted: false, website: 'https://www.clikodoc.com/', styleCode: '_clikodoc' },
-    5: { code: 'FresqueAlimentation', logo: 'logo_mesoigner.svg', nom: 'Fresque de l\'Alimentation', promoted: false, website: 'https://www.mesoigner.fr/', styleCode: '_mesoigner' },
-    9: { code: 'OGRE', logo: 'logo_bimedoc.svg', nom: 'Atelier OGRE', promoted: false, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
-    6: { code: 'FresqueConstruction', logo: 'logo_bimedoc.svg', nom: 'Atelier OGRE', promoted: false, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
-    8: { code: 'FresqueSexisme', logo: 'logo_bimedoc.svg', nom: 'Atelier OGRE', promoted: false, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
-    10: { code: 'AtelierNosViesBasCarbone', logo: 'logo_bimedoc.svg', nom: 'Atelier OGRE', promoted: false, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
+    2: { code: 'FresqueBiodiversite', logo: 'logo_fresqueBiodiversite.svg', nom: 'Fresque de la Biodiversité', promoted: true, website: 'https://www.fresquedelabiodiversite.org/', styleCode: '_fresqueBiodiversite' },
+    1: { code: 'FresqueOceane', logo: 'logo_fresqueOceane.webp', nom: 'Fresque Océane', promoted: true, website: 'https://www.fresqueoceane.org/', styleCode: '_fresqueOceane' },
+    4: { code: 'FresqueAgriAlim', logo: 'logo_fresqueAgriAlim.png', nom: 'Fresque Agri\'Alim', promoted: true, website: 'https://fresqueagrialim.org/', styleCode: '_fresqueAgriAlim' },
+    3: { code: 'FresqueNumerique', logo: 'logo_fresqueNumerique.png', nom: 'Fresque du Numérique', promoted: true, website: 'https://www.fresquedunumerique.org/', styleCode: '_fresqueNumerique' },
+    0: { code: 'FresqueNouveauxRecits', logo: 'logo_fresqueNouveauxRecits.png', nom: 'Fresque des Nouveaux Récits', promoted: true, website: 'https://www.fresquedesnouveauxrecits.org/', styleCode: '_fresqueNouveauRevits' },
+    7: { code: 'FresqueMobilite', logo: 'logo_fresqueMobilite.png', nom: 'Fresque de la Mobilité', promoted: true, website: 'https://fresquedelamobilite.org/', styleCode: '_fresqueMobilite' },
+    5: { code: 'FresqueAlimentation', logo: 'logo_fresqueAlimentation.svg', nom: 'Fresque de l\'Alimentation', promoted: true, website: 'https://fresquealimentation.org/', styleCode: '_fresqueAlimentation' },
+    9: { code: 'OGRE', logo: 'logo_OGRE.png', nom: 'Atelier OGRE', promoted: true, website: 'https://atelierogre.org/', styleCode: '_logoOGRE' },
+    6: { code: 'FresqueConstruction', logo: 'logo_fresqueConstruction.webp', nom: 'Fresque de la Construction', promoted: true, website: 'https://www.fresquedelaconstruction.org/', styleCode: '_fresqueConstruction' },
+    8: { code: 'FresqueSexisme', logo: 'logo_fresqueSexisme.png', nom: 'Fresque du Sexisme', promoted: true, website: 'https://www.facebook.com/FresqueDuSexisme/', styleCode: '_fresqueSexisme' },
+    10: { code: 'AtelierNosViesBasCarbone', logo: 'logo_NVBC.png', nom: 'Atelier Nos Vies Bas Carbone', promoted: true, website: 'https://www.nosviesbascarbone.org/', styleCode: '_atelierNVBC' },
 };
 
 export type CodeDepartement = string;
