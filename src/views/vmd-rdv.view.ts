@@ -482,8 +482,8 @@ export abstract class AbstractVmdRdvView extends LitElement {
             try {   
                 this.searchInProgress = true;
                 await delay(1) // give some time (one tick) to render loader before doing the heavy lifting
-                this.workshopsParDepartement = await State.current.allWorkshops();
-                // this.workshopsParDepartement = await State.current.workshopsPour([codeDepartement].concat(this.options.codeDepartementAdditionnels(codeDepartement)));
+                // this.workshopsParDepartement = await State.current.allWorkshops();
+                this.workshopsParDepartement = await State.current.workshopsPour([codeDepartement].concat(this.options.codeDepartementAdditionnels(codeDepartement)));
                 console.log("workshops updated");
                 console.log(this.workshopsParDepartement);
 
