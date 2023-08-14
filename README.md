@@ -77,3 +77,7 @@ We're using :
   - **Bootstrap** as the CSS library => https://getbootstrap.com/docs/5.0/getting-started/introduction/ ([icons](https://icons.getbootstrap.com/))
   - **SASS** as CSS transpiler => [documentation](https://sass-lang.com/documentation)
   - **ViteJS** for the development/production build toolchain => [guide](https://vitejs.dev/guide/)
+
+# Crédits
+
+[Terre icônes créées par Freepik - Flaticon](https://www.flaticon.com/fr/icones-gratuites/terre)
