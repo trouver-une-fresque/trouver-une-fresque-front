@@ -72,7 +72,7 @@ export class VmdAppointmentCardComponent extends LitElement {
                 if(this.workshop.sold_out) {
                     specificCardConfig = {
                         disabledBG: true,
-                        cardTitle: 'Atelier complet.',
+                        cardTitle: `Atelier ${atelier.nom} complet.`,
                         libelleBouton: 'Vérifier sur la page de l\'évènement',
                         typeBouton: 'btn-info',
                         onclick: () => this.verifierRdv()
@@ -130,7 +130,7 @@ export class VmdAppointmentCardComponent extends LitElement {
                                 <div slot="content">
                                   <span class="fw-bold">${this.workshop.title}</span>
                                   <br/>
-                                  <span class="text-description">${this.workshop.address}</span>
+                                  <span class="text-description">${this.workshop.address}, ${this.workshop.city} (${this.workshop.department})</span>
                                 </div>
                               </vmd-appointment-metadata>
                               <vmd-appointment-metadata class="mb-2" widthType="fit-to-content" icon="vmdicon-syringe" .displayed="${!!this.workshop.online}">
