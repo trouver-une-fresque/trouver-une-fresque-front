@@ -28,7 +28,7 @@ type RouteDeclaration = {
 class Routing {
     public static readonly INSTANCE = new Routing();
 
-    private static readonly DEFAULT_TITLE = 'Vite Ma Dose : trouvez un créneau de vaccination COVID-19';
+    private static readonly DEFAULT_TITLE = 'Trouver Une Fresque : trouvez une fresque près de chez vous';
     private static readonly DEFAULT_TITLE_PROMISE: TitleProvider =
         () => Promise.resolve(Routing.DEFAULT_TITLE);
 
