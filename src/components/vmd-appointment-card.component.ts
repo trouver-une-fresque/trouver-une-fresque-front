@@ -76,7 +76,7 @@ export class VmdAppointmentCardComponent extends LitElement {
                 if(this.workshop.sold_out) {
                     specificCardConfig = {
                         disabledBG: true,
-                        cardTitle: `Atelier ${atelier.nom} complet.`,
+                        cardTitle: `${this.workshop.training?'Formation':'Atelier'} ${this.workshop.kids?'Junior ':''} ${atelier.nom} complet.`,
                         libelleBouton: 'Vérifier sur la page de l\'évènement',
                         typeBouton: 'btn-info',
                         onclick: () => this.verifierRdv()
@@ -84,7 +84,7 @@ export class VmdAppointmentCardComponent extends LitElement {
                 } else {
                     specificCardConfig = {
                         disabledBG: false,
-                        cardTitle: `Atelier ${atelier.nom}`,
+                        cardTitle: `${this.workshop.training?'Formation':'Atelier'} ${this.workshop.kids?'Junior ':''} ${atelier.nom}`,
                         libelleBouton: 'Réserver une place',
                         typeBouton: 'btn-primary',
                         onclick: () => this.prendreRdv()

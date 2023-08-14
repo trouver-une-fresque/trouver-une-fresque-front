@@ -441,6 +441,13 @@ export abstract class AbstractVmdRdvView extends LitElement {
                 await delay(1) // give some time (one tick) to render loader before doing the heavy lifting
                 // this.workshopsParDepartement = await State.current.allWorkshops();
                 this.workshopsParDepartement = await State.current.workshopsPour([codeDepartement].concat(this.options.codeDepartementAdditionnels(codeDepartement)));
+                if(this.currentSearch?.type === 'junior') {
+                    this.workshopsParDepartement.workshopsDisponibles = this.workshopsParDepartement.workshopsDisponibles.filter(w => w.kids && !w.training);
+                }else if(this.currentSearch?.type === 'formation') {
+                    this.workshopsParDepartement.workshopsDisponibles = this.workshopsParDepartement.workshopsDisponibles.filter(w => w.training);
+                  }else if(this.currentSearch?.type === 'atelier') {
+                  this.workshopsParDepartement.workshopsDisponibles = this.workshopsParDepartement.workshopsDisponibles.filter(w => !w.training);
+                }
                 console.log("workshops updated");
                 console.log(this.workshopsParDepartement);
 
