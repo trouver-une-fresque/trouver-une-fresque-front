@@ -56,8 +56,6 @@ export class VmdAppComponent extends LitElement {
             ${this.viewTemplateResult?this.viewTemplateResult(html`
               <slot name="main-title" slot="main-title"></slot>
               <slot name="about" slot="about"></slot>
-              <slot name="about-lieux" slot="about-lieux"></slot>
-              <slot name="chronodose" slot="chronodose"></slot>
             `):html``}
 
             <footer class="row justify-content-between">
