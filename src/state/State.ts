@@ -48,7 +48,25 @@ export namespace SearchRequest {
 export type CodeTriCentre = 'date' | 'distance';
 
 export type TypePlateforme = "Doctolib"|"Maiia"|"Ordoclic"|"Keldoc"|"Pandalab"|"Mapharma"|"AvecMonDoc"|"Clikodoc"|"mesoigner"|"Bimedoc"|"Valwin";
-export type TypeAtelier = "FresqueClimat"|"2tonnes"|"FresqueBiodiversite"|"FresqueOceane"|"FresqueAgriAlim"|"FresqueNumerique"|"FresqueNouveauxRecits"|"FresqueMobilite"|"FresqueAlimentation"|"OGRE"
+
+enum TypeAtelierEnum {
+  "FresqueNouveauxRecits" = 0,
+  "FresqueOceane" = 1,
+  "FresqueBiodiversite" = 2,
+  "FresqueNumerique" = 3,
+  "FresqueAgriAlim" = 4,
+  "FresqueAlimentation" = 5,
+  "FresqueConstruction" = 6,
+  "FresqueMobilite" = 7,
+  "FresqueSexisme" = 8,
+  "OGRE" = 9,
+  "AtelierNosViesBasCarbone" = 10,
+  "2tonnes" = 100,
+  "FresqueClimat" = 200,
+}
+
+export type TypeAtelier = keyof typeof TypeAtelierEnum;
+
 export type Plateforme = {
     // Should be the same than PLATEFORMES' key
     code: TypePlateforme;
@@ -89,19 +107,20 @@ export const PLATEFORMES: Record<TypePlateforme, Plateforme> = {
     // in index.html page, referencing the list of supported plateforms
 };
 
-export const ATELIERS: Record<TypeAtelier, Atelier> = {
-    'FresqueClimat': { code: 'FresqueClimat', logo: 'logo_fresqueClimat.png', nom: 'Fresque du Climat', promoted: true,  website: 'https://fresqueduclimat.org/',  styleCode: '_fresqueClimat'},
-    '2tonnes':    { code: '2tonnes',    logo: 'logo_2tonnes.webp',    nom: 'Atelier 2tonnes',    promoted: true,  website: 'https://www.2tonnes.org/', styleCode: '_2tonnes'},
-    'FresqueBiodiversite': { code: 'FresqueOceane', logo: 'logo_ordoclic.png', nom: 'Fresque de la Biodiversité', promoted: false,  website: 'https://covid-pharma.fr/', styleCode: '_ordoclic'},
-    'FresqueOceane':   { code: 'FresqueOceane',   logo: 'logo_keldoc.png',   nom: 'Fresque Océane',   promoted: false,  website: 'https://www.keldoc.com/', styleCode: '_keldoc'},
-    'FresqueAgriAlim': { code: 'FresqueAgriAlim', logo: 'logo_pandalab.png', nom: 'Fresque Agri\'Alim', promoted: false, website: 'https://masante.pandalab.eu/welcome', styleCode: '_pandalab'},
-    'FresqueNumerique': { code: 'FresqueNumerique', logo: 'logo_mapharma.png', nom: 'Fresque du Numérique', promoted: false,  website: 'https://mapharma.net/login', styleCode: '_mapharma'},
-    'FresqueNouveauxRecits': { code: 'FresqueNouveauxRecits', logo: 'logo_avecmondoc.png', nom: 'Fresque des Nouveaux Récits', promoted: false,  website: 'https://www.avecmondoc.com/', styleCode: '_avecmondoc'},
-    'FresqueMobilite': { code: 'FresqueMobilite', logo: 'logo_clikodoc.png', nom: 'Fresque de la Mobilité', promoted: false,  website: 'https://www.clikodoc.com/', styleCode: '_clikodoc'},
-    'FresqueAlimentation': { code: 'FresqueAlimentation', logo: 'logo_mesoigner.svg', nom: 'Fresque de l\'Alimentation', promoted: false, website: 'https://www.mesoigner.fr/', styleCode: '_mesoigner'},
-    'OGRE': { code: 'OGRE', logo: 'logo_bimedoc.svg', nom: 'Atelier OGRE', promoted: false, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
-    // Beware: if you add a new plateform, don't forget to update 'hardcoded' (indexable) content
-    // in index.html page, referencing the list of supported plateforms
+export const ATELIERS: Record<number, Atelier> = {
+    200: { code: 'FresqueClimat', logo: 'logo_fresqueClimat.png', nom: 'Fresque du Climat', promoted: true, website: 'https://fresqueduclimat.org/', styleCode: '_fresqueClimat' },
+    100: { code: '2tonnes', logo: 'logo_2tonnes.webp', nom: 'Atelier 2tonnes', promoted: true, website: 'https://www.2tonnes.org/', styleCode: '_2tonnes' },
+    2: { code: 'FresqueOceane', logo: 'logo_ordoclic.png', nom: 'Fresque de la Biodiversité', promoted: false, website: 'https://covid-pharma.fr/', styleCode: '_ordoclic' },
+    1: { code: 'FresqueOceane', logo: 'logo_keldoc.png', nom: 'Fresque Océane', promoted: false, website: 'https://www.keldoc.com/', styleCode: '_keldoc' },
+    4: { code: 'FresqueAgriAlim', logo: 'logo_pandalab.png', nom: 'Fresque Agri\'Alim', promoted: false, website: 'https://masante.pandalab.eu/welcome', styleCode: '_pandalab' },
+    3: { code: 'FresqueNumerique', logo: 'logo_mapharma.png', nom: 'Fresque du Numérique', promoted: false, website: 'https://mapharma.net/login', styleCode: '_mapharma' },
+    0: { code: 'FresqueNouveauxRecits', logo: 'logo_avecmondoc.png', nom: 'Fresque des Nouveaux Récits', promoted: false, website: 'https://www.avecmondoc.com/', styleCode: '_avecmondoc' },
+    7: { code: 'FresqueMobilite', logo: 'logo_clikodoc.png', nom: 'Fresque de la Mobilité', promoted: false, website: 'https://www.clikodoc.com/', styleCode: '_clikodoc' },
+    5: { code: 'FresqueAlimentation', logo: 'logo_mesoigner.svg', nom: 'Fresque de l\'Alimentation', promoted: false, website: 'https://www.mesoigner.fr/', styleCode: '_mesoigner' },
+    9: { code: 'OGRE', logo: 'logo_bimedoc.svg', nom: 'Atelier OGRE', promoted: false, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
+    6: { code: 'FresqueConstruction', logo: 'logo_bimedoc.svg', nom: 'Atelier OGRE', promoted: false, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
+    8: { code: 'FresqueSexisme', logo: 'logo_bimedoc.svg', nom: 'Atelier OGRE', promoted: false, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
+    10: { code: 'AtelierNosViesBasCarbone', logo: 'logo_bimedoc.svg', nom: 'Atelier OGRE', promoted: false, website: 'https://www.bimedoc.com/', styleCode: '_bimedoc' },
 };
 
 export type CodeDepartement = string;

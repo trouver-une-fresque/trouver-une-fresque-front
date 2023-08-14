@@ -329,9 +329,6 @@ export abstract class AbstractVmdRdvView extends LitElement {
                       <p class="fs-6 text-gray-600">
                         Dernière mise à jour : il y a
                         ${ formatDistanceToNow(parseISO(this.workshopsParDepartementAffiches!.derniereMiseAJour), { locale: fr }) }
-                        ${this.miseAJourDisponible?html`
-                          <button class="btn btn-primary" @click="${() => { this.refreshWorkshops(); this.miseAJourDisponible = false; this.launchCheckingUpdates() }}">Rafraîchir</button>
-                        `:html``}
                       </p>
                       <p class="alert ${this.disclaimerSeverity === 'error' ? 'alert-danger':'alert-warning'} fs-6 ${this.disclaimerEnabled ? '' : 'd-none'}">
                           <i class="bi vmdicon-attention-fill"></i>
@@ -385,7 +382,6 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
     async connectedCallback() {
         super.connectedCallback();
-        this.launchCheckingUpdates();
     }
 
     private registerInfiniteScroll() {
@@ -430,29 +426,6 @@ export abstract class AbstractVmdRdvView extends LitElement {
     private stopListeningToScroll() {
         if (this.infiniteScrollObserver) {
             this.infiniteScrollObserver.disconnect();
-        }
-    }
-
-    launchCheckingUpdates() {
-        if(this.lieuBackgroundRefreshIntervalId === undefined) {
-            this.lieuBackgroundRefreshIntervalId = setDebouncedInterval(async () => {
-                const currentSearch = this.currentSearch
-                if (currentSearch) {
-                    const codeDepartement = SearchRequest.isByDepartement(currentSearch)
-                        ? currentSearch.departement.code_departement
-                        : currentSearch.commune.codeDepartement
-                    const derniereMiseAJour = this.lieuxParDepartementAffiches?.derniereMiseAJour
-                    const lieuxAJourPourDepartement = await State.current.lieuxPour([codeDepartement])
-                    this.miseAJourDisponible = (derniereMiseAJour !== lieuxAJourPourDepartement.derniereMiseAJour);
-
-                    // we stop the update check if there has been one
-                    if (this.miseAJourDisponible) {
-                        this.stopCheckingUpdates();
-                    }
-                    // Used only to refresh derniereMiseAJour's displayed relative time
-                    await this.requestUpdate();
-                }
-            }, this.DELAI_VERIFICATION_MISE_A_JOUR);
         }
     }
 

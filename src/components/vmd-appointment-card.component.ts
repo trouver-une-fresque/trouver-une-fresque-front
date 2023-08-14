@@ -51,7 +51,7 @@ export class VmdAppointmentCardComponent extends LitElement {
     }
 
     render() {
-            const atelier: Atelier|undefined = ATELIERS['FresqueClimat'];
+            const atelier: Atelier|undefined = ATELIERS[this.workshop.workshop_type];
             let distance: string|undefined;
             // if (this.workshop.distance && this.workshop.distance >= 10) {
             //   distance = this.workshop.distance.toFixed(0)
