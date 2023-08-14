@@ -42,7 +42,7 @@ import {Strings} from "../utils/Strings";
 import {DEPARTEMENTS_LIMITROPHES} from "../utils/Departements";
 import {TemplateResult} from "lit-html";
 import {Analytics} from "../utils/Analytics";
-import {LieuCliqueCustomEvent} from "../components/vmd-appointment-card.component";
+import {WorkshopCliqueCustomEvent} from "../components/vmd-appointment-card.component";
 import {delay, setDebouncedInterval} from "../utils/Schedulers";
 import {ArrayBuilder} from "../utils/Arrays";
 import {classMap} from "lit-html/directives/class-map";
@@ -380,8 +380,8 @@ export abstract class AbstractVmdRdvView extends LitElement {
                                     style="--list-index: ${index}"
                                     .workshop="${workshop}"
                                     theme="${searchTypeConfig.theme}"
-                                    @prise-rdv-cliquee="${(event: LieuCliqueCustomEvent) => this.prendreRdv(event.detail.lieu)}"
-                                    @verification-rdv-cliquee="${(event: LieuCliqueCustomEvent) =>  this.verifierRdv(event.detail.lieu)}"
+                                    @prise-rdv-cliquee="${(event: WorkshopCliqueCustomEvent) => this.prendreRdv(event.detail.workshop)}"
+                                    @verification-rdv-cliquee="${(event: WorkshopCliqueCustomEvent) =>  this.verifierRdv(event.detail.workshop)}"
                                 />`;
                             })}
                             <div id="sentinel"></div>
@@ -586,18 +586,12 @@ export abstract class AbstractVmdRdvView extends LitElement {
     }
 
 
-    private prendreRdv(lieu: Lieu) {
-      if(this.currentSearch && SearchRequest.isByCommune(this.currentSearch) && lieu.url) {
-            Analytics.INSTANCE.clickSurRdv(lieu, this.currentTri(), this.currentSearch.type, this.currentSearch.commune);
-          }
-        Router.navigateToUrlIfPossible(lieu.url);
-    }
-
-    private verifierRdv(lieu: Lieu) {
-      if(this.currentSearch && SearchRequest.isByCommune(this.currentSearch) && lieu.url) {
-            Analytics.INSTANCE.clickSurVerifRdv(lieu, this.currentTri(), this.currentSearch.type, this.currentSearch.commune);
-        }
-        Router.navigateToUrlIfPossible(lieu.url);
+    private prendreRdv(workshop: Workshop) {
+        Router.navigateToUrlIfPossible(workshop.tickets_link);
+      }
+      
+      private verifierRdv(workshop: Workshop) {
+        Router.navigateToUrlIfPossible(workshop.source_link);
     }
 
     private currentTri(): CodeTriCentre|"unknown" {
