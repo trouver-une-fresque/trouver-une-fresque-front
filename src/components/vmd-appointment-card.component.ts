@@ -80,7 +80,7 @@ export class VmdAppointmentCardComponent extends LitElement {
                 } else {
                     specificCardConfig = {
                         disabledBG: false,
-                        cardTitle: `Atelier disponible`,
+                        cardTitle: `Atelier ${atelier.nom}`,
                         libelleBouton: 'Réserver une place',
                         typeBouton: 'btn-primary',
                         onclick: () => this.prendreRdv()
