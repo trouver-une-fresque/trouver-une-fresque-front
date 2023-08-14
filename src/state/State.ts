@@ -283,9 +283,10 @@ export type LieuxAvecDistanceParDepartement = {
     derniereMiseAJour: ISODateString;
 };
 
+export type WorkshopsAffichableAvecDistance = Workshop & { distance: number|undefined };
 export type WorkshopsAvecDistanceParDepartement = {
-    workshopsMatchantCriteres: Workshop[];
-    workshopsDisponibles: Workshop[];
+    workshopsMatchantCriteres: WorkshopsAffichableAvecDistance[];
+    workshopsDisponibles: WorkshopsAffichableAvecDistance[];
     codeDepartements: CodeDepartement[];
     derniereMiseAJour: ISODateString;
 };

@@ -532,8 +532,8 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
         if(this.currentSearch && this.workshopsParDepartement) {
             const searchTypeConfig = searchTypeConfigFor(this.currentSearch.type);
-            // const workshopsMatchantCriteres = this.filtrerLieuxMatchantLesCriteres(this.lieuxParDepartement, this.currentSearch);
-            const workshopsMatchantCriteres = this.workshopsParDepartement;
+            const workshopsMatchantCriteres = this.filtrerWorkshopsMatchantLesCriteres(this.workshopsParDepartement, this.currentSearch);
+            // const workshopsMatchantCriteres = this.workshopsParDepartement;
 
             let daySelectorAvailable = this.daySelectorAvailable;
             this.autoSelectJourSelectionne(daySelectorAvailable);
@@ -541,8 +541,8 @@ export abstract class AbstractVmdRdvView extends LitElement {
             this.workshopsParDepartementAffiches = {
                 derniereMiseAJour: this.workshopsParDepartement.derniereMiseAJour,
                 codeDepartements: this.workshopsParDepartement.codeDepartements,
-                workshopsMatchantCriteres: workshopsMatchantCriteres.workshopsDisponibles,
-                workshopsDisponibles: workshopsMatchantCriteres.workshopsDisponibles,
+                workshopsMatchantCriteres: workshopsMatchantCriteres,
+                workshopsDisponibles: workshopsMatchantCriteres,
             };
 
             this.cartesAffichees = this.infiniteScroll.ajouterCartesPaginees(this.workshopsParDepartementAffiches, []);
@@ -563,32 +563,11 @@ export abstract class AbstractVmdRdvView extends LitElement {
     }
 
     // FIXME move me to testable files
-    protected extraireFormuleDeTri(lieu: LieuAffichableAvecDistance, tri: CodeTriCentre) {
+    protected extraireFormuleDeTri(workshop: WorkshopsAffichableAvecDistance, tri: CodeTriCentre) {
         if(tri === 'date') {
-            let firstLevelSort;
-            if(lieu.appointment_by_phone_only && lieu.metadata.phone_number) {
-                firstLevelSort = 2;
-            } else if(lieu.url) {
-                firstLevelSort = lieu.appointment_count !== 0 ? (lieu.prochain_rdv!==null? 0:1):3;
-              } else {
-                firstLevelSort = 4;
-            }
-            return `${firstLevelSort}__${Strings.padLeft(Date.parse(lieu.prochain_rdv!) || 0, 15, '0')}`;
+            return `${Strings.padLeft(Date.parse(workshop.start_date!) || 0, 15, '0')}`;
         } else if(tri === 'distance') {
-          let firstLevelSort;
-
-          // Considering only 2 kind of sorting sections :
-            // - the one with (potentially) available appointments (with url, or appointment by phone only)
-            // - the one with unavailable appointments (without url, or with 0 available appointments)
-            if(lieu.appointment_by_phone_only && lieu.metadata.phone_number) {
-                firstLevelSort = 0;
-              } else if(lieu.url) {
-                firstLevelSort = lieu.appointment_count !== 0 ? 0:1;
-              } else {
-                firstLevelSort = 1;
-              }
-
-              return `${firstLevelSort}__${Strings.padLeft(Math.round(lieu.distance!*1000), 8, '0')}`;
+            return `${Strings.padLeft(Math.round(workshop.distance!*1000), 8, '0')}`;
         } else {
           throw new Error(`Unsupported tri : ${tri}`);
         }
@@ -604,7 +583,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
     abstract libelleLieuSelectionne(): TemplateResult;
     // FIXME move me to a testable file
-    abstract filtrerLieuxMatchantLesCriteres(lieuxParDepartement: LieuxParDepartement, search: SearchRequest): LieuAffichableAvecDistance[];
+    abstract filtrerWorkshopsMatchantLesCriteres(workshopsParDepartement: WorkshopsParDepartement, search: SearchRequest): WorkshopsAffichableAvecDistance[];
 }
 
 @customElement('vmd-rdv-par-commune')
@@ -681,25 +660,19 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
         `
     }
 
-    // FIXME move me to testable file
-    filtrerLieuxMatchantLesCriteres(lieuxParDepartement: LieuxParDepartement, search: SearchRequest.ByCommune): LieuAffichableAvecDistance[] {
+    filtrerWorkshopsMatchantLesCriteres(workshopsParDepartement: WorkshopsParDepartement, search: SearchRequest.ByCommune): WorkshopsAffichableAvecDistance[] {
         const origin = search.commune
-        const distanceAvec = (lieu: Lieu) => (lieu.location ? distanceEntreDeuxPoints(origin, lieu.location) : Infinity)
+        const distanceAvec = (workshop: Workshop) => (workshop.latitude ? distanceEntreDeuxPoints(origin, {latitude: workshop.latitude, longitude: workshop.longitude}) : Infinity)
 
-        const { lieuxDisponibles, lieuxIndisponibles } = lieuxParDepartement
+        let workshopsAffichablesBuilder = ArrayBuilder.from([...workshopsParDepartement.workshopsDisponibles])
+            .map(l => ({ ...l, distance: distanceAvec(l) }));
 
-        let lieuxAffichablesBuilder = ArrayBuilder.from([...lieuxDisponibles].map(l => ({...l, disponible: true})))
-            .concat([...lieuxIndisponibles].map(l => ({...l, disponible: false})))
-            .map(l => ({ ...l, distance: distanceAvec(l) })
-            ).filter(l => (!l.distance || l.distance < this._distanceSelectionnee))
-        if(this.searchTypeConfig.excludeAppointmentByPhoneOnly) {
-            lieuxAffichablesBuilder.filter(l => !l.appointment_by_phone_only)
-        }
+        workshopsAffichablesBuilder = workshopsAffichablesBuilder.filter(l => l.distance <= this._distanceSelectionnee)
 
-        lieuxAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'distance'))
+        workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'distance'))
 
-        const lieuxMatchantCriteres = lieuxAffichablesBuilder.build();
-        return lieuxMatchantCriteres;
+        const workshopsMatchantCriteres = workshopsAffichablesBuilder.build();
+        return workshopsMatchantCriteres;
     }
 }
 
@@ -751,20 +724,14 @@ export class VmdRdvParDepartementView extends AbstractVmdRdvView {
     }
 
     // FIXME move me to testable file
-    filtrerLieuxMatchantLesCriteres(lieuxParDepartement: LieuxParDepartement /*, search: SearchRequest */): LieuAffichableAvecDistance[] {
-        const { lieuxDisponibles, lieuxIndisponibles } = lieuxParDepartement
+    filtrerWorkshopsMatchantLesCriteres(workshopsParDepartement: WorkshopsParDepartement /*, search: SearchRequest */): WorkshopsAffichableAvecDistance[] {
 
-        let lieuxAffichablesBuilder = ArrayBuilder.from([...lieuxDisponibles].map(l => ({...l, disponible: true})))
-            .concat([...lieuxIndisponibles].map(l => ({...l, disponible: false})))
+        let workshopsAffichablesBuilder = ArrayBuilder.from([...workshopsParDepartement.workshopsDisponibles])
             .map(l => ({ ...l, distance: undefined }))
 
-        if(this.searchTypeConfig.excludeAppointmentByPhoneOnly) {
-            lieuxAffichablesBuilder.filter(l => !l.appointment_by_phone_only)
-        }
+        workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'distance'))
 
-        lieuxAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'distance'))
-
-        const lieuxMatchantCriteres = lieuxAffichablesBuilder.build();
-        return lieuxMatchantCriteres;
+        const workshopsMatchantCriteres = workshopsAffichablesBuilder.build();
+        return workshopsMatchantCriteres;
     }
 }
