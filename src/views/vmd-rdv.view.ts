@@ -261,7 +261,6 @@ export abstract class AbstractVmdRdvView extends LitElement {
         const countWorkshopsDisponibles = (this.workshopsParDepartementAffiches?.workshopsDisponibles || []).length;
         const searchTypeConfig = this.searchTypeConfig;
         const standardMode = searchTypeConfig.standardTabSelected;
-        const creneauxTotaux = this.totalCreneaux;
 
         return html`
             <div class="criteria-container text-dark rounded-3 py-5 bg-std">
@@ -311,8 +310,19 @@ export abstract class AbstractVmdRdvView extends LitElement {
             `:html`
                 <h3 class="fw-normal text-center h4 search-standard"
                     style="${styleMap({display: (this.workshopsParDepartementAffiches) ? 'block' : 'none'})}">
-                    ${creneauxTotaux.toLocaleString()} créneau${Strings.plural(creneauxTotaux, "x")} de vaccination trouvé${Strings.plural(creneauxTotaux)}
+                    ${countWorkshopsDisponibles?
+                      html`
+                    <i class="bi vmdicon-calendar2-check-fill text-success me-2 fs-3 col-auto"></i>
+                    <span class="col col-sm-auto">
+                    ${countWorkshopsDisponibles.toLocaleString()} atelier${Strings.plural(countWorkshopsDisponibles, "s")} trouvé${Strings.plural(countWorkshopsDisponibles)}
                     ${this.libelleLieuSelectionne()}
+                    </span>`:
+                      html`
+                      <i class="bi vmdicon-calendar-x-fill text-black-50 me-2 fs-3 col-auto"></i>
+                    <span class="col col-sm-auto">
+                    ${countWorkshopsDisponibles.toLocaleString()} atelier${Strings.plural(countWorkshopsDisponibles, "s")} trouvé${Strings.plural(countWorkshopsDisponibles)}
+                    ${this.libelleLieuSelectionne()}
+                    `}
                   <br/>
                   ${(this.workshopsParDepartementAffiches && this.workshopsParDepartementAffiches.derniereMiseAJour) ?
                       html`
@@ -345,51 +355,25 @@ export abstract class AbstractVmdRdvView extends LitElement {
                     }}"></vmd-upcoming-days-selector>
                   </div>
                 `:html``}
+
+                ${countWorkshopsDisponibles?html`
                 <div class="resultats px-2 py-5 text-dark bg-light ${classMap({ 'rounded-resultats-top': !this.daySelectorAvailable })}">
-                    ${countWorkshopsDisponibles ? html`
-                        <h2 class="row align-items-center justify-content-center mb-5 h5 px-3">
-                            <i class="bi vmdicon-calendar2-check-fill text-success me-2 fs-3 col-auto"></i>
-                            <span class="col col-sm-auto">
-                                ${countWorkshopsDisponibles} Lieu${Strings.plural(countWorkshopsDisponibles, 'x')} de vaccination avec des disponibilités
-                            </span>
-                        </h2>
-                    ` : html`
-                        <h2 class="row align-items-center justify-content-center mb-5 h5">
-                          <i class="bi vmdicon-calendar-x-fill text-black-50 me-2 fs-3 col-auto"></i>
-                          Aucun créneau de vaccination trouvé
-                        </h2>
-                        <div class="mb-5 container-content">
-                          <p class="fst-italic">Nous n’avons pas trouvé de <strong>rendez-vous de vaccination</strong> Covid-19
-                            sur les plateformes de réservation. </p>
-                          <p class="fst-italic">Nous vous recommandons toutefois de vérifier manuellement
-                            les rendez-vous de vaccination auprès des sites qui gèrent la réservation de créneau de vaccination.
-                            Pour ce faire, cliquez sur le bouton “vérifier le centre de vaccination”.
-                          </p>
-                          <p class="fst-italic">Pour recevoir une notification quand de nouveaux créneaux seront disponibles,
-                            nous vous invitons à utiliser les applications mobiles Trouver une Fresque” pour
-                            <u><a href="https://play.google.com/store/apps/details?id=com.cvtracker.vmd2" target="_blank" rel="noopener">Android</a></u>
-                            et <u><a href="http://apple.co/3dFMGy3" target="_blank" rel="noopener">iPhone</a></u>.
-                          </p>
-                        </div>
-                    `}
-                        <div id="scroller">
-                            ${repeat(this.cartesAffichees || [],
-                                       (c => `${c.departement}||${c.title}||${c.workshop_type}}`), 
-                                       (workshop, index) => {
-                                          return html`<vmd-appointment-card
-                                    style="--list-index: ${index}"
-                                    .workshop="${workshop}"
-                                    theme="${searchTypeConfig.theme}"
-                                    @prise-rdv-cliquee="${(event: WorkshopCliqueCustomEvent) => this.prendreRdv(event.detail.workshop)}"
-                                    @verification-rdv-cliquee="${(event: WorkshopCliqueCustomEvent) =>  this.verifierRdv(event.detail.workshop)}"
-                                />`;
-                            })}
-                            <div id="sentinel"></div>
-                        </div>
-                ${standardMode?html`
-                <div class="eligibility-criteria fade-in-then-fade-out">
-                    <p>Les critères d'éligibilité sont vérifiés lors de la prise de rendez-vous</p>
+                  <div id="scroller">
+                      ${repeat(this.cartesAffichees || [],
+                                  (c => `${c.department}||${c.title}||${c.workshop_type}}`), 
+                                  (workshop, index) => {
+                                    return html`<vmd-appointment-card
+                              style="--list-index: ${index}"
+                              .workshop="${workshop}"
+                              theme="${searchTypeConfig.theme}"
+                              @prise-rdv-cliquee="${(event: WorkshopCliqueCustomEvent) => this.prendreRdv(event.detail.workshop)}"
+                              @verification-rdv-cliquee="${(event: WorkshopCliqueCustomEvent) =>  this.verifierRdv(event.detail.workshop)}"
+                          />`;
+                      })}
+                      <div id="sentinel"></div>
+                  </div>
                 </div>`:html``}
+                
             `}
         `;
     }

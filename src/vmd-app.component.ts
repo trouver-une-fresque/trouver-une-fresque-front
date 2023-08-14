@@ -60,7 +60,7 @@ export class VmdAppComponent extends LitElement {
 
             <footer class="row justify-content-between">
                 <div class="col-auto">
-                    Trouver une Fresque par Thomas Bouvier -
+                    Trouver une Fresque -
                     <a href="https://github.com/trouver-une-fresque/trouver-une-fresque-front/blob/main/LICENSE">(CC BY-NC-SA 4.0)</a>
                 </div>
                 <div class="col-auto">
