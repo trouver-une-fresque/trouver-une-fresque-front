@@ -421,7 +421,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
         }
         this.infiniteScrollObserver = new IntersectionObserver(entries => {
             if (entries.some(entry => entry.isIntersecting)) {
-                this.cartesAffichees = this.infiniteScroll.ajouterCartesPaginees(this.lieuxParDepartementAffiches,
+                this.cartesAffichees = this.infiniteScroll.ajouterCartesPaginees(this.workshopsParDepartementAffiches,
                     this.cartesAffichees);
             }
         }, { root: null, rootMargin: '200px', threshold: 0.0 });
