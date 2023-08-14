@@ -17,13 +17,13 @@ Don't hesitate to install multiple `node` version in your dev environment using 
 Install dependencies :
 `npm ci`
 
-Run vite (we're obviously using vitejs for vite-ma-dose !) :
+Run vite :
 `npm run dev` or `vite` (see `package.json` scripts)
 
 Open your browser : http://localhost:3000/
 and enjoy live reload / on-the-fly typescript compilation
 
-You can also click on [this link](https://gitpod.io/#https://github.com/CovidTrackerFr/vitemadose-front) in order to open a Gitpod workspace with everything loaded in it.
+You can also click on [this link](https://gitpod.io/#https://github.com/trouver-une-fresque/trouver-une-fresque-front) in order to open a Gitpod workspace with everything loaded in it.
 
 ## Alternative: Running with docker
 If you don't want to install node.js on your machine, you can isolate it with [docker](https://www.docker.com/get-started):
@@ -53,11 +53,12 @@ For debug purposes, if you want to generate sourcemaps for production build, you
 
 # Mobile apps
 
-See [vitemadose-android](https://github.com/CovidTrackerFr/vitemadose-android) and [vitemadose-ios](https://github.com/CovidTrackerFr/vitemadose-ios).
+TODO
+<!-- See [vitemadose-android](https://github.com/CovidTrackerFr/vitemadose-android) and [vitemadose-ios](https://github.com/CovidTrackerFr/vitemadose-ios). -->
 
 # Development workflow
 
-- `main` is automatically deployed on https://vitemadose.covidtracker.fr/
+- `main` is automatically deployed on TODO
 
   => Push on this branch only when you're ready.
 
