@@ -22,6 +22,9 @@ import {
     LieuAffichableAvecDistance,
     LieuxAvecDistanceParDepartement,
     LieuxParDepartement,
+    Workshop,
+    WorkshopsAvecDistanceParDepartement,
+    WorkshopsAffichableAvecDistance,
     SearchRequest,
     SearchType,
     State,
@@ -31,7 +34,7 @@ import {
     SearchTypeConfig,
     RendezVousDuJour,
     StatsCreneauxLieuxParJour,
-    countCreneauxFromCreneauxParTag, TYPE_RECHERCHE_PAR_DEFAUT
+    countCreneauxFromCreneauxParTag, TYPE_RECHERCHE_PAR_DEFAUT, WorkshopsParDepartement
 } from "../state/State";
 import {formatDistanceToNow, parseISO} from 'date-fns'
 import { fr } from 'date-fns/locale'
@@ -191,11 +194,13 @@ export abstract class AbstractVmdRdvView extends LitElement {
     ];
 
     @internalProperty() lieuxParDepartementAffiches: LieuxAvecDistanceParDepartement | undefined = undefined;
+    @internalProperty() workshopsParDepartementAffiches: WorkshopsAvecDistanceParDepartement | undefined = undefined;
     @internalProperty() creneauxQuotidiensAffiches: RendezVousDuJour[] = [];
     @property({type: Boolean, attribute: false}) searchInProgress: boolean = false;
     @property({type: Boolean, attribute: false}) miseAJourDisponible: boolean = false;
-    @property({type: Array, attribute: false}) cartesAffichees: LieuAffichableAvecDistance[] = [];
+    @property({type: Array, attribute: false}) cartesAffichees: Workshop[] = [];
     @internalProperty() lieuxParDepartement: LieuxParDepartement|undefined = undefined;
+    @internalProperty() workshopsParDepartement: WorkshopsParDepartement|undefined = undefined;
     @internalProperty() protected currentSearch: SearchRequest | undefined = undefined
 
     @internalProperty() jourSelectionne: {date: string, type: 'manual'|'auto'}|undefined = undefined;
@@ -253,7 +258,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
 
     render() {
-        const countLieuxDisponibles = (this.lieuxParDepartementAffiches?.lieuxDisponibles || []).length;
+        const countWorkshopsDisponibles = (this.workshopsParDepartementAffiches?.workshopsDisponibles || []).length;
         const searchTypeConfig = this.searchTypeConfig;
         const standardMode = searchTypeConfig.standardTabSelected;
         const creneauxTotaux = this.totalCreneaux;
@@ -305,17 +310,17 @@ export abstract class AbstractVmdRdvView extends LitElement {
               </div>
             `:html`
                 <h3 class="fw-normal text-center h4 search-standard"
-                    style="${styleMap({display: (this.lieuxParDepartementAffiches) ? 'block' : 'none'})}">
+                    style="${styleMap({display: (this.workshopsParDepartementAffiches) ? 'block' : 'none'})}">
                     ${creneauxTotaux.toLocaleString()} créneau${Strings.plural(creneauxTotaux, "x")} de vaccination trouvé${Strings.plural(creneauxTotaux)}
                     ${this.libelleLieuSelectionne()}
                   <br/>
-                  ${(this.lieuxParDepartementAffiches && this.lieuxParDepartementAffiches.derniereMiseAJour) ?
+                  ${(this.workshopsParDepartementAffiches && this.workshopsParDepartementAffiches.derniereMiseAJour) ?
                       html`
                       <p class="fs-6 text-gray-600">
                         Dernière mise à jour : il y a
-                        ${ formatDistanceToNow(parseISO(this.lieuxParDepartementAffiches!.derniereMiseAJour), { locale: fr }) }
+                        ${ formatDistanceToNow(parseISO(this.workshopsParDepartementAffiches!.derniereMiseAJour), { locale: fr }) }
                         ${this.miseAJourDisponible?html`
-                          <button class="btn btn-primary" @click="${() => { this.refreshLieux(); this.miseAJourDisponible = false; this.launchCheckingUpdates() }}">Rafraîchir</button>
+                          <button class="btn btn-primary" @click="${() => { this.refreshWorkshops(); this.miseAJourDisponible = false; this.launchCheckingUpdates() }}">Rafraîchir</button>
                         `:html``}
                       </p>
                       <p class="alert ${this.disclaimerSeverity === 'error' ? 'alert-danger':'alert-warning'} fs-6 ${this.disclaimerEnabled ? '' : 'd-none'}">
@@ -341,11 +346,11 @@ export abstract class AbstractVmdRdvView extends LitElement {
                   </div>
                 `:html``}
                 <div class="resultats px-2 py-5 text-dark bg-light ${classMap({ 'rounded-resultats-top': !this.daySelectorAvailable })}">
-                    ${countLieuxDisponibles ? html`
+                    ${countWorkshopsDisponibles ? html`
                         <h2 class="row align-items-center justify-content-center mb-5 h5 px-3">
                             <i class="bi vmdicon-calendar2-check-fill text-success me-2 fs-3 col-auto"></i>
                             <span class="col col-sm-auto">
-                                ${countLieuxDisponibles} Lieu${Strings.plural(countLieuxDisponibles, 'x')} de vaccination avec des disponibilités
+                                ${countWorkshopsDisponibles} Lieu${Strings.plural(countWorkshopsDisponibles, 'x')} de vaccination avec des disponibilités
                             </span>
                         </h2>
                     ` : html`
@@ -369,11 +374,11 @@ export abstract class AbstractVmdRdvView extends LitElement {
                     `}
                         <div id="scroller">
                             ${repeat(this.cartesAffichees || [],
-                                       (c => `${c.departement}||${c.nom}||${c.plateforme}}`), 
-                                       (lieu, index) => {
+                                       (c => `${c.departement}||${c.title}||${c.workshop_type}}`), 
+                                       (workshop, index) => {
                                           return html`<vmd-appointment-card
                                     style="--list-index: ${index}"
-                                    .lieu="${lieu}"
+                                    .workshop="${workshop}"
                                     theme="${searchTypeConfig.theme}"
                                     @prise-rdv-cliquee="${(event: LieuCliqueCustomEvent) => this.prendreRdv(event.detail.lieu)}"
                                     @verification-rdv-cliquee="${(event: LieuCliqueCustomEvent) =>  this.verifierRdv(event.detail.lieu)}"
@@ -467,6 +472,36 @@ export abstract class AbstractVmdRdvView extends LitElement {
         }
     }
 
+    async refreshWorkshops() {
+        const currentSearch = this.currentSearch
+        if(currentSearch) {
+
+            const codeDepartement = SearchRequest.isByDepartement(currentSearch)
+              ? currentSearch.departement.code_departement
+              : currentSearch.commune.codeDepartement
+            try {   
+                this.searchInProgress = true;
+                await delay(1) // give some time (one tick) to render loader before doing the heavy lifting
+                this.workshopsParDepartement = await State.current.allWorkshops();
+                // this.workshopsParDepartement = await State.current.workshopsPour([codeDepartement].concat(this.options.codeDepartementAdditionnels(codeDepartement)));
+                console.log("workshops updated");
+                console.log(this.workshopsParDepartement);
+
+                this.rafraichirDonneesAffichees();
+            } finally {
+                this.searchInProgress = false;
+            }
+        } else {
+            this.cartesAffichees = [];
+        }
+        this.disclaimerEnabled = await RemoteConfig.INSTANCE.disclaimerEnabled();
+        // Refresh only if needed
+        if (this.disclaimerEnabled) {
+            this.disclaimerMessage = await RemoteConfig.INSTANCE.disclaimerMessage();
+            this.disclaimerSeverity = await RemoteConfig.INSTANCE.disclaimerSeverity();
+        }
+    }
+
     async refreshLieux() {
         const currentSearch = this.currentSearch
         if(currentSearch) {
@@ -478,7 +513,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
                 this.searchInProgress = true;
                 await delay(1) // give some time (one tick) to render loader before doing the heavy lifting
                 this.lieuxParDepartement = await State.current.lieuxPour([codeDepartement].concat(this.options.codeDepartementAdditionnels(codeDepartement)));
-
+                
                 this.rafraichirDonneesAffichees();
 
                 const commune = SearchRequest.isByCommune(currentSearch) ? currentSearch.commune : undefined
@@ -530,62 +565,26 @@ export abstract class AbstractVmdRdvView extends LitElement {
     }
 
     rafraichirDonneesAffichees() {
-        if(this.currentSearch && this.lieuxParDepartement) {
+
+        if(this.currentSearch && this.workshopsParDepartement) {
             const searchTypeConfig = searchTypeConfigFor(this.currentSearch.type);
-            const lieuxMatchantCriteres = this.filtrerLieuxMatchantLesCriteres(this.lieuxParDepartement, this.currentSearch);
-            // On calcule les créneaux quotidiens en fonction des lieux matchant les critères
-            this.creneauxQuotidiensAffiches = this.filtrerCreneauxQuotidiensEnFonctionDesLieuxMatchantLesCriteres(this.lieuxParDepartement.statsCreneauxLieuxQuotidiens, lieuxMatchantCriteres, searchTypeConfig);
+            // const workshopsMatchantCriteres = this.filtrerLieuxMatchantLesCriteres(this.lieuxParDepartement, this.currentSearch);
+            const workshopsMatchantCriteres = this.workshopsParDepartement;
 
             let daySelectorAvailable = this.daySelectorAvailable;
             this.autoSelectJourSelectionne(daySelectorAvailable);
 
-            // On calcule les lieux affichés en fonction du jour sélectionné
-            const creneauxQuotidienSelectionnes = this.creneauxQuotidiensAffiches.find(cq => cq.date === this.jourSelectionne?.date);
-            const creneauxParLieu = creneauxQuotidienSelectionnes?.creneauxParLieu || [];
-            const lieuxMatchantCriteresAvecCountRdvMAJ = lieuxMatchantCriteres.map(l => ({
-                ...l,
-                appointment_count: searchTypeConfig.cardAppointmentsExtractor(l, daySelectorAvailable, creneauxParLieu)
-            }));
-
-            let lieuxDisponiblesAffiches = lieuxMatchantCriteresAvecCountRdvMAJ
-                .filter(l => searchTypeConfig.lieuConsidereCommeDisponible(l, creneauxParLieu.find(cpl => cpl.lieu === l.internal_id)))
-                .map(l => ({
-                    ...l,
-                    disponible: true
-                }));
-            let lieuxIndisponiblesAffiches = lieuxMatchantCriteresAvecCountRdvMAJ
-                .filter(l => !searchTypeConfig.lieuConsidereCommeDisponible(l, creneauxParLieu.find(cpl => cpl.lieu === l.internal_id)))
-                .map(l => ({
-                    ...l,
-                    disponible: false
-                }));
-
-            this.lieuxParDepartementAffiches = {
-                derniereMiseAJour: this.lieuxParDepartement.derniereMiseAJour,
-                codeDepartements: this.lieuxParDepartement.codeDepartements,
-                lieuxMatchantCriteres: lieuxDisponiblesAffiches.concat(lieuxIndisponiblesAffiches),
-                lieuxDisponibles: lieuxDisponiblesAffiches
+            this.workshopsParDepartementAffiches = {
+                derniereMiseAJour: this.workshopsParDepartement.derniereMiseAJour,
+                codeDepartements: this.workshopsParDepartement.codeDepartements,
+                workshopsMatchantCriteres: workshopsMatchantCriteres.workshopsDisponibles,
+                workshopsDisponibles: workshopsMatchantCriteres.workshopsDisponibles,
             };
 
-            this.cartesAffichees = this.infiniteScroll.ajouterCartesPaginees(this.lieuxParDepartementAffiches, []);
+            this.cartesAffichees = this.infiniteScroll.ajouterCartesPaginees(this.workshopsParDepartementAffiches, []);
         }
-      }
-
-      private filtrerCreneauxQuotidiensEnFonctionDesLieuxMatchantLesCriteres(statsCreneauxLieuxParJours: StatsCreneauxLieuxParJour[], lieuxMatchantCriteres: LieuAffichableAvecDistance[], searchTypeConfig: SearchTypeConfig): RendezVousDuJour[] {
-        const lieuIdsMatchantCriteres = lieuxMatchantCriteres.map(l => l.internal_id);
-        return statsCreneauxLieuxParJours.map(statsCreneauxLieuxParJour => {
-          const lieuxAvecCreneauxFromDailyStats = statsCreneauxLieuxParJour.statsCreneauxParLieu
-                .map(scpl => ({ lieu: scpl.lieu, creneaux: countCreneauxFromCreneauxParTag(scpl.statsCreneauxParTag, searchTypeConfig.tagCreneau) }))
-                .filter(result => result.creneaux > 0)
-
-                const lieuxAvecCreneauxFiltres = lieuxAvecCreneauxFromDailyStats.filter(cpl => lieuIdsMatchantCriteres.includes(cpl.lieu));
-            return {
-              date: statsCreneauxLieuxParJour.date,
-                total: lieuxAvecCreneauxFiltres.reduce((total, lac) => total + lac.creneaux, 0),
-                creneauxParLieu: lieuxAvecCreneauxFiltres
-            }
-        });
     }
+
 
     private prendreRdv(lieu: Lieu) {
       if(this.currentSearch && SearchRequest.isByCommune(this.currentSearch) && lieu.url) {
@@ -707,7 +706,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
         const commune = await State.current.autocomplete.findCommune(this._codePostalSelectionne, this._codeCommuneSelectionne)
         if (commune) {
           this.currentSearch = SearchRequest.ByCommune(commune, this._searchType, this.jourSelectionne?.date)
-          this.refreshLieux()
+          this.refreshWorkshops()
         }
       }
     }
@@ -776,7 +775,7 @@ export class VmdRdvParDepartementView extends AbstractVmdRdvView {
           const departementSelectionne = departements.find(d => d.code_departement === code);
           if (departementSelectionne) {
             this.currentSearch = SearchRequest.ByDepartement(departementSelectionne, this._searchType, this.jourSelectionne?.date)
-            this.refreshLieux()
+            this.refreshWorkshops()
           }
         }
     }

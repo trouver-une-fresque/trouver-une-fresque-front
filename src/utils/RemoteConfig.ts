@@ -1,4 +1,4 @@
-import {DataUrlGenerator, GITHUB_DATA_URLS, GITLAB_DATA_URLS} from "./LocalConfig";
+import {DataUrlGenerator, GITHUB_DATA_URLS} from "./LocalConfig";
 
 type RemoteConfigEntries = {
     "chronodose_min_count": string,
@@ -68,7 +68,8 @@ export class RemoteConfig {
                 statsByDate: () => `/offline/stats_by_date.json`,
                 stats: () => `/offline/stats.json`,
                 infosDepartement: (codeDepartement) => `/offline/${codeDepartement}.json`,
-                creneauxQuotidiensDepartement: (codeDepartement) => `/offline/${codeDepartement}/creneaux-quotidiens.json`
+                creneauxQuotidiensDepartement: (codeDepartement) => `/offline/${codeDepartement}/creneaux-quotidiens.json`,
+                workshops: () => `/offline/workshops.json`
             };
             this.configurationSyncedPromise = Promise.resolve();
 
@@ -97,26 +98,24 @@ export class RemoteConfig {
 
                 // If false, rawgithub will be used
                 // but keep in mind that firebase remote config will be taken first
-                const USE_GITLAB_AS_FALLBACK = true;
 
-                let urlBase = this.configuration.url_base;
-                if(urlBase) {
-                    const statsPath = this.configuration.path_stats || `/vitemadose/stats.json`;
-                    const statsByDatePath = `/vitemadose/stats_by_date.json`;
-                    const departementsListPath = this.configuration.path_list_departments || `/vitemadose/departements.json`;
-                    const infosDepartementPath = this.configuration.path_data_department || `/vitemadose/{code}.json`;
-                    this._urlGenerator = {
-                        listDepartements: () => `${urlBase}${departementsListPath}`,
-                        statsByDate: () => `${urlBase}${statsByDatePath}`,
-                        stats: () => `${urlBase}${statsPath}`,
-                        infosDepartement: (codeDepartement) => `${urlBase}${infosDepartementPath.replace('{code}', codeDepartement)}`,
-                        creneauxQuotidiensDepartement: (codeDepartement) => `${urlBase}/vitemadose/${codeDepartement}/creneaux-quotidiens.json`
-                    };
-                } else if(USE_GITLAB_AS_FALLBACK) {
-                    this._urlGenerator = GITLAB_DATA_URLS;
-                } else {
+                // let urlBase = this.configuration.url_base;
+                // if(urlBase) {
+                //     const statsPath = this.configuration.path_stats || `/vitemadose/stats.json`;
+                //     const statsByDatePath = `/vitemadose/stats_by_date.json`;
+                //     const departementsListPath = this.configuration.path_list_departments || `/vitemadose/departements.json`;
+                //     const infosDepartementPath = this.configuration.path_data_department || `/vitemadose/{code}.json`;
+                //     this._urlGenerator = {
+                //         listDepartements: () => `${urlBase}${departementsListPath}`,
+                //         statsByDate: () => `${urlBase}${statsByDatePath}`,
+                //         stats: () => `${urlBase}${statsPath}`,
+                //         infosDepartement: (codeDepartement) => `${urlBase}${infosDepartementPath.replace('{code}', codeDepartement)}`,
+                //         creneauxQuotidiensDepartement: (codeDepartement) => `${urlBase}/vitemadose/${codeDepartement}/creneaux-quotidiens.json`,
+                //         workshops: () => `${urlBase}/workshops.json`
+                //     };
+                // } else {
                     this._urlGenerator = GITHUB_DATA_URLS;
-                }
+                // }
 
                 return undefined as void;
             })

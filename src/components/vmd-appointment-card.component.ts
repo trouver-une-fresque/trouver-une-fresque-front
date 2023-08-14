@@ -8,21 +8,17 @@ import {
 } from 'lit-element';
 import {classMap} from "lit-html/directives/class-map";
 import {
-    Lieu,
-    LieuAffichableAvecDistance,
-    Plateforme,
-    PLATEFORMES,
-    typeActionPour,
-    TYPES_LIEUX
+    Workshop,
+    Atelier,
+    ATELIERS,
 } from "../state/State";
 import {Router} from "../routing/Router";
 import appointmentCardCss from "./vmd-appointment-card.component.scss";
-import {Strings} from "../utils/Strings";
 import {TemplateResult} from "lit-html";
 import {CSS_Global} from "../styles/ConstructibleStyleSheets";
 
-type LieuCliqueContext = {lieu: Lieu};
-export type LieuCliqueCustomEvent = CustomEvent<LieuCliqueContext>;
+type WorkshopCliqueContext = {workshop: Workshop};
+export type WorkshopCliqueCustomEvent = CustomEvent<WorkshopCliqueContext>;
 
 @customElement('vmd-appointment-card')
 export class VmdAppointmentCardComponent extends LitElement {
@@ -35,7 +31,7 @@ export class VmdAppointmentCardComponent extends LitElement {
         `
     ];
 
-    @property({type: Object, attribute: false}) lieu!: LieuAffichableAvecDistance;
+    @property({type: Object, attribute: false}) workshop!: Workshop;
     @property({type: String}) theme!: string;
 
     constructor() {
@@ -43,25 +39,25 @@ export class VmdAppointmentCardComponent extends LitElement {
     }
 
     prendreRdv() {
-        this.dispatchEvent(new CustomEvent<LieuCliqueContext>('prise-rdv-cliquee', {
-            detail: { lieu: this.lieu }
+        this.dispatchEvent(new CustomEvent<WorkshopCliqueContext>('prise-rdv-cliquee', {
+            detail: { workshop: this.workshop }
         }));
     }
 
     verifierRdv() {
-        this.dispatchEvent(new CustomEvent<LieuCliqueContext>('verification-rdv-cliquee', {
-            detail: { lieu: this.lieu }
+        this.dispatchEvent(new CustomEvent<WorkshopCliqueContext>('verification-rdv-cliquee', {
+            detail: { workshop: this.workshop }
         }));
     }
 
     render() {
-            const plateforme: Plateforme|undefined = PLATEFORMES[this.lieu.plateforme];
+            const atelier: Atelier|undefined = ATELIERS['FresqueClimat'];
             let distance: string|undefined;
-            if (this.lieu.distance && this.lieu.distance >= 10) {
-              distance = this.lieu.distance.toFixed(0)
-            } else if (this.lieu.distance) {
-              distance = this.lieu.distance.toFixed(1)
-            }
+            // if (this.workshop.distance && this.workshop.distance >= 10) {
+            //   distance = this.workshop.distance.toFixed(0)
+            // } else if (this.workshop.distance) {
+            //   distance = this.workshop.distance.toFixed(1)
+            // }
 
             // FIXME créer un type `SearchResultItem` ou un truc du genre, pour avoir une meilleure vue des cas possibles
             // Qu'un if-pit de 72 lignes de long et 190 colonnes de large xD
@@ -71,22 +67,21 @@ export class VmdAppointmentCardComponent extends LitElement {
                 disabledBG: boolean,
                 actions: TemplateResult|undefined
             };
-            let typeLieu = typeActionPour(this.lieu);
-            if(typeLieu === 'actif-via-plateforme' || typeLieu === 'inactif-via-plateforme') {
+
                 let specificCardConfig: { disabledBG: boolean, cardTitle: string, libelleBouton: string, typeBouton: 'btn-info'|'btn-primary', onclick: ()=>void };
-                if(typeLieu === 'inactif-via-plateforme') {
+                if(this.workshop.sold_out) {
                     specificCardConfig = {
                         disabledBG: true,
-                        cardTitle: 'Aucun rendez-vous',
-                        libelleBouton: 'Vérifier le centre de vaccination',
+                        cardTitle: 'Atelier complet.',
+                        libelleBouton: 'Vérifier sur la page de l\'évènement',
                         typeBouton: 'btn-info',
                         onclick: () => this.verifierRdv()
                     };
                 } else {
                     specificCardConfig = {
                         disabledBG: false,
-                        cardTitle: `${this.lieu.appointment_count} créneau${Strings.plural(this.lieu.appointment_count, 'x')} trouvé${Strings.plural(this.lieu.appointment_count)}`,
-                        libelleBouton: 'Prendre rendez-vous',
+                        cardTitle: `Atelier disponible`,
+                        libelleBouton: 'Réserver une place',
                         typeBouton: 'btn-primary',
                         onclick: () => this.prendreRdv()
                     };
@@ -103,46 +98,19 @@ export class VmdAppointmentCardComponent extends LitElement {
                         ${specificCardConfig.libelleBouton}
                       </button>
                       <div class="row align-items-center justify-content-center mt-3 text-gray-700">
-                        <div class="col-auto text-description">
-                          ${this.lieu.appointment_count.toLocaleString()} créneau${Strings.plural(this.lieu.appointment_count, "x")}
-                        </div>
-                        ${this.lieu.plateforme?html`
+                        ${atelier.nom?html`
                         |
                         <div class="col-auto">
-                            ${plateforme?html`
-                            <img class="rdvPlatformLogo ${plateforme.styleCode}" src="${Router.basePath}assets/images/logo/${plateforme.logo}" alt="Créneau de vaccination ${plateforme.nom}">
+                            ${atelier?html`
+                            <img class="rdvPlatformLogo ${atelier.styleCode}" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Créneau de vaccination ${atelier.nom}">
                             `:html`
-                            ${this.lieu.plateforme}
+                            ???
                             `}
                         </div>
                         `:html``}
                       </div>
                     `
                 };
-            } else if(typeLieu === 'actif-via-tel') {
-                cardConfig = {
-                    disabledBG: false,
-                    cardTitle: 'Réservation tél uniquement',
-                    cardLink: (content) => html`
-                          <div>
-                            ${content}
-                          </div>`,
-                    actions: html`
-                          <a href="tel:${this.lieu.metadata.phone_number}" class="btn btn-tel btn-lg">
-                            Appeler le ${Strings.toNormalizedPhoneNumber(this.lieu.metadata.phone_number)}
-                          </a>
-                        `
-                };
-            } else if(typeLieu === 'inactif') {
-                cardConfig = {
-                    disabledBG: true,
-                    cardTitle: 'Aucun rendez-vous',
-                    cardLink: (content) => content,
-                    actions: undefined
-                };
-            } else {
-                throw new Error(`Unsupported typeLieu : ${typeLieu}`)
-            }
 
             return cardConfig.cardLink(html`
             <div class="card rounded-3 mb-5  ${classMap({
@@ -160,24 +128,13 @@ export class VmdAppointmentCardComponent extends LitElement {
                             <div class="row">
                               <vmd-appointment-metadata class="mb-2" widthType="full-width" icon="vmdicon-geo-alt-fill">
                                 <div slot="content">
-                                  <span class="fw-bold">${this.lieu.nom}</span>
+                                  <span class="fw-bold">${this.workshop.title}</span>
                                   <br/>
-                                  <span class="text-description">${this.lieu.metadata.address}</span>
+                                  <span class="text-description">${this.workshop.address}</span>
                                 </div>
                               </vmd-appointment-metadata>
-                              <vmd-appointment-metadata class="mb-2" widthType="fit-to-content" icon="vmdicon-telephone-fill" .displayed="${!!this.lieu.metadata.phone_number}">
-                                <span slot="content">
-                                    <a href="tel:${this.lieu.metadata.phone_number}"
-                                       @click="${(e: Event) => { e.stopImmediatePropagation(); }}">
-                                        ${Strings.toNormalizedPhoneNumber(this.lieu.metadata.phone_number)}
-                                    </a>
-                                </span>
-                              </vmd-appointment-metadata>
-                              <vmd-appointment-metadata class="mb-2" widthType="fit-to-content" icon="vmdicon-building">
-                                <span class="text-description" slot="content">${TYPES_LIEUX[this.lieu.type]}</span>
-                              </vmd-appointment-metadata>
-                              <vmd-appointment-metadata class="mb-2" widthType="fit-to-content" icon="vmdicon-syringe" .displayed="${!!this.lieu.vaccine_type}">
-                                <span class="text-description" slot="content">${this.lieu.vaccine_type}</span>
+                              <vmd-appointment-metadata class="mb-2" widthType="fit-to-content" icon="vmdicon-syringe" .displayed="${!!this.workshop.online}">
+                                <span class="text-description" slot="content">${this.workshop.description}</span>
                               </vmd-appointment-metadata>
                             </div>
                         </div>

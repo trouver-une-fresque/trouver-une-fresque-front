@@ -25,11 +25,11 @@ export class Analytics {
     }
 
     navigationSurNouvellePage(nomPage: string) {
-        window.dataLayer.push({
-            'event': 'change_screen',
-            'site_name' : 'vite_ma_dose',
-            'page_type' : nomPage
-        });
+        // window.dataLayer.push({
+        //     'event': 'change_screen',
+        //     'site_name' : 'vite_ma_dose',
+        //     'page_type' : nomPage
+        // });
     }
 
     clickSurRdv(lieu: Lieu, triCentre: CodeTriCentre|'unknown', searchType: SearchType, commune: Commune|undefined) {

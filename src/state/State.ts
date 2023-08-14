@@ -158,6 +158,29 @@ export type Lieu = {
     type: TypeLieu;
     vaccine_type: VaccineType
 };
+
+export type Workshop = {
+    address: string;
+    city: string;
+    departement: CodeDepartement;
+    description: string;
+    end_date: ISODateString;
+    full_location: string;
+    kids: boolean;
+    latitude: number;
+    longitude: number;
+    location_name: string;
+    online: boolean;
+    scrape_date: ISODateString;
+    sold_out: boolean;
+    source_link: string;
+    start_date: ISODateString;
+    tickets_link: string;
+    title: string;
+    training: boolean;
+    workshop_type: number;
+    zip_code: string;
+};
 function transformLieu(rawLieu: any): Lieu {
     return {
         ...rawLieu,
@@ -236,6 +259,12 @@ export type LieuxParDepartement = {
     derniereMiseAJour: ISODateString;
 };
 
+export type WorkshopsParDepartement = {
+    workshopsDisponibles: Workshop[];
+    codeDepartements: CodeDepartement[];
+    derniereMiseAJour: ISODateString;
+};
+
 export type LieuxParDepartement_JSON = {
     centres_disponibles: Lieu[];
     centres_indisponibles: Lieu[];
@@ -246,6 +275,13 @@ export type LieuAffichableAvecDistance = Lieu & { disponible: boolean, distance:
 export type LieuxAvecDistanceParDepartement = {
     lieuxMatchantCriteres: LieuAffichableAvecDistance[];
     lieuxDisponibles: LieuAffichableAvecDistance[];
+    codeDepartements: CodeDepartement[];
+    derniereMiseAJour: ISODateString;
+};
+
+export type WorkshopsAvecDistanceParDepartement = {
+    workshopsMatchantCriteres: Workshop[];
+    workshopsDisponibles: Workshop[];
     codeDepartements: CodeDepartement[];
     derniereMiseAJour: ISODateString;
 };
@@ -476,6 +512,84 @@ export class State {
 
     async lieuxPour(codesDepartements: CodeDepartement[]): Promise<LieuxParDepartement> {
         const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
+        const [principalLieuxDepartement, ...lieuxDepartementsAditionnels] = await Promise.all(
+            codesDepartements.map(codeDept => Promise.all([
+                fetch(urlGenerator.infosDepartement(codeDept), { cache: 'no-cache' })
+                    .then(resp => resp.json())
+                    .then((statsDept: LieuxParDepartement_JSON) => ({...statsDept, codeDepartement: codeDept} as LieuxParDepartement_JSON & {codeDepartement: string})),
+                fetch(urlGenerator.creneauxQuotidiensDepartement(codeDept), { cache: 'no-cache' })
+                    .then(resp => resp.json())
+                    .then((creneauxQuotidiens: InfosDepartementAdditionnelles_JSON|undefined) => creneauxQuotidiens),
+            ]).then(([lieuxParDepartement, infosDeptAdditionnelles] : [LieuxParDepartement_JSON & {codeDepartement: string}, InfosDepartementAdditionnelles_JSON|undefined]) => ({
+                ...lieuxParDepartement,
+                creneaux_quotidiens: infosDeptAdditionnelles?.creneaux_quotidiens || []
+            }))
+        ));
+
+        const lieuxParDepartement: LieuxParDepartement = [principalLieuxDepartement].concat(lieuxDepartementsAditionnels).reduce((mergedLieuxParDepartement, lieuxParDepartement) => {
+            const creneauxQuotidiens = mergedLieuxParDepartement.statsCreneauxLieuxQuotidiens;
+            (lieuxParDepartement.creneaux_quotidiens || []).forEach((creneauxQuotidien) => {
+                if(!creneauxQuotidiens.find(cq => cq.date === creneauxQuotidien.date)) {
+                    creneauxQuotidiens.push({
+                        codesDepartement: [],
+                        date: creneauxQuotidien.date,
+                        total: 0,
+                        statsCreneauxParLieu: []
+                    })
+                }
+                const creneauxQuotidienMatchingDate = creneauxQuotidiens.find(cq => cq.date === creneauxQuotidien.date)!;
+
+                creneauxQuotidienMatchingDate.codesDepartement.push(lieuxParDepartement.codeDepartement);
+                creneauxQuotidienMatchingDate.total += creneauxQuotidien.total;
+                Array.prototype.push.apply(creneauxQuotidienMatchingDate.statsCreneauxParLieu, creneauxQuotidien.creneaux_par_lieu.map<StatsCreneauxParLieu>(cpl => ({
+                    lieu: cpl.lieu,
+                    statsCreneauxParTag: cpl.creneaux_par_tag.map(cpt => ({
+                        tag: cpt.tag,
+                        creneaux: cpt.creneaux,
+                        creneauxParHeure: cpt.creneaux_par_heure
+                    }))
+                })));
+            });
+
+            const lieuxParDepartementMerge: LieuxParDepartement = {
+                codeDepartements: mergedLieuxParDepartement.codeDepartements.concat(lieuxParDepartement.codeDepartement),
+                derniereMiseAJour: mergedLieuxParDepartement.derniereMiseAJour,
+                lieuxDisponibles: mergedLieuxParDepartement.lieuxDisponibles.concat(lieuxParDepartement.centres_disponibles.map(transformLieu)),
+                lieuxIndisponibles: mergedLieuxParDepartement.lieuxIndisponibles.concat(lieuxParDepartement.centres_indisponibles.map(transformLieu)),
+                statsCreneauxLieuxQuotidiens: creneauxQuotidiens
+            };
+            return lieuxParDepartementMerge;
+        }, {
+            codeDepartements: [],
+            derniereMiseAJour: principalLieuxDepartement.last_updated,
+            lieuxDisponibles: [],
+            lieuxIndisponibles: [],
+            statsCreneauxLieuxQuotidiens: []
+        } as LieuxParDepartement);
+
+        lieuxParDepartement.statsCreneauxLieuxQuotidiens = ArrayBuilder.from(lieuxParDepartement.statsCreneauxLieuxQuotidiens)
+            .sortBy(cq => cq.date)
+            .build();
+
+        return lieuxParDepartement;
+    }
+
+    async allWorkshops(): Promise<WorkshopsParDepartement> {
+        const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
+        const workshops = await fetch(urlGenerator.workshops(), { cache: 'no-cache' }).then(resp => resp.json());
+        return {
+            workshopsDisponibles: workshops,
+            codeDepartements: [],
+            derniereMiseAJour: new Date().toISOString()
+        };
+    }
+
+    async workshopsPour(codesDepartements: CodeDepartement[]): Promise<WorkshopsParDepartement> {
+        const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
+        fetch(urlGenerator.workshops(), { cache: 'no-cache' }).then(resp => resp.json()).then((workshops: string) => {
+            console.log("workshops");
+            console.log(workshops);
+        });
         const [principalLieuxDepartement, ...lieuxDepartementsAditionnels] = await Promise.all(
             codesDepartements.map(codeDept => Promise.all([
                 fetch(urlGenerator.infosDepartement(codeDept), { cache: 'no-cache' })

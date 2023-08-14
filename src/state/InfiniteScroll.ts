@@ -1,20 +1,20 @@
-import {LieuAffichableAvecDistance, LieuxAvecDistanceParDepartement} from "./State";
+import {Workshop, WorkshopsAvecDistanceParDepartement} from "./State";
 
 const PAGINATION_SIZE = 20;
 
 export class InfiniteScroll {
 
-    ajouterCartesPaginees(lieuxParDepartementAffiches: LieuxAvecDistanceParDepartement | undefined = undefined,
-                          cartesAffichees: LieuAffichableAvecDistance[]) {
+    ajouterCartesPaginees(workshopsParDepartementAffiches: WorkshopsAvecDistanceParDepartement | undefined = undefined,
+                          cartesAffichees: Workshop[]) {
 
-        if (!lieuxParDepartementAffiches?.lieuxMatchantCriteres ||
-            cartesAffichees.length >= lieuxParDepartementAffiches?.lieuxMatchantCriteres.length) {
+        if (!workshopsParDepartementAffiches?.workshopsMatchantCriteres ||
+            cartesAffichees.length >= workshopsParDepartementAffiches?.workshopsMatchantCriteres.length) {
 
             return cartesAffichees;
         }
 
         const startIndex = cartesAffichees.length
-        let cartesAAjouter = lieuxParDepartementAffiches.lieuxMatchantCriteres
+        let cartesAAjouter = workshopsParDepartementAffiches.workshopsMatchantCriteres
             .slice(startIndex, startIndex + PAGINATION_SIZE);
 
         return cartesAffichees.concat(cartesAAjouter);
