@@ -288,12 +288,12 @@ export abstract class AbstractVmdRdvView extends LitElement {
               </div>`:html``}
                 <div class="rdvForm-fields row align-items-center mb-3 mb-md-5">
                     <label class="col-sm-24 col-md-auto mb-md-1 label-for-search p-3 ps-1">
-                        Vous recherchez :
+                        Vous souhaitez :
                     </label>
                     <div class="col">
                         <vmd-button-switch class="mb-3" style="display: inline-block"
-                                           codeSelectionne="${this.currentSearch?.type || 'dose_rappel'}"
-                                           .options="${[{code: 'dose_rappel', libelle: 'Une dose de rappel'}, {code: 'dose_1_enfants', libelle: 'Une dose pour 5-11 ans'}, {code: 'dose_1_ou_2', libelle: 'Une 1ère dose de vaccin'}]}"
+                                           codeSelectionne="${this.currentSearch?.type || 'atelier'}"
+                                           .options="${[{code: 'atelier', libelle: 'participer à un atelier'}, {code: 'formation', libelle: 'se former à l\'animation'}, {code: 'junior', libelle: 'trouver un atelier pour un junior'}]}"
                                            @changed="${(e: CustomEvent<{value: SearchType}>) => this.updateSearchTypeTo(e.detail.value)}">
                         </vmd-button-switch>
                     </div>

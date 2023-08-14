@@ -361,8 +361,8 @@ export const VACCINE_CATEGORIES: VaccineCategory[] = [
 ];
  */
 
-export type SearchType = "standard" /*| "18_55"|*/ |"dose_rappel"|"dose_1_ou_2"|"dose_1_enfants";
-export const TYPE_RECHERCHE_PAR_DEFAUT: SearchType = "dose_rappel";
+export type SearchType = "standard" | "atelier" |"formation"|"junior";
+export const TYPE_RECHERCHE_PAR_DEFAUT: SearchType = "atelier";
 
 export type SearchTypeConfig = {
     tagCreneau: TagCreneau;
@@ -396,36 +396,14 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
             searchResultsByCity: 'search_results_by_city'
         }
     },
-    /*
-    '18_55': {
-        type: '18_55',
-        tagCreneau: "preco18_55",
-        cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => {
-            if(daySelectorDisponible) {
-                return creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
-            }
-            throw new Error("We're not supposed to call cardAppointmentsExtractor() on 18_55 without day selector !")
-        },
-        lieuConsidereCommeDisponible: (lieu, creneauxParLieu) => lieu.appointment_by_phone_only || (creneauxParLieu?.creneaux || 0) > 0,
-        pathParam: '18_55',
-        standardTabSelected: true,
-        excludeAppointmentByPhoneOnly: false,
-        jourSelectionnable: true,
-        theme: 'standard',
-        analytics: {
-            searchResultsByDepartement: 'search_results_by_department_18_55',
-            searchResultsByCity: 'search_results_by_city_18_55'
-        }
-    },
-     */
-    'dose_rappel': {
-        type: 'dose_rappel',
+    'atelier': {
+        type: 'atelier',
         tagCreneau: 'third_dose',
         cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
             ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
             :lieu.appointment_count,
         lieuConsidereCommeDisponible: (lieu, creneauxParLieu) => lieu.appointment_by_phone_only || (creneauxParLieu?.creneaux || 0) > 0,
-        pathParam: 'dose_rappel',
+        pathParam: 'atelier',
         standardTabSelected: true,
         excludeAppointmentByPhoneOnly: false,
         jourSelectionnable: true,
@@ -435,14 +413,14 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
             searchResultsByCity: 'search_results_by_city_third_shot'
         }
     },
-    'dose_1_ou_2': {
-        type: 'dose_1_ou_2',
+    'formation': {
+        type: 'formation',
         tagCreneau: 'first_or_second_dose',
         cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
             ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
             :lieu.appointment_count,
         lieuConsidereCommeDisponible: (lieu, creneauxParLieu) => lieu.appointment_by_phone_only || (creneauxParLieu?.creneaux || 0) > 0,
-        pathParam: 'dose_1_ou_2',
+        pathParam: 'formation',
         standardTabSelected: true,
         excludeAppointmentByPhoneOnly: false,
         jourSelectionnable: true,
@@ -452,14 +430,14 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
             searchResultsByCity: 'search_results_by_city_first_or_second_shot'
         }
     },
-    'dose_1_enfants': {
-        type: 'dose_1_enfants',
+    'junior': {
+        type: 'junior',
         tagCreneau: 'kids_first_dose',
         cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
             ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
             :lieu.appointment_count,
         lieuConsidereCommeDisponible: (lieu, creneauxParLieu) => lieu.appointment_by_phone_only || (creneauxParLieu?.creneaux || 0) > 0,
-        pathParam: 'dose_1_enfants',
+        pathParam: 'junior',
         standardTabSelected: true,
         excludeAppointmentByPhoneOnly: false,
         jourSelectionnable: true,
