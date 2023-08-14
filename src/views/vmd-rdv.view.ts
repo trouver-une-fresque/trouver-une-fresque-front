@@ -314,13 +314,13 @@ export abstract class AbstractVmdRdvView extends LitElement {
                       html`
                     <i class="bi vmdicon-calendar2-check-fill text-success me-2 fs-3 col-auto"></i>
                     <span class="col col-sm-auto">
-                    ${countWorkshopsDisponibles.toLocaleString()} atelier${Strings.plural(countWorkshopsDisponibles, "s")} trouvé${Strings.plural(countWorkshopsDisponibles)}
+                    ${countWorkshopsDisponibles.toLocaleString()} ${searchTypeConfig.type=="junior"?"atelier":searchTypeConfig.type}${Strings.plural(countWorkshopsDisponibles, "s")} trouvé${Strings.plural(countWorkshopsDisponibles)}
                     ${this.libelleLieuSelectionne()}
                     </span>`:
                       html`
                       <i class="bi vmdicon-calendar-x-fill text-black-50 me-2 fs-3 col-auto"></i>
                     <span class="col col-sm-auto">
-                    ${countWorkshopsDisponibles.toLocaleString()} atelier${Strings.plural(countWorkshopsDisponibles, "s")} trouvé${Strings.plural(countWorkshopsDisponibles)}
+                    ${countWorkshopsDisponibles.toLocaleString()} ${searchTypeConfig.type=="junior"?"atelier":searchTypeConfig.type}${Strings.plural(countWorkshopsDisponibles, "s")} trouvé${Strings.plural(countWorkshopsDisponibles)}
                     ${this.libelleLieuSelectionne()}
                     `}
                   <br/>
