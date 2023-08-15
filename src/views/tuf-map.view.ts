@@ -16,11 +16,7 @@ type WorkshopCarte = {
     longitude: number;
     latitude: number;
     reservation: string;
-    date_ouverture: string|undefined;
-    rdv_tel: string|undefined;
-    modalites: string|undefined;
     adresse: string|undefined;
-    maj: string|undefined;
 };
 
 @customElement('tuf-map')
@@ -57,7 +53,6 @@ export class TufWorkshopsView extends LitElement {
 
         }).setView([46.505, 3], 6);
 
-        const departements = await State.current.departementsDisponibles();
         const resultatsRechercheWorkshops = await (await State.current.allWorkshops()).workshopsDisponibles.filter((w: Workshop) => w.online === false);
         const workshopsCarte = resultatsRechercheWorkshops
             .filter(workshop => !!workshop.longitude && workshop.latitude)
@@ -68,11 +63,7 @@ export class TufWorkshopsView extends LitElement {
                 longitude: workshop.longitude,
                 latitude: workshop.latitude,
                 reservation: workshop.source_link,
-                date_ouverture: undefined,
-                rdv_tel: undefined,
-                modalites: undefined,
-                adresse: workshop.address,
-                maj: undefined,
+                adresse: workshop.full_location,
             }));
 
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -89,7 +80,7 @@ export class TufWorkshopsView extends LitElement {
             let reservation_str = ""
             if (typeof lieu.reservation != 'undefined'){
                 if (lieu.reservation.indexOf("http") === 0){
-                    reservation_str = `<a href="${lieu.reservation}">${lieu.reservation}</a>`
+                    reservation_str = `<a href="${lieu.reservation}">${lieu.reservation.slice(0,35)+"..."}</a>`
                 }
             } else {
                 reservation_str = lieu.reservation;
@@ -101,8 +92,6 @@ export class TufWorkshopsView extends LitElement {
                 <b>Adresse :</b> ${lieu.adresse || "-"}
                 <br>
                 <b>Réservation :</b> ${reservation_str || "-"}
-                <br>
-                <b>Tél :</b> ${lieu.rdv_tel?`<a href='tel:${lieu.rdv_tel}'>${lieu.rdv_tel}</a>`:`-`}
             `;
             const newMarker = marker([lieu.latitude, lieu.longitude] as LatLngTuple, {
                 icon: new Icon.Default({imagePath: `${Router.basePath}assets/images/png/`})
