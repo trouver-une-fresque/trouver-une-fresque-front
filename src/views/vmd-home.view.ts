@@ -64,7 +64,7 @@ export class VmdHomeView extends LitElement {
 
                 <div class="searchAppointment-form">
                     <div class="searchAppointmentForm-fields">
-                          <vmd-search
+                          <tuf-search
                             @on-search="${this.onSearch.bind(this)}"
                           />
                     </div>

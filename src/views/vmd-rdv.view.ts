@@ -238,7 +238,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
         return html`
             <div class="criteria-container text-dark rounded-3 py-5 bg-std">
               <div class="rdvForm-fields row align-items-center mb-3 mb-md-4">
-                    <vmd-search
+                    <tuf-search
                           .value="${this.currentSearch}"
                           @on-search="${this.onSearchSelected}"
                     />

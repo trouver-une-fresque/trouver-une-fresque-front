@@ -10,7 +10,7 @@ import {
     DepartementSelected
 } from "../components/tuf-commune-or-departement-selector.component";
 
-@customElement('vmd-search')
+@customElement('tuf-search')
 export class VmdSearchComponent extends LitElement {
 
     //language=css
