@@ -131,6 +131,15 @@ class Routing {
                     html`<vmd-apropos>${subViewSlot}</vmd-apropos>`
             }
         });
+        this.declareRoutes({
+            pathPattern: `/mentions-legales`,
+            analyticsViewName: () => 'mentions_legales',
+            viewContent: async () => {
+                await import('../views/tuf-mentions.view');
+                return (subViewSlot) =>
+                    html`<tuf-mentions>${subViewSlot}</tuf-mentions>`
+            }
+        });
         // Legacy URL
         page.redirect(`${this.basePath}chronodose`, `/`);
 

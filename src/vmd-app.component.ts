@@ -66,7 +66,7 @@ export class VmdAppComponent extends LitElement {
                 <div class="col-auto">
                     <div class="row">
                         <div class="col-auto">
-                            <a href="https://covidtracker.fr/mentions-legales" target="_blank" rel="noreferrer">Mentions légales</a>
+                            <a href="mentions-legales" rel="noreferrer">Mentions légales</a>
                         </div>
                         <div class="col-auto">
                             <a href="https://covidtracker.fr/contact" target="_blank" rel="noreferrer">Contactez-nous</a>
