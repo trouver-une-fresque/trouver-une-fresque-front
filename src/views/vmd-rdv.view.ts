@@ -669,7 +669,8 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
 
         workshopsAffichablesBuilder = workshopsAffichablesBuilder.filter(l => l.distance <= this._distanceSelectionnee)
 
-        workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'distance'))
+        workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'date'))
+        // workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'distance'))
 
         const workshopsMatchantCriteres = workshopsAffichablesBuilder.build();
         return workshopsMatchantCriteres;
@@ -729,7 +730,8 @@ export class VmdRdvParDepartementView extends AbstractVmdRdvView {
         let workshopsAffichablesBuilder = ArrayBuilder.from([...workshopsParDepartement.workshopsDisponibles])
             .map(l => ({ ...l, distance: undefined }))
 
-        workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'distance'))
+        workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'date'))
+        // workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'distance'))
 
         const workshopsMatchantCriteres = workshopsAffichablesBuilder.build();
         return workshopsMatchantCriteres;
