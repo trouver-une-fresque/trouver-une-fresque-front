@@ -437,8 +437,8 @@ export abstract class AbstractVmdRdvView extends LitElement {
             try {   
                 this.searchInProgress = true;
                 await delay(1) // give some time (one tick) to render loader before doing the heavy lifting
-                // this.workshopsParDepartement = await State.current.allWorkshops();
-                this.workshopsParDepartement = await State.current.workshopsPour([codeDepartement].concat(this.options.codeDepartementAdditionnels(codeDepartement)));
+                this.workshopsParDepartement = await State.current.allWorkshops();
+                // this.workshopsParDepartement = await State.current.workshopsPour([codeDepartement].concat(this.options.codeDepartementAdditionnels(codeDepartement)));
                 if(this.currentSearch?.type === 'junior') {
                     this.workshopsParDepartement.workshopsDisponibles = this.workshopsParDepartement.workshopsDisponibles.filter(w => w.kids && !w.training);
                 }else if(this.currentSearch?.type === 'formation') {
@@ -624,7 +624,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
     @internalProperty() private _searchType: SearchType | undefined = undefined;
     @internalProperty() private _codeCommuneSelectionne: string | undefined = undefined;
     @internalProperty() private _codePostalSelectionne: string | undefined = undefined;
-    @internalProperty() private _distanceSelectionnee: number = 50;
+    @internalProperty() private _distanceSelectionnee: number = 100;
 
     private currentSearchMarker = {}
 
@@ -641,9 +641,10 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
                   id="searchAppointment-distance" codeSelectionne="${this._distanceSelectionnee}"
                   theme="${this.searchTypeConfig.theme}"
                   .options="${[
-                    {code: 1, libelle:"<1km"}, {code: 2, libelle:"<2km"}, {code: 5, libelle:"<5km"},
-                    {code: 10, libelle:"<10km"}, {code: 20, libelle:"<20km"}, {code: 50, libelle:"<50km"},
-                    {code: 100, libelle:"<100km"}, {code: 150, libelle:"<150km"}
+                    {code: 5, libelle:"<5km"},
+                    {code: 10, libelle:"<10km"}, {code: 50, libelle:"<50km"},
+                    {code: 100, libelle:"<100km"}, {code: 250, libelle:"<250km"},
+                    {code: 500, libelle:"<500km"}, {code: 100000, libelle:"∞"}
                   ]}"
                   @option-selected="${(e: CustomEvent<{value: number}>) => { this._distanceSelectionnee = e.detail.value; this.rafraichirDonneesAffichees(); }}"
               ></vmd-input-range-with-tooltip>

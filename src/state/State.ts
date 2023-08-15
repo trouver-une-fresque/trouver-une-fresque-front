@@ -565,7 +565,7 @@ export class State {
         return {
             workshopsDisponibles: workshops,
             codeDepartements: [],
-            derniereMiseAJour: new Date().toISOString()
+            derniereMiseAJour: workshops.length?workshops[0].scrape_date : new Date().toISOString()
         };
     }
 
