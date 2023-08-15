@@ -7,7 +7,7 @@ import {
     ATELIERS,
     SearchRequest,
     State,
-    StatsLieu, Departement, TYPE_RECHERCHE_PAR_DEFAUT,
+    Departement, TYPE_RECHERCHE_PAR_DEFAUT,
 } from "../state/State";
 import {CSS_Global, CSS_Home} from "../styles/ConstructibleStyleSheets";
 
@@ -26,7 +26,6 @@ export class VmdHomeView extends LitElement {
     ];
 
     @property({type: Array, attribute: false}) recuperationCommunesEnCours: boolean = false;
-    @property({type: Array, attribute: false}) statsLieu: StatsLieu|undefined = undefined;
 
     private async onSearch (event: CustomEvent<SearchRequest>) {
       const searchType: SearchType = TYPE_RECHERCHE_PAR_DEFAUT;
@@ -94,6 +93,5 @@ export class VmdHomeView extends LitElement {
 
     async connectedCallback() {
         super.connectedCallback();
-        this.statsLieu = await State.current.statsLieux()
     }
 }

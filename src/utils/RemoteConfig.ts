@@ -9,7 +9,6 @@ type RemoteConfigEntries = {
     "path_contributors": string,
     "path_data_department": string,
     "path_list_departments": string,
-    "path_stats": string,
     "url_base": string,
     "vaccination_centres_list_radius_in_km": string,
 };
@@ -23,7 +22,6 @@ const REMOTE_CONFIG_ENTRIES_FALLBACK: RemoteConfigEntries = {
     "path_contributors": "/vitemadose/contributors_all.json",
     "path_data_department": "/vitemadose/{code}.json",
     "path_list_departments": "/vitemadose/departements.json",
-    "path_stats": "/vitemadose/stats.json",
     "url_base": "https://vitemadose.gitlab.io",
     "vaccination_centres_list_radius_in_km": "50"
 };
@@ -65,8 +63,6 @@ export class RemoteConfig {
             this.configuration = REMOTE_CONFIG_ENTRIES_FALLBACK;
             this._urlGenerator = {
                 listDepartements: () => `/offline/departements.json`,
-                statsByDate: () => `/offline/stats_by_date.json`,
-                stats: () => `/offline/stats.json`,
                 infosDepartement: (codeDepartement) => `/offline/${codeDepartement}.json`,
                 creneauxQuotidiensDepartement: (codeDepartement) => `/offline/${codeDepartement}/creneaux-quotidiens.json`,
                 workshops: () => `/offline/workshops.json`

@@ -8,7 +8,6 @@ import {
     searchTypeConfigFromPathParam,
     State
 } from "../state/State";
-import {Analytics} from "../utils/Analytics";
 // @ts-ignore
 import {rechercheDepartementDescriptor, rechercheCommuneDescriptor} from './DynamicURLs';
 
@@ -20,7 +19,6 @@ export type TitleProvider = (pathParams: Record<string, string>) => Promise<stri
 
 type RouteDeclaration = {
     pathPattern: string|string[];
-    analyticsViewName: (pathParams: Record<string, string>) => string;
     viewContent: (pathParams: Record<string, string>) => Promise<SlottedTemplateResultFactory>|SlottedTemplateResultFactory;
     pageTitleProvider?: TitleProvider;
 };
@@ -48,7 +46,6 @@ class Routing {
 
         this.declareRoutes({
             pathPattern: `/`,
-            analyticsViewName: () => 'home',
             viewContent: async () => {
                 await import('../views/vmd-home.view')
                 return (subViewSlot) =>
@@ -61,7 +58,6 @@ class Routing {
                 `/dpt:codeDpt-:nomDpt`,
                 rechercheDepartementDescriptor.routerUrl
             ],
-            analyticsViewName: (pathParams) => searchTypeConfigFromPathParam(pathParams).analytics.searchResultsByDepartement,
             viewContent: async (params) => {
                 await import('../views/vmd-rdv.view');
                 return (subViewSlot) =>
@@ -82,7 +78,6 @@ class Routing {
                 `/dpt:codeDpt-:nomDpt/commune:codeCommune-:codePostal-:nomCommune/en-triant-par-:codeTriCentre`,
                 rechercheCommuneDescriptor.routerUrl
             ],
-            analyticsViewName: (pathParams) => searchTypeConfigFromPathParam(pathParams).analytics.searchResultsByCity,
             viewContent: async (params) => {
                 await import('../views/vmd-rdv.view');
                 return (subViewSlot) =>
@@ -103,7 +98,6 @@ class Routing {
             pathPattern: [
                 '/carte',
             ],
-            analyticsViewName: () => 'centres',
             viewContent: async () => {
                 await import('../views/tuf-map.view');
                 return (subViewSlot) =>
@@ -111,17 +105,7 @@ class Routing {
             }
         });
         this.declareRoutes({
-            pathPattern: `/statistiques`,
-            analyticsViewName: () => 'statistiques',
-            viewContent: async () => {
-                await import('../views/vmd-statistiques.view');
-                return (subViewSlot) =>
-                    html`<vmd-statistiques>${subViewSlot}</vmd-statistiques>`
-            }
-        });
-        this.declareRoutes({
             pathPattern: `/apropos`,
-            analyticsViewName: () => 'a_propos',
             viewContent: async () => {
                 await import('../views/vmd-apropos.view');
                 return (subViewSlot) =>
@@ -130,15 +114,12 @@ class Routing {
         });
         this.declareRoutes({
             pathPattern: `/mentions-legales`,
-            analyticsViewName: () => 'mentions_legales',
             viewContent: async () => {
                 await import('../views/tuf-mentions.view');
                 return (subViewSlot) =>
                     html`<tuf-mentions>${subViewSlot}</tuf-mentions>`
             }
         });
-        // Legacy URL
-        page.redirect(`${this.basePath}chronodose`, `/`);
 
         page(`*`, (context) => Routing._notFoundRoute(context));
         page();
@@ -151,14 +132,13 @@ class Routing {
         paths.forEach(path => {
             this._declareRoute(
                 path,
-                routeDeclaration.analyticsViewName,
                 routeDeclaration.viewContent,
                 routeDeclaration.pageTitleProvider || Routing.DEFAULT_TITLE_PROMISE
             );
         });
     }
 
-    private _declareRoute(path: string, pageNameSupplier: (pathParams: Record<string,string>) => string, viewComponentCreator: (pathParams: Record<string, string>) => Promise<SlottedTemplateResultFactory>|SlottedTemplateResultFactory,
+    private _declareRoute(path: string, viewComponentCreator: (pathParams: Record<string, string>) => Promise<SlottedTemplateResultFactory>|SlottedTemplateResultFactory,
                          titlePromise = Routing.DEFAULT_TITLE_PROMISE) {
         page(`${this.basePath}${path.substring(path[0]==='/'?1:0)}`, (context) => {
             const slottedViewComponentFactoryResult = viewComponentCreator(context.params);
@@ -179,7 +159,6 @@ class Routing {
                 document.title = title;
 
                 this._viewChangeCallbacks.forEach(callback => callback(slottedViewTemplateFactory, path));
-                Analytics.INSTANCE.navigationSurNouvellePage(pageNameSupplier(context.params));
             })
         });
     }

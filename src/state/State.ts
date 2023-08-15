@@ -1,7 +1,6 @@
 import {Strings} from "../utils/Strings";
 import { Autocomplete } from './Autocomplete'
 import { Memoize } from 'typescript-memoize'
-import {ArrayBuilder} from "../utils/Arrays";
 import {RemoteConfig} from "../utils/RemoteConfig";
 
 export type CodeTrancheAge = 'plus75ans';
@@ -21,11 +20,10 @@ export namespace SearchRequest {
       par: 'departement',
       departement: Departement,
       tri: 'date',
-      date: string|undefined,
       online: boolean
   }
-  export function ByDepartement (departement: Departement, type: SearchType, date: string|undefined, online: boolean): ByDepartement {
-    return { type, par: 'departement', departement, tri: 'date', date, online }
+  export function ByDepartement (departement: Departement, type: SearchType, online: boolean): ByDepartement {
+    return { type, par: 'departement', departement, tri: 'date', online }
   }
   export function isByDepartement (searchRequest: SearchRequest): searchRequest is ByDepartement {
     return searchRequest.par === 'departement'
@@ -36,11 +34,10 @@ export namespace SearchRequest {
     par: 'commune',
     commune: Commune,
     tri: 'distance',
-    date: string|undefined,
     online: boolean
   }
-  export function ByCommune (commune: Commune, type: SearchType, date: string|undefined, online: boolean): ByCommune {
-    return { type, par: 'commune', commune, tri: 'distance', date, online }
+  export function ByCommune (commune: Commune, type: SearchType, online: boolean): ByCommune {
+    return { type, par: 'commune', commune, tri: 'distance', online }
   }
   export function isByCommune (searchRequest: SearchRequest): searchRequest is ByCommune {
     return searchRequest.par === 'commune'
@@ -209,24 +206,8 @@ function transformLieu(rawLieu: any): Lieu {
 export type Coordinates = { latitude: number, longitude: number }
 export type Location = Coordinates & {city: string, cp: string}
 export type TagCreneau = /*"preco18_55"|*/"all"|"first_or_second_dose"|"third_dose"|"kids_first_dose";
-export type StatsCreneauxQuotidienParTag = {
-    tag: TagCreneau;
-    creneaux: number;
-    creneauxParHeure: [number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number];
-};
-export type StatsCreneauxQuotidienParTag_JSON = {
-    tag: TagCreneau;
-    creneaux: number;
-    creneaux_par_heure: [number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number,number];
-};
-export type StatsCreneauxParLieu = {
-    lieu: string;
-    statsCreneauxParTag: StatsCreneauxQuotidienParTag[];
-};
-export type CreneauxParLieu_JSON = {
-    lieu: string;
-    creneaux_par_tag: StatsCreneauxQuotidienParTag_JSON[];
-};
+
+
 export type CreneauxParLieu = {
     lieu: string;
     creneaux: number;
@@ -236,32 +217,11 @@ export type RendezVousDuJour = {
     total: number;
     creneauxParLieu: CreneauxParLieu[];
 }
-export type StatsCreneauxLieuxParJour = {
-    date: string; // "2021-05-23"
-    codesDepartement: CodeDepartement[];
-    total: number;
-    statsCreneauxParLieu: StatsCreneauxParLieu[];
-}
-export function countCreneauxFromCreneauxParTag(statsCreneauxQuotidiensParTag: StatsCreneauxQuotidienParTag[], tag: TagCreneau): number {
-    return statsCreneauxQuotidiensParTag.find(cpt => cpt.tag===tag)?.creneaux || 0;
-}
-export function countCreneauxFromStatsCreneauxLieux(statsCreneauxLieuxParJour: StatsCreneauxLieuxParJour, tag: TagCreneau) {
-    return statsCreneauxLieuxParJour.statsCreneauxParLieu.reduce((total, lieu) => total + countCreneauxFromCreneauxParTag(lieu.statsCreneauxParTag, tag), 0);
-}
-export type StatsCreneauxLieuxParJour_JSON = {
-    date: string; // "2021-05-23"
-    total: number;
-    creneaux_par_lieu: CreneauxParLieu_JSON[];
-}
-export type InfosDepartementAdditionnelles_JSON = {
-    creneaux_quotidiens: StatsCreneauxLieuxParJour_JSON[];
-};
 
 export type LieuxParDepartement = {
     lieuxDisponibles: Lieu[];
     lieuxIndisponibles: Lieu[];
     codeDepartements: CodeDepartement[];
-    statsCreneauxLieuxQuotidiens: StatsCreneauxLieuxParJour[];
     derniereMiseAJour: ISODateString;
 };
 
@@ -324,14 +284,6 @@ const DEPARTEMENT_OM: Departement = {
 };
 
 
-export type StatLieu = {disponibles: number, total: number, creneaux: number};
-export type StatLieuGlobale = StatLieu & { proportion: number };
-export type StatsLieuParDepartement = Record<string, StatLieu>
-export type StatsLieu = {
-    parDepartements: StatsLieuParDepartement;
-    global: StatLieuGlobale;
-}
-
 export type CommunesParAutocomplete = Map<string, Commune[]>;
 export interface Commune {
     code: string;
@@ -342,12 +294,6 @@ export interface Commune {
     longitude: number;
 }
 
-export type StatsByDate = {
-    dates: ISODateString[],
-    total_centres_disponibles: number[],
-    total_centres: number[],
-    total_appointments: number[]
-}
 
 // Permet de convertir un nom de departement en un chemin d'url correct (remplacement des caractères
 // non valides comme les accents ou les espaces)
@@ -376,10 +322,6 @@ export type SearchTypeConfig = {
     excludeAppointmentByPhoneOnly: boolean;
     jourSelectionnable: boolean;
     theme: 'standard'|'highlighted';
-    analytics: {
-        searchResultsByDepartement: string;
-        searchResultsByCity: string;
-    }
 };
 const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type}} = {
     'standard': {
@@ -394,10 +336,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
         excludeAppointmentByPhoneOnly: false,
         jourSelectionnable: true,
         theme: 'standard',
-        analytics: {
-            searchResultsByDepartement: 'search_results_by_department',
-            searchResultsByCity: 'search_results_by_city'
-        }
     },
     'atelier': {
         type: 'atelier',
@@ -411,10 +349,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
         excludeAppointmentByPhoneOnly: false,
         jourSelectionnable: true,
         theme: 'standard',
-        analytics: {
-            searchResultsByDepartement: 'search_results_by_department_third_shot',
-            searchResultsByCity: 'search_results_by_city_third_shot'
-        }
     },
     'formation': {
         type: 'formation',
@@ -428,10 +362,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
         excludeAppointmentByPhoneOnly: false,
         jourSelectionnable: true,
         theme: 'standard',
-        analytics: {
-            searchResultsByDepartement: 'search_results_by_department_first_or_second_shot',
-            searchResultsByCity: 'search_results_by_city_first_or_second_shot'
-        }
     },
     'junior': {
         type: 'junior',
@@ -445,10 +375,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
         excludeAppointmentByPhoneOnly: false,
         jourSelectionnable: true,
         theme: 'standard',
-        analytics: {
-            searchResultsByDepartement: 'search_results_by_department_first_kids_shot',
-            searchResultsByCity: 'search_results_by_city_first_kids_shot'
-        }
     }
 };
 export function searchTypeConfigFromPathParam(pathParams: Record<string,string>): SearchTypeConfig & {type: SearchType} {
@@ -495,70 +421,6 @@ export class State {
       this.autocomplete = new Autocomplete(webBaseUrl, () => this.departementsDisponibles())
     }
 
-    async lieuxPour(codesDepartements: CodeDepartement[]): Promise<LieuxParDepartement> {
-        const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
-        const [principalLieuxDepartement, ...lieuxDepartementsAditionnels] = await Promise.all(
-            codesDepartements.map(codeDept => Promise.all([
-                fetch(urlGenerator.infosDepartement(codeDept), { cache: 'no-cache' })
-                    .then(resp => resp.json())
-                    .then((statsDept: LieuxParDepartement_JSON) => ({...statsDept, codeDepartement: codeDept} as LieuxParDepartement_JSON & {codeDepartement: string})),
-                fetch(urlGenerator.creneauxQuotidiensDepartement(codeDept), { cache: 'no-cache' })
-                    .then(resp => resp.json())
-                    .then((creneauxQuotidiens: InfosDepartementAdditionnelles_JSON|undefined) => creneauxQuotidiens),
-            ]).then(([lieuxParDepartement, infosDeptAdditionnelles] : [LieuxParDepartement_JSON & {codeDepartement: string}, InfosDepartementAdditionnelles_JSON|undefined]) => ({
-                ...lieuxParDepartement,
-                creneaux_quotidiens: infosDeptAdditionnelles?.creneaux_quotidiens || []
-            }))
-        ));
-
-        const lieuxParDepartement: LieuxParDepartement = [principalLieuxDepartement].concat(lieuxDepartementsAditionnels).reduce((mergedLieuxParDepartement, lieuxParDepartement) => {
-            const creneauxQuotidiens = mergedLieuxParDepartement.statsCreneauxLieuxQuotidiens;
-            (lieuxParDepartement.creneaux_quotidiens || []).forEach((creneauxQuotidien) => {
-                if(!creneauxQuotidiens.find(cq => cq.date === creneauxQuotidien.date)) {
-                    creneauxQuotidiens.push({
-                        codesDepartement: [],
-                        date: creneauxQuotidien.date,
-                        total: 0,
-                        statsCreneauxParLieu: []
-                    })
-                }
-                const creneauxQuotidienMatchingDate = creneauxQuotidiens.find(cq => cq.date === creneauxQuotidien.date)!;
-
-                creneauxQuotidienMatchingDate.codesDepartement.push(lieuxParDepartement.codeDepartement);
-                creneauxQuotidienMatchingDate.total += creneauxQuotidien.total;
-                Array.prototype.push.apply(creneauxQuotidienMatchingDate.statsCreneauxParLieu, creneauxQuotidien.creneaux_par_lieu.map<StatsCreneauxParLieu>(cpl => ({
-                    lieu: cpl.lieu,
-                    statsCreneauxParTag: cpl.creneaux_par_tag.map(cpt => ({
-                        tag: cpt.tag,
-                        creneaux: cpt.creneaux,
-                        creneauxParHeure: cpt.creneaux_par_heure
-                    }))
-                })));
-            });
-
-            const lieuxParDepartementMerge: LieuxParDepartement = {
-                codeDepartements: mergedLieuxParDepartement.codeDepartements.concat(lieuxParDepartement.codeDepartement),
-                derniereMiseAJour: mergedLieuxParDepartement.derniereMiseAJour,
-                lieuxDisponibles: mergedLieuxParDepartement.lieuxDisponibles.concat(lieuxParDepartement.centres_disponibles.map(transformLieu)),
-                lieuxIndisponibles: mergedLieuxParDepartement.lieuxIndisponibles.concat(lieuxParDepartement.centres_indisponibles.map(transformLieu)),
-                statsCreneauxLieuxQuotidiens: creneauxQuotidiens
-            };
-            return lieuxParDepartementMerge;
-        }, {
-            codeDepartements: [],
-            derniereMiseAJour: principalLieuxDepartement.last_updated,
-            lieuxDisponibles: [],
-            lieuxIndisponibles: [],
-            statsCreneauxLieuxQuotidiens: []
-        } as LieuxParDepartement);
-
-        lieuxParDepartement.statsCreneauxLieuxQuotidiens = ArrayBuilder.from(lieuxParDepartement.statsCreneauxLieuxQuotidiens)
-            .sortBy(cq => cq.date)
-            .build();
-
-        return lieuxParDepartement;
-    }
-
     async allWorkshops(): Promise<WorkshopsParDepartement> {
         const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
         const workshops = await fetch(urlGenerator.workshops(), { cache: 'no-cache' }).then(resp => resp.json());
@@ -578,7 +440,6 @@ export class State {
             codeDepartements: codesDepartements,
             derniereMiseAJour: workshops.length?workshops[0].scrape_date : new Date().toISOString()
         }
-        console.log("found %d workshops", workshopsParDepartement.workshopsDisponibles.length);
 
         return workshopsParDepartement;
     }
@@ -602,38 +463,9 @@ export class State {
         return deps.find(dep => dep.code_departement === code) || State.DEPARTEMENT_VIDE;
     }
 
-    private _statsByDate: StatsByDate|undefined = undefined;
-    async statsByDate(): Promise<StatsByDate> {
-        if(this._statsByDate !== undefined) {
-            return Promise.resolve(this._statsByDate);
-        } else {
-            const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
-            const resp = await fetch(urlGenerator.statsByDate())
-            const statsByDate: StatsByDate = await resp.json()
-
-            this._statsByDate = statsByDate;
-            return statsByDate;
-        }
-    }
-
     async chercheCommuneParCode(codePostal: string, codeCommune: string): Promise<Commune> {
         const commune = await this.autocomplete.findCommune(codePostal, codeCommune)
         return commune || State.COMMUNE_VIDE
-    }
-
-    @Memoize()
-    async statsLieux(): Promise<StatsLieu> {
-      const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
-      const resp = await fetch(urlGenerator.stats())
-      const statsParDepartements: Record<CodeDepartement|'tout_departement', StatLieu> = await resp.json()
-      const { tout_departement: global, ...parDepartements } = statsParDepartements
-      return {
-          parDepartements,
-          global: {
-              ...global,
-              proportion: Math.round(global.disponibles * 10000 / global.total)/100
-          }
-      };
     }
 
 }

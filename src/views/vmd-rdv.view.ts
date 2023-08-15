@@ -18,10 +18,6 @@ import {
     Commune,
     libelleUrlPathDeCommune,
     libelleUrlPathDuDepartement,
-    Lieu,
-    LieuAffichableAvecDistance,
-    LieuxAvecDistanceParDepartement,
-    LieuxParDepartement,
     Workshop,
     WorkshopsAvecDistanceParDepartement,
     WorkshopsAffichableAvecDistance,
@@ -31,21 +27,16 @@ import {
     CodeTriCentre,
     searchTypeConfigFor,
     searchTypeConfigFromSearch,
-    SearchTypeConfig,
-    RendezVousDuJour,
-    StatsCreneauxLieuxParJour,
-    countCreneauxFromCreneauxParTag, TYPE_RECHERCHE_PAR_DEFAUT, WorkshopsParDepartement
+    TYPE_RECHERCHE_PAR_DEFAUT, WorkshopsParDepartement
 } from "../state/State";
 import {formatDistanceToNow, parseISO} from 'date-fns'
 import { fr } from 'date-fns/locale'
 import {Strings} from "../utils/Strings";
 import {DEPARTEMENTS_LIMITROPHES} from "../utils/Departements";
 import {TemplateResult} from "lit-html";
-import {Analytics} from "../utils/Analytics";
 import {WorkshopCliqueCustomEvent} from "../components/vmd-appointment-card.component";
 import {delay, setDebouncedInterval} from "../utils/Schedulers";
 import {ArrayBuilder} from "../utils/Arrays";
-import {classMap} from "lit-html/directives/class-map";
 import {CSS_Global} from "../styles/ConstructibleStyleSheets";
 import {InfiniteScroll} from "../state/InfiniteScroll";
 import {DisclaimerSeverity, RemoteConfig} from "../utils/RemoteConfig";
@@ -193,17 +184,12 @@ export abstract class AbstractVmdRdvView extends LitElement {
         `
     ];
 
-    @internalProperty() lieuxParDepartementAffiches: LieuxAvecDistanceParDepartement | undefined = undefined;
     @internalProperty() workshopsParDepartementAffiches: WorkshopsAvecDistanceParDepartement | undefined = undefined;
-    @internalProperty() creneauxQuotidiensAffiches: RendezVousDuJour[] = [];
     @property({type: Boolean, attribute: false}) searchInProgress: boolean = false;
     @property({type: Boolean, attribute: false}) miseAJourDisponible: boolean = false;
     @property({type: Array, attribute: false}) cartesAffichees: Workshop[] = [];
-    @internalProperty() lieuxParDepartement: LieuxParDepartement|undefined = undefined;
     @internalProperty() workshopsParDepartement: WorkshopsParDepartement|undefined = undefined;
     @internalProperty() protected currentSearch: SearchRequest | undefined = undefined
-
-    @internalProperty() jourSelectionne: {date: string, type: 'manual'|'auto'}|undefined = undefined;
 
     @internalProperty() disclaimerEnabled: boolean = false;
     @internalProperty() disclaimerMessage: string | undefined = undefined;
@@ -211,7 +197,6 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
     protected derniereCommuneSelectionnee: Commune|undefined = undefined;
 
-    protected lieuBackgroundRefreshIntervalId: ReturnType<typeof setTimeout>|undefined = undefined;
     private infiniteScroll = new InfiniteScroll();
     private infiniteScrollObserver: IntersectionObserver | undefined;
 
@@ -220,18 +205,6 @@ export abstract class AbstractVmdRdvView extends LitElement {
         criteresDeRechercheAdditionnels: () => TemplateResult
     }) {
         super();
-    }
-
-    get totalCreneaux() {
-        if (!this.creneauxQuotidiensAffiches) {
-            return 0;
-        }
-        return this.creneauxQuotidiensAffiches
-            .reduce((total, rdvDuJour) => total+rdvDuJour.total, 0);
-    }
-
-    get daySelectorAvailable(): boolean {
-        return !!this.lieuxParDepartement?.statsCreneauxLieuxQuotidiens.length && !!this.currentSearch && searchTypeConfigFor(this.currentSearch.type).jourSelectionnable;
     }
 
     get searchTypeConfig() {
@@ -338,21 +311,9 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
                 <div class="spacer mt-5 mb-5"></div>
 
-                ${this.daySelectorAvailable?html`
-                  <div class="resultats px-4 py-3 text-dark bg-light rounded-resultats-top mb-2">
-                      <vmd-upcoming-days-selector
-                            dateSelectionnee="${this.jourSelectionne?.date || ""}"
-                            .creneauxQuotidiens="${this.creneauxQuotidiensAffiches}"
-                            @jour-selectionne="${(event: CustomEvent<RendezVousDuJour>) => {
-                        this.jourSelectionne = { date: event.detail.date, type: 'manual' };
-                        Analytics.INSTANCE.clickSurJourRdv(this.jourSelectionne.date, this.jourSelectionne.type, event.detail.total);
-                        this.rafraichirDonneesAffichees();
-                    }}"></vmd-upcoming-days-selector>
-                  </div>
-                `:html``}
 
                 ${countWorkshopsDisponibles?html`
-                <div class="resultats px-2 py-5 text-dark bg-light ${classMap({ 'rounded-resultats-top': !this.daySelectorAvailable })}">
+                <div class="resultats px-2 py-5 text-dark bg-light rounded-resultats-top">
                   <div id="scroller">
                       ${repeat(this.cartesAffichees || [],
                                   (c => `${c.department}||${c.title}||${c.workshop_type}}`), 
@@ -410,15 +371,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
     disconnectedCallback() {
         super.disconnectedCallback();
-        this.stopCheckingUpdates();
         this.stopListeningToScroll();
-    }
-
-    stopCheckingUpdates() {
-        if(this.lieuBackgroundRefreshIntervalId) {
-            clearInterval(this.lieuBackgroundRefreshIntervalId);
-            this.lieuBackgroundRefreshIntervalId = undefined;
-        }
     }
 
     private stopListeningToScroll() {
@@ -449,13 +402,8 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
                 // filter online workshops if needed
                 if(this.currentSearch?.online === false) {
-                  console.log("filtering online workshops");
                   this.workshopsParDepartement.workshopsDisponibles = this.workshopsParDepartement.workshopsDisponibles.filter(w => !w.online);
-                }else{
-                  console.log("including online workshops")
                 }
-
-                console.log("refresh %d workshops", this.workshopsParDepartement.workshopsDisponibles.length);
 
                 this.rafraichirDonneesAffichees();
             } finally {
@@ -472,67 +420,6 @@ export abstract class AbstractVmdRdvView extends LitElement {
         }
     }
 
-    async refreshLieux() {
-        const currentSearch = this.currentSearch
-        if(currentSearch) {
-            // FIXME move all of this to testable file
-            const codeDepartement = SearchRequest.isByDepartement(currentSearch)
-              ? currentSearch.departement.code_departement
-              : currentSearch.commune.codeDepartement
-            try {
-                this.searchInProgress = true;
-                await delay(1) // give some time (one tick) to render loader before doing the heavy lifting
-                this.lieuxParDepartement = await State.current.lieuxPour([codeDepartement].concat(this.options.codeDepartementAdditionnels(codeDepartement)));
-                
-                this.rafraichirDonneesAffichees();
-
-                const commune = SearchRequest.isByCommune(currentSearch) ? currentSearch.commune : undefined
-                Analytics.INSTANCE.rechercheLieuEffectuee(
-                    codeDepartement,
-                    this.currentTri(),
-                    currentSearch.type,
-                    this.jourSelectionne?.type,
-                    this.jourSelectionne?.date,
-                    commune,
-                    this.lieuxParDepartementAffiches);
-            } finally {
-                this.searchInProgress = false;
-            }
-        } else {
-            this.lieuxParDepartementAffiches = undefined;
-            this.cartesAffichees = [];
-        }
-
-        this.disclaimerEnabled = await RemoteConfig.INSTANCE.disclaimerEnabled();
-        // Refresh only if needed
-        if (this.disclaimerEnabled) {
-            this.disclaimerMessage = await RemoteConfig.INSTANCE.disclaimerMessage();
-            this.disclaimerSeverity = await RemoteConfig.INSTANCE.disclaimerSeverity();
-        }
-    }
-
-    private autoSelectJourSelectionne(daySelectorAvailable: boolean) {
-        if(daySelectorAvailable) {
-            // On voit quel jour selectionner:
-            // 1/ on essaie de conserver le même jour selectionné si possible
-            // 2/ si pas possible (pas de créneau) on prend le premier jour dispo avec des créneaux
-            // 3/ si pas possible (aucun jour avec des créneaux) aucun jour n'est sélectionné
-            if(this.jourSelectionne) {
-                const creneauxQuotidienSelectionnes = this.creneauxQuotidiensAffiches.find(cq => cq.date === this.jourSelectionne?.date);
-                if(!creneauxQuotidienSelectionnes || creneauxQuotidienSelectionnes.total===0) {
-                    this.jourSelectionne = undefined;
-                }
-            }
-            if(!this.jourSelectionne) {
-                this.jourSelectionne = {
-                    date: this.creneauxQuotidiensAffiches.filter(dailyAppointments => dailyAppointments.total !== 0)[0]?.date,
-                    type: 'auto'
-                };
-            }
-        } else {
-            this.jourSelectionne = undefined;
-        }
-    }
 
     rafraichirDonneesAffichees() {
 
@@ -540,9 +427,6 @@ export abstract class AbstractVmdRdvView extends LitElement {
             const searchTypeConfig = searchTypeConfigFor(this.currentSearch.type);
             const workshopsMatchantCriteres = this.filtrerWorkshopsMatchantLesCriteres(this.workshopsParDepartement, this.currentSearch);
             // const workshopsMatchantCriteres = this.workshopsParDepartement;
-
-            let daySelectorAvailable = this.daySelectorAvailable;
-            this.autoSelectJourSelectionne(daySelectorAvailable);
 
             this.workshopsParDepartementAffiches = {
                 derniereMiseAJour: this.workshopsParDepartement.derniereMiseAJour,
@@ -662,7 +546,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
         if (this.currentSearchMarker !== marker) { return }
         const commune = await State.current.autocomplete.findCommune(this._codePostalSelectionne, this._codeCommuneSelectionne)
         if (commune) {
-          this.currentSearch = SearchRequest.ByCommune(commune, this._searchType, this.jourSelectionne?.date, this._onlineEvents)
+          this.currentSearch = SearchRequest.ByCommune(commune, this._searchType, this._onlineEvents)
           this.refreshWorkshops()
         }
       }
@@ -732,7 +616,7 @@ export class VmdRdvParDepartementView extends AbstractVmdRdvView {
           const departements = await State.current.departementsDisponibles()
           const departementSelectionne = departements.find(d => d.code_departement === code);
           if (departementSelectionne) {
-            this.currentSearch = SearchRequest.ByDepartement(departementSelectionne, this._searchType, this.jourSelectionne?.date, this._onlineEvents)
+            this.currentSearch = SearchRequest.ByDepartement(departementSelectionne, this._searchType, this._onlineEvents)
             this.refreshWorkshops()
           }
         }
