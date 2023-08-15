@@ -6,6 +6,7 @@
 :host {
     display: inline-block;
     cursor: pointer;
+    height: 24px;
 }
 
 .toggle {
@@ -30,7 +31,7 @@
 }
 
 .checked {
-    background-color: #4caf50;
+    background-color: #5561d9;
 }
 
 .search-highlighted .option.active {

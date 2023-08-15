@@ -264,7 +264,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
         return html`
             <div class="criteria-container text-dark rounded-3 py-5 bg-std">
-              <div class="rdvForm-fields row align-items-center mb-3 mb-md-5">
+              <div class="rdvForm-fields row align-items-center mb-3 mb-md-4">
                     <vmd-search
                           .value="${this.currentSearch}"
                           @on-search="${this.onSearchSelected}"
@@ -272,19 +272,19 @@ export abstract class AbstractVmdRdvView extends LitElement {
               </div>
               ${this.options.criteresDeRechercheAdditionnels()}
               ${true?html`
-              <div class="rdvForm-fields row align-items-center mb-3 mb-md-5">
+              <div class="rdvForm-fields row align-items-center mb-3 mb-md-4">
                 <label for="searchAppointment-heures" class="col-sm-24 col-md-auto mb-md-1 label-for-search p-3 ps-1">
                   Inclure les ateliers en ligne :
                 </label>
                 <div class="col">
-                  <tuf-toggle-switch class="mb-3" style="display: inline-block"
+                  <tuf-toggle-switch class=""
                                      codeSelectionne="no"
                                      .checked="${this.currentSearch?.online || false}"
                                      @changed="${(e: CustomEvent<{value: boolean}>) => this.updateResultsWithOnline(e.detail.value)}">
                   </tuf-toggle-switch>
                 </div>
               </div>`:html``}
-                <div class="rdvForm-fields row align-items-center mb-3 mb-md-5">
+                <div class="rdvForm-fields row align-items-center mb-3 mb-md-4">
                     <label class="col-sm-24 col-md-auto mb-md-1 label-for-search p-3 ps-1">
                         Vous souhaitez :
                     </label>
@@ -632,7 +632,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
         super({
           codeDepartementAdditionnels: (codeDepartementSelectionne) => DEPARTEMENTS_LIMITROPHES[codeDepartementSelectionne],
             criteresDeRechercheAdditionnels: () => html`
-            <div class="rdvForm-fields row align-items-center mb-3 mb-md-5">
+            <div class="rdvForm-fields row align-items-center mb-3 mb-md-4">
             <label for="searchAppointment-distance" class="col-sm-24 col-md-auto mb-md-1 label-for-search p-3 ps-1">
             Distance :
             </label>
