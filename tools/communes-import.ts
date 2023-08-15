@@ -103,12 +103,12 @@ function generateFilesForQuery(query: string, communes: Commune[], unreferencedC
 
 function sitemapDynamicEntry(path: string): string {
     return `
-    <url><loc>https://vitemadose.covidtracker.fr${path}</loc><changefreq>always</changefreq><priority>0.1</priority></url>
+    <url><loc>https://trouverunefresque.org${path}</loc><changefreq>always</changefreq><priority>0.1</priority></url>
     `.trim();
 }
 function sitemapIndexDynamicEntry(codeDepartement: string): string {
     return `
-    <sitemap><loc>https://vitemadose.covidtracker.fr/sitemaps/sitemap-${codeDepartement}.xml</loc></sitemap>
+    <sitemap><loc>https://trouverunefresque.org/sitemaps/sitemap-${codeDepartement}.xml</loc></sitemap>
     `.trim();
 }
 

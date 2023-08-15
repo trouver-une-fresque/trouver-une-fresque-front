@@ -5,4 +5,4 @@ User-agent: *
 Allow: /
 Disallow: /404.html
 
-Sitemap: https://vitemadose.covidtracker.fr/sitemap.xml
+Sitemap: https://trouverunefresque.org/sitemap.xml

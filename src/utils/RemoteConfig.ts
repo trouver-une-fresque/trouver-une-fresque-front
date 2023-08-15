@@ -37,7 +37,7 @@ export class RemoteConfig {
     }
 
     public static currentEnv(): 'prod'|'testing'|'dev'|'unknown' {
-        if(document.location.host === 'vitemadose.covidtracker.fr') {
+        if(document.location.host === 'trouverunefresque.org') {
             return 'prod';
         } else if(document.location.host === 'dev.vitemado.se') {
             return 'testing';
