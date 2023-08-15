@@ -94,7 +94,7 @@ export class VmdAppointmentCardComponent extends LitElement {
                 } else {
                     specificCardConfig = {
                         disabledBG: false,
-                        cardTitle: `${this.workshop.training?'Formation':'Atelier'} ${this.workshop.kids?'Junior ':''} ${atelier.nom}`,
+                        cardTitle: `${this.workshop.online?'👩🏽‍💻 ':''}${this.workshop.training?'Formation':'Atelier'} ${this.workshop.kids?'Junior ':''} ${atelier.nom}`,
                         libelleBouton: 'Réserver une place',
                         typeBouton: 'btn-primary',
                         onclick: () => this.prendreRdv()
