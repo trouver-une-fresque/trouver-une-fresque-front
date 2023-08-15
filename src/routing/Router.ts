@@ -47,9 +47,9 @@ class Routing {
         this.declareRoutes({
             pathPattern: `/`,
             viewContent: async () => {
-                await import('../views/vmd-home.view')
+                await import('../views/tuf-home.view')
                 return (subViewSlot) =>
-                    html`<vmd-home>${subViewSlot}</vmd-home>`
+                    html`<tuf-home>${subViewSlot}</tuf-home>`
             }
         });
 

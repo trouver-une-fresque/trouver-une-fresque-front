@@ -1,6 +1,6 @@
 import {css, unsafeCSS} from "lit-element";
 import globalCss from "./global.scss";
-import homeCss from "../views/vmd-home.view.scss";
+import homeCss from "../views/tuf-home.view.scss";
 
 
 export const CSS_Global = css`${unsafeCSS(globalCss)}`

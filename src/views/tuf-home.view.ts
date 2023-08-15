@@ -11,7 +11,7 @@ import {
 } from "../state/State";
 import {CSS_Global, CSS_Home} from "../styles/ConstructibleStyleSheets";
 
-@customElement('vmd-home')
+@customElement('tuf-home')
 export class VmdHomeView extends LitElement {
 
     //language=css
