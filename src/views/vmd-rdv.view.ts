@@ -557,7 +557,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
 
     private prendreRdv(workshop: Workshop) {
-        Router.navigateToUrlIfPossible(workshop.tickets_link);
+        Router.navigateToUrlIfPossible(workshop.source_link);
       }
       
       private verifierRdv(workshop: Workshop) {

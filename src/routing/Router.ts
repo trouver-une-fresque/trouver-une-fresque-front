@@ -108,9 +108,9 @@ class Routing {
             ],
             analyticsViewName: () => 'centres',
             viewContent: async () => {
-                await import('../views/vmd-lieux.view');
+                await import('../views/tuf-map.view');
                 return (subViewSlot) =>
-                    html`<vmd-lieux>${subViewSlot}</vmd-lieux>`
+                    html`<tuf-map>${subViewSlot}</tuf-map>`
             }
         });
         this.declareRoutes({

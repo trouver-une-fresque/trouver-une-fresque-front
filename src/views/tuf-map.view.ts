@@ -6,12 +6,12 @@ import leafletMarkerCss from 'leaflet.markercluster/dist/MarkerCluster.Default.c
 import {MarkerClusterGroup}  from 'leaflet.markercluster'
 import {Router} from "../routing/Router";
 import {CSS_Global} from "../styles/ConstructibleStyleSheets";
-import {State} from "../state/State";
+import {State, Workshop} from "../state/State";
 
 // Code imported (and refactored a little bit)
 // from https://github.com/rozierguillaume/covidtracker-tools/blob/main/src/ViteMaDose/carteCentres.html
 
-type LieuCarte = {
+type WorkshopCarte = {
     nom: string;
     longitude: number;
     latitude: number;
@@ -23,8 +23,8 @@ type LieuCarte = {
     maj: string|undefined;
 };
 
-@customElement('vmd-lieux')
-export class VmdLieuxView extends LitElement {
+@customElement('tuf-map')
+export class TufWorkshopsView extends LitElement {
 
     //language=css
     static styles = [
@@ -58,20 +58,20 @@ export class VmdLieuxView extends LitElement {
         }).setView([46.505, 3], 6);
 
         const departements = await State.current.departementsDisponibles();
-        const resultatsRechercheLieux = await State.current.lieuxPour(departements.map(d => d.code_departement).filter(code => code !== 'om'));
-        const lieuxCarte = resultatsRechercheLieux.lieuxDisponibles.concat(resultatsRechercheLieux.lieuxIndisponibles)
-            .filter(lieu => !!lieu.location && !!lieu.location.longitude && lieu.location.latitude)
+        const resultatsRechercheWorkshops = await (await State.current.allWorkshops()).workshopsDisponibles.filter((w: Workshop) => w.online === false);
+        const workshopsCarte = resultatsRechercheWorkshops
+            .filter(workshop => !!workshop.longitude && workshop.latitude)
             // We have some location which have silly locations, like longitude=6786471059425410 (missing comma)
-            .filter(lieu => lieu.location.latitude >= -90 && lieu.location.latitude <= 90 && lieu.location.longitude >= -180 && lieu.location.longitude <= 180)
-            .map<LieuCarte>(lieu => ({
-                nom: lieu.nom,
-                longitude: lieu.location.longitude,
-                latitude: lieu.location.latitude,
-                reservation: lieu.url,
+            .filter(workshop => workshop.latitude >= -90 && workshop.latitude <= 90 && workshop.longitude >= -180 && workshop.longitude <= 180)
+            .map<WorkshopCarte>(workshop => ({
+                nom: workshop.title,
+                longitude: workshop.longitude,
+                latitude: workshop.latitude,
+                reservation: workshop.source_link,
                 date_ouverture: undefined,
-                rdv_tel: lieu?.metadata?.phone_number,
+                rdv_tel: undefined,
                 modalites: undefined,
-                adresse: lieu?.metadata?.address,
+                adresse: workshop.address,
                 maj: undefined,
             }));
 
@@ -80,11 +80,11 @@ export class VmdLieuxView extends LitElement {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);
 
-        const markers = VmdLieuxView.creer_pins(lieuxCarte);
+        const markers = TufWorkshopsView.creer_pins(workshopsCarte);
         mymap.addLayer(markers);
     }
 
-    private static creer_pins(lieux: LieuCarte[]){
+    private static creer_pins(lieux: WorkshopCarte[]){
         const markers = lieux.reduce((markers, lieu) => {
             let reservation_str = ""
             if (typeof lieu.reservation != 'undefined'){
