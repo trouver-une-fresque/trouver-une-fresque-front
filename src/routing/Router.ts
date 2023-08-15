@@ -101,10 +101,7 @@ class Routing {
         });
         this.declareRoutes({
             pathPattern: [
-                // Legacy URLs with tranche age inside ... used only for old URLs referenced by Google
-                '/centres',
-                // Proper URL really used
-                '/lieux'
+                '/carte',
             ],
             analyticsViewName: () => 'centres',
             viewContent: async () => {

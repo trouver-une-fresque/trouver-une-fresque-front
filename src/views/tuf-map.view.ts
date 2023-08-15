@@ -42,7 +42,7 @@ export class TufWorkshopsView extends LitElement {
     render() {
         return html`
           <slot name="about-lieux"></slot>
-          <div id="mapid" style="height: 80vh; width: 90vw; max-width: 100%; max-height: 600px; margin-bottom: 40px"></div>
+          <div id="mapid" style="height: 80vh; width: 90vw; max-width: 100%; max-height: 600px; margin-bottom: 40px; margin: auto;"></div>
         `;
     }
 
