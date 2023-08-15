@@ -107,9 +107,9 @@ class Routing {
         this.declareRoutes({
             pathPattern: `/apropos`,
             viewContent: async () => {
-                await import('../views/vmd-apropos.view');
+                await import('../views/tuf-apropos.view');
                 return (subViewSlot) =>
-                    html`<vmd-apropos>${subViewSlot}</vmd-apropos>`
+                    html`<tuf-apropos>${subViewSlot}</tuf-apropos>`
             }
         });
         this.declareRoutes({

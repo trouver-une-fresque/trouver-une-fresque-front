@@ -1,6 +1,6 @@
 import {LitElement, html, customElement, css} from 'lit-element';
 
-@customElement('vmd-apropos')
+@customElement('tuf-apropos')
 export class VmdAproposComponent extends LitElement {
 
     //language=css
