@@ -142,10 +142,14 @@ export class VmdAppointmentCardComponent extends LitElement {
                                 <div slot="content">
                                   <span class="fw-bold">${cardConfig.workshopDate}</span>
                                   <br/>
+                                  ${this.workshop.online?html`
+                                  <span class="text-description">En ligne</span>
+                                  `:html`
                                   <span class="text-description">${this.workshop.address}, ${this.workshop.city} (${this.workshop.department})</span>
+                                  `}
                                 </div>
                               </vmd-appointment-metadata>
-                              <vmd-appointment-metadata class="mb-2" widthType="fit-to-content" icon="vmdicon-syringe" .displayed="${!!this.workshop.online}">
+                              <vmd-appointment-metadata class="mb-2" widthType="fit-to-content" icon="vmdicon-syringe" .displayed="${false}">
                                 <span class="text-description" slot="content">${this.workshop.description}</span>
                               </vmd-appointment-metadata>
                             </div>
