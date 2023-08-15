@@ -4,7 +4,7 @@ function clientRootUrl() {
 }
 
 function env() {
-    return (self.location.hostname === "vitemadose.covidtracker.fr")?'prod':'dev';
+    return (self.location.hostname.endsWith(".fr")?'prod':'dev');
 }
 
 

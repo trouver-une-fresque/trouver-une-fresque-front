@@ -205,7 +205,6 @@ function transformLieu(rawLieu: any): Lieu {
 
 export type Coordinates = { latitude: number, longitude: number }
 export type Location = Coordinates & {city: string, cp: string}
-export type TagCreneau = /*"preco18_55"|*/"all"|"first_or_second_dose"|"third_dose"|"kids_first_dose";
 
 
 export type CreneauxParLieu = {
@@ -314,7 +313,6 @@ export type SearchType = "standard" | "atelier" |"formation"|"junior";
 export const TYPE_RECHERCHE_PAR_DEFAUT: SearchType = "atelier";
 
 export type SearchTypeConfig = {
-    tagCreneau: TagCreneau;
     cardAppointmentsExtractor: (lieu: Lieu, daySelectorDisponible: boolean, creneauxParLieux: CreneauxParLieu[]) => number;
     lieuConsidereCommeDisponible: (lieu: LieuAffichableAvecDistance, creneauxParLieu: CreneauxParLieu|undefined) => boolean;
     pathParam: string;
@@ -326,7 +324,6 @@ export type SearchTypeConfig = {
 const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type}} = {
     'standard': {
         type: 'standard',
-        tagCreneau: "all",
         cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
             ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
             :lieu.appointment_count,
@@ -339,7 +336,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
     },
     'atelier': {
         type: 'atelier',
-        tagCreneau: 'third_dose',
         cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
             ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
             :lieu.appointment_count,
@@ -352,7 +348,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
     },
     'formation': {
         type: 'formation',
-        tagCreneau: 'first_or_second_dose',
         cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
             ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
             :lieu.appointment_count,
@@ -365,7 +360,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
     },
     'junior': {
         type: 'junior',
-        tagCreneau: 'kids_first_dose',
         cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
             ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
             :lieu.appointment_count,

@@ -8,8 +8,6 @@ import {Router} from "../routing/Router";
 import {CSS_Global} from "../styles/ConstructibleStyleSheets";
 import {State, Workshop} from "../state/State";
 
-// Code imported (and refactored a little bit)
-// from https://github.com/rozierguillaume/covidtracker-tools/blob/main/src/ViteMaDose/carteCentres.html
 
 type WorkshopCarte = {
     nom: string;

@@ -1,6 +1,6 @@
 {
-  "short_name": "ViteMaDose",
-  "name": "ViteMaDose : Trouver un vaccin facilement et rapidement",
+  "short_name": "TrouverUneFresque",
+  "name": "TrouverUneFresque : Trouver une fresque facilement et rapidement",
   "icons": [
     {
       "src": "/assets/images/favicon/android-chrome-192x192.png",
@@ -18,7 +18,7 @@
   "display": "minimal-ui",
   "theme_color": "#5561d9",
   "shortcuts": [],
-  "description": "Trouver un vaccin facilement et rapidement",
+  "description": "Trouver une fresque facilement et rapidement",
   "screenshots": [
     {
       "src": "/assets/images/social/vitemadose.png",

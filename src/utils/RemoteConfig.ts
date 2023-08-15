@@ -16,7 +16,7 @@ type RemoteConfigEntries = {
 const REMOTE_CONFIG_ENTRIES_FALLBACK: RemoteConfigEntries = {
     "chronodose_min_count": "2",
     "data_disclaimer_enabled": "false",
-    "data_disclaimer_message": "Les plateformes sont très sollicitées, les données affichées par Vite Ma Dose peuvent avoir jusqu'à 15 minutes de retard pour Doctolib.",
+    "data_disclaimer_message": "",
     "data_disclaimer_repeat_days": "5",
     "data_disclaimer_severity": "warning",
     "path_contributors": "/vitemadose/contributors_all.json",

@@ -41,8 +41,8 @@ export class TufAppComponent extends LitElement {
             <div class="container">
                 <div class="row align-items-center justify-content-between">
                     <a href="${Router.basePath}" class="col-auto">
-                        <img src="${Router.basePath}assets/images/svg/tuf-logo-portrait.svg" class="d-block d-sm-none appLogo _phone" alt="Trouvez votre créneau de vaccination avec Vite Ma Dose">
-                        <img src="${Router.basePath}assets/images/svg/tuf-logo-landscape.svg" class="d-none d-sm-block appLogo" alt="Trouvez votre créneau de vaccination avec Vite Ma Dose">
+                        <img src="${Router.basePath}assets/images/svg/tuf-logo-portrait.svg" class="d-block d-sm-none appLogo _phone" alt="Trouvez une fresque">
+                        <img src="${Router.basePath}assets/images/svg/tuf-logo-landscape.svg" class="d-none d-sm-block appLogo" alt="Trouvez une fresque">
                     </a>
                     <div class="col">
                         <div class="row justify-content-end gx-5">
