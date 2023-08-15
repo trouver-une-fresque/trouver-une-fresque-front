@@ -755,6 +755,7 @@ export class VmdRdvParDepartementView extends AbstractVmdRdvView {
 
         let workshopsAffichablesBuilder = ArrayBuilder.from([...workshopsParDepartement.workshopsDisponibles])
             .map(l => ({ ...l, distance: undefined }))
+            .filter(l => l.online || l.department === this._codeDepartement)
 
         workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'date'))
         // workshopsAffichablesBuilder.sortBy(l => this.extraireFormuleDeTri(l, 'distance'))
