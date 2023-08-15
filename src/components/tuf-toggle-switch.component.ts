@@ -38,5 +38,10 @@ export class TufToggleSwitchComponent extends LitElement {
 
   toggleChecked() {
     this.checked = !this.checked;
+    this.dispatchEvent(new CustomEvent<{value: boolean}>('changed', {
+            detail: {
+                value: this.checked
+            }
+        }));
   }
 }

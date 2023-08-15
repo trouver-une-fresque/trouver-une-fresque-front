@@ -21,10 +21,11 @@ export namespace SearchRequest {
       par: 'departement',
       departement: Departement,
       tri: 'date',
-      date: string|undefined
+      date: string|undefined,
+      online: boolean
   }
-  export function ByDepartement (departement: Departement, type: SearchType, date: string|undefined): ByDepartement {
-    return { type, par: 'departement', departement, tri: 'date', date }
+  export function ByDepartement (departement: Departement, type: SearchType, date: string|undefined, online: boolean): ByDepartement {
+    return { type, par: 'departement', departement, tri: 'date', date, online }
   }
   export function isByDepartement (searchRequest: SearchRequest): searchRequest is ByDepartement {
     return searchRequest.par === 'departement'
@@ -35,10 +36,11 @@ export namespace SearchRequest {
     par: 'commune',
     commune: Commune,
     tri: 'distance',
-    date: string|undefined
+    date: string|undefined,
+    online: boolean
   }
-  export function ByCommune (commune: Commune, type: SearchType, date: string|undefined): ByCommune {
-    return { type, par: 'commune', commune, tri: 'distance', date }
+  export function ByCommune (commune: Commune, type: SearchType, date: string|undefined, online: boolean): ByCommune {
+    return { type, par: 'commune', commune, tri: 'distance', date, online }
   }
   export function isByCommune (searchRequest: SearchRequest): searchRequest is ByCommune {
     return searchRequest.par === 'commune'
@@ -572,10 +574,11 @@ export class State {
         const workshops : Workshop[] = await fetch(urlGenerator.workshops(), { cache: 'no-cache' }).then(resp => resp.json());
         
         const workshopsParDepartement : WorkshopsParDepartement={
-            workshopsDisponibles: workshops.filter((workshop: Workshop) => codesDepartements.includes(workshop.department)),
+            workshopsDisponibles: workshops.filter((workshop: Workshop) => workshop.online || codesDepartements.includes(workshop.department)),
             codeDepartements: codesDepartements,
             derniereMiseAJour: workshops.length?workshops[0].scrape_date : new Date().toISOString()
         }
+        console.log("found %d workshops", workshopsParDepartement.workshopsDisponibles.length);
 
         return workshopsParDepartement;
     }

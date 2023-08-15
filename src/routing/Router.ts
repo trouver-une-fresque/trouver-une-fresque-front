@@ -67,13 +67,14 @@ class Routing {
                 return (subViewSlot) =>
                     html`<vmd-rdv-par-departement
                         searchType="${searchTypeConfigFromPathParam(params).type}"
-                        codeDepartementSelectionne="${params[`codeDpt`]}">
+                        codeDepartementSelectionne="${params[`codeDpt`]}"
+                        onlineEventsSelectionne="${params[`includesOnline`]}">
                       ${subViewSlot}
                     </vmd-rdv-par-departement>`
             },
             pageTitleProvider: (params) =>
                 State.current.chercheDepartementParCode(params[`codeDpt`])
-                    .then(nomDpt => `Vaccination COVID-19 en ${nomDpt.nom_departement} ${params[`codeDpt`]}`)
+                    .then(nomDpt => `Fresques en ${nomDpt.nom_departement} ${params[`codeDpt`]}`)
         });
 
         this.declareRoutes({
@@ -89,13 +90,14 @@ class Routing {
                     searchType="${searchTypeConfigFromPathParam(params).type}"
                     codeCommuneSelectionne="${params[`codeCommune`]}"
                     codePostalSelectionne="${params[`codePostal`]}"
-                    critèreDeTri="${params[`codeTriCentre`]}">
+                    critèreDeTri="${params[`codeTriCentre`]}"
+                    onlineEventsSelectionne="${params[`includesOnline`]}">
                   ${subViewSlot}
                 </vmd-rdv-par-commune>`
             },
             pageTitleProvider: (params) =>
                 State.current.chercheCommuneParCode(params['codePostal'], params['codeCommune'])
-                    .then(commune => `Vaccination COVID-19 à ${commune.nom} ${commune.codePostal}`)
+                    .then(commune => `Fresques à ${commune.nom} ${commune.codePostal}`)
         });
         this.declareRoutes({
             pathPattern: [
@@ -190,16 +192,16 @@ class Routing {
         window.location.href = notFoundUrl;
     }
 
-    public navigateToRendezVousAvecDepartement(codeDepartement: string, pathLibelleDepartement: string, searchType: SearchType) {
-        page(this.getLinkToRendezVousAvecDepartement(codeDepartement, pathLibelleDepartement, searchType));
+    public navigateToRendezVousAvecDepartement(codeDepartement: string, pathLibelleDepartement: string, searchType: SearchType, online: boolean) {
+        page(this.getLinkToRendezVousAvecDepartement(codeDepartement, pathLibelleDepartement, searchType, online));
     }
 
-    public getLinkToRendezVousAvecDepartement(codeDepartement: string, pathLibelleDepartement: string, searchType: SearchType) {
-        return `${this.basePath}centres-vaccination-covid-dpt${codeDepartement}-${pathLibelleDepartement}/recherche-${searchTypeConfigFor(searchType).pathParam}`;
+    public getLinkToRendezVousAvecDepartement(codeDepartement: string, pathLibelleDepartement: string, searchType: SearchType, online: boolean) {
+        return `${this.basePath}centres-vaccination-covid-dpt${codeDepartement}-${pathLibelleDepartement}/recherche-${searchTypeConfigFor(searchType).pathParam}/online-${online?'oui':'non'}`;
     }
 
-    public navigateToRendezVousAvecCommune(codeTriCentre: CodeTriCentre, codeDepartement: string, pathLibelleDepartement: string, codeCommune: string, codePostal: string, pathLibelleCommune: string, searchType: SearchType) {
-        page(`${this.basePath}centres-vaccination-covid-dpt${codeDepartement}-${pathLibelleDepartement}/commune${codeCommune}-${codePostal}-${pathLibelleCommune}/recherche-${searchTypeConfigFor(searchType).pathParam}/en-triant-par-${codeTriCentre}`);
+    public navigateToRendezVousAvecCommune(codeTriCentre: CodeTriCentre, codeDepartement: string, pathLibelleDepartement: string, codeCommune: string, codePostal: string, pathLibelleCommune: string, searchType: SearchType, online: boolean) {
+        page(`${this.basePath}centres-vaccination-covid-dpt${codeDepartement}-${pathLibelleDepartement}/commune${codeCommune}-${codePostal}-${pathLibelleCommune}/recherche-${searchTypeConfigFor(searchType).pathParam}/en-triant-par-${codeTriCentre}/online-${online?'oui':'non'}`);
     }
 
     navigateToHome() {

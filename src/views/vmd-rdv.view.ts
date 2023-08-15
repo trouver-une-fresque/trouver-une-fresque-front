@@ -245,13 +245,13 @@ export abstract class AbstractVmdRdvView extends LitElement {
 
     protected async goToNewSearch (search: SearchRequest) {
       if (SearchRequest.isByDepartement(search)) {
-        Router.navigateToRendezVousAvecDepartement(search.departement.code_departement, libelleUrlPathDuDepartement(search.departement), search.type);
+        Router.navigateToRendezVousAvecDepartement(search.departement.code_departement, libelleUrlPathDuDepartement(search.departement), search.type, search.online);
       } else {
         const departements = await State.current.departementsDisponibles()
         const departement = departements.find(d => d.code_departement === search.commune.codeDepartement);
         const commune = search.commune
         Router.navigateToRendezVousAvecCommune(search.tri, commune.codeDepartement,
-          libelleUrlPathDuDepartement(departement!), commune.code, commune.codePostal, libelleUrlPathDeCommune(commune), search.type)
+          libelleUrlPathDuDepartement(departement!), commune.code, commune.codePostal, libelleUrlPathDeCommune(commune), search.type, search.online);
       }
     }
 
@@ -279,7 +279,8 @@ export abstract class AbstractVmdRdvView extends LitElement {
                 <div class="col">
                   <tuf-toggle-switch class="mb-3" style="display: inline-block"
                                      codeSelectionne="no"
-                                     .checked="${true}">
+                                     .checked="${this.currentSearch?.online || false}"
+                                     @changed="${(e: CustomEvent<{value: boolean}>) => this.updateResultsWithOnline(e.detail.value)}">
                   </tuf-toggle-switch>
                 </div>
               </div>`:html``}
@@ -445,8 +446,16 @@ export abstract class AbstractVmdRdvView extends LitElement {
                   }else if(this.currentSearch?.type === 'atelier') {
                   this.workshopsParDepartement.workshopsDisponibles = this.workshopsParDepartement.workshopsDisponibles.filter(w => !w.training);
                 }
-                console.log("workshops updated");
-                console.log(this.workshopsParDepartement);
+
+                // filter online workshops if needed
+                if(this.currentSearch?.online === false) {
+                  console.log("filtering online workshops");
+                  this.workshopsParDepartement.workshopsDisponibles = this.workshopsParDepartement.workshopsDisponibles.filter(w => !w.online);
+                }else{
+                  console.log("including online workshops")
+                }
+
+                console.log("refresh %d workshops", this.workshopsParDepartement.workshopsDisponibles.length);
 
                 this.rafraichirDonneesAffichees();
             } finally {
@@ -578,6 +587,14 @@ export abstract class AbstractVmdRdvView extends LitElement {
         }
     }
 
+    protected updateResultsWithOnline(includeOnline: boolean) {
+        if(this.currentSearch) {
+          this.goToNewSearch({
+            ...this.currentSearch, online: includeOnline
+          });
+        }
+    }
+
     abstract libelleLieuSelectionne(): TemplateResult;
     // FIXME move me to a testable file
     abstract filtrerWorkshopsMatchantLesCriteres(workshopsParDepartement: WorkshopsParDepartement, search: SearchRequest): WorkshopsAffichableAvecDistance[];
@@ -598,7 +615,12 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
       this._codePostalSelectionne = code
       this.updateCurrentSearch()
     }
-
+    @property({type: String})
+    set onlineEventsSelectionne (online: String) {
+      this._onlineEvents = online == "oui";
+      this.updateCurrentSearch()
+    }
+    @internalProperty() private _onlineEvents: boolean = false
     @internalProperty() private _searchType: SearchType | undefined = undefined;
     @internalProperty() private _codeCommuneSelectionne: string | undefined = undefined;
     @internalProperty() private _codePostalSelectionne: string | undefined = undefined;
@@ -639,7 +661,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
         if (this.currentSearchMarker !== marker) { return }
         const commune = await State.current.autocomplete.findCommune(this._codePostalSelectionne, this._codeCommuneSelectionne)
         if (commune) {
-          this.currentSearch = SearchRequest.ByCommune(commune, this._searchType, this.jourSelectionne?.date)
+          this.currentSearch = SearchRequest.ByCommune(commune, this._searchType, this.jourSelectionne?.date, this._onlineEvents)
           this.refreshWorkshops()
         }
       }
@@ -659,7 +681,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
 
     filtrerWorkshopsMatchantLesCriteres(workshopsParDepartement: WorkshopsParDepartement, search: SearchRequest.ByCommune): WorkshopsAffichableAvecDistance[] {
         const origin = search.commune
-        const distanceAvec = (workshop: Workshop) => (workshop.latitude ? distanceEntreDeuxPoints(origin, {latitude: workshop.latitude, longitude: workshop.longitude}) : Infinity)
+        const distanceAvec = (workshop: Workshop) => (workshop.online ? 0 : distanceEntreDeuxPoints(origin, {latitude: workshop.latitude, longitude: workshop.longitude}))
 
         let workshopsAffichablesBuilder = ArrayBuilder.from([...workshopsParDepartement.workshopsDisponibles])
             .map(l => ({ ...l, distance: distanceAvec(l) }));
@@ -686,6 +708,12 @@ export class VmdRdvParDepartementView extends AbstractVmdRdvView {
       this._codeDepartement = code
       this.updateCurrentSearch()
     }
+    @property({type: String})
+    set onlineEventsSelectionne (online: String) {
+      this._onlineEvents = online == "oui";
+      this.updateCurrentSearch()
+    }
+    @internalProperty() private _onlineEvents: boolean = false
     @internalProperty() private _searchType: SearchType | void = undefined
     @internalProperty() private _codeDepartement: CodeDepartement | void = undefined
     @internalProperty() protected currentSearch: SearchRequest.ByDepartement | undefined = undefined
@@ -703,7 +731,7 @@ export class VmdRdvParDepartementView extends AbstractVmdRdvView {
           const departements = await State.current.departementsDisponibles()
           const departementSelectionne = departements.find(d => d.code_departement === code);
           if (departementSelectionne) {
-            this.currentSearch = SearchRequest.ByDepartement(departementSelectionne, this._searchType, this.jourSelectionne?.date)
+            this.currentSearch = SearchRequest.ByDepartement(departementSelectionne, this._searchType, this.jourSelectionne?.date, this._onlineEvents)
             this.refreshWorkshops()
           }
         }
