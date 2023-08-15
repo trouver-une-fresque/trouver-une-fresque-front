@@ -10,7 +10,7 @@ const METADATA_WIDTH_CLASSES: {[type in MetadataWidthType]: string} = {
 };
 
 
-@customElement('vmd-appointment-metadata')
+@customElement('tuf-workshop-metadata')
 export class VmdAppointmentMetadataComponent extends LitElement {
 
     //language=css
@@ -31,7 +31,7 @@ export class VmdAppointmentMetadataComponent extends LitElement {
 
     render() {
         if(!this.widthType) {
-            console.error("No widthType defined on vmd-appointment-metadata component !")
+            console.error("No widthType defined on tuf-workshop-metadata component !")
             return html``
         }
 

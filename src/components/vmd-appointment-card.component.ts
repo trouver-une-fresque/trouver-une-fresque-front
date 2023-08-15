@@ -138,7 +138,7 @@ export class VmdAppointmentCardComponent extends LitElement {
                               <small class="distance">${distance ? `- ${distance} km` : ''}</small>
                             </div>
                             <div class="row">
-                              <vmd-appointment-metadata class="mb-2" widthType="full-width">
+                              <tuf-workshop-metadata class="mb-2" widthType="full-width">
                                 <div slot="content">
                                   <span class="fw-bold">${cardConfig.workshopDate}</span>
                                   <br/>
@@ -148,10 +148,10 @@ export class VmdAppointmentCardComponent extends LitElement {
                                   <span class="text-description">${this.workshop.address}, ${this.workshop.city} (${this.workshop.department})</span>
                                   `}
                                 </div>
-                              </vmd-appointment-metadata>
-                              <vmd-appointment-metadata class="mb-2" widthType="fit-to-content" icon="vmdicon-syringe" .displayed="${false}">
+                              </tuf-workshop-metadata>
+                              <tuf-workshop-metadata class="mb-2" widthType="fit-to-content" icon="vmdicon-syringe" .displayed="${false}">
                                 <span class="text-description" slot="content">${this.workshop.description}</span>
-                              </vmd-appointment-metadata>
+                              </tuf-workshop-metadata>
                             </div>
                         </div>
 
