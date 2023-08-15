@@ -1,5 +1,5 @@
 import {css, customElement, html, LitElement, property, unsafeCSS} from "lit-element";
-import buttonSwitchCss from "./vmd-button-switch.component.scss";
+import buttonSwitchCss from "./tuf-button-switch.component.scss";
 import {repeat} from "lit-html/directives/repeat";
 import {classMap} from "lit-html/directives/class-map";
 import {CSS_Global} from "../styles/ConstructibleStyleSheets";
@@ -11,7 +11,7 @@ export type Option = {
     libelle: string;
 };
 
-@customElement('vmd-button-switch')
+@customElement('tuf-button-switch')
 export class VmdButtonSwitchComponent extends LitElement {
 
     //language=css

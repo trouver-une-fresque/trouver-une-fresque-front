@@ -262,11 +262,11 @@ export abstract class AbstractVmdRdvView extends LitElement {
                         Vous souhaitez :
                     </label>
                     <div class="col">
-                        <vmd-button-switch class="mb-3" style="display: inline-block"
+                        <tuf-button-switch class="mb-3" style="display: inline-block"
                                            codeSelectionne="${this.currentSearch?.type || 'atelier'}"
                                            .options="${[{code: 'atelier', libelle: 'participer à un atelier'}, {code: 'formation', libelle: 'se former à l\'animation'}, {code: 'junior', libelle: 'trouver un atelier pour un junior'}]}"
                                            @changed="${(e: CustomEvent<{value: SearchType}>) => this.updateSearchTypeTo(e.detail.value)}">
-                        </vmd-button-switch>
+                        </tuf-button-switch>
                     </div>
                 </div>
             </div>

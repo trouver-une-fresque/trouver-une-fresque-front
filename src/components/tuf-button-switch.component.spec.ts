@@ -3,9 +3,9 @@ import { html } from 'lit-html'
 import { screen } from "testing-library__dom";
 import userEvent from "@testing-library/user-event"
 import { fixture } from "@open-wc/testing-helpers";
-import './vmd-button-switch.component'
+import './tuf-button-switch.component'
 
-describe("<vmd-button-switch>", () => {
+describe("<tuf-button-switch>", () => {
   const options = [
     { code: 'y', libelle: 'oui' },
     { code: 'n', libelle: 'non' }
@@ -14,7 +14,7 @@ describe("<vmd-button-switch>", () => {
   beforeEach(async () => {
     onChanged = jest.fn()
     await fixture(html`
-      <vmd-button-switch
+      <tuf-button-switch
         .codeSelectionne="${'y'}"
         .options="${options}"
         @changed="${onChanged}"
