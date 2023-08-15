@@ -58,7 +58,7 @@ class Routing {
 
         this.declareRoutes({
             pathPattern: [
-                `/centres-vaccination-covid-dpt:codeDpt-:nomDpt`,
+                `/dpt:codeDpt-:nomDpt`,
                 rechercheDepartementDescriptor.routerUrl
             ],
             analyticsViewName: (pathParams) => searchTypeConfigFromPathParam(pathParams).analytics.searchResultsByDepartement,
@@ -79,7 +79,7 @@ class Routing {
 
         this.declareRoutes({
             pathPattern: [
-                `/centres-vaccination-covid-dpt:codeDpt-:nomDpt/commune:codeCommune-:codePostal-:nomCommune/en-triant-par-:codeTriCentre`,
+                `/dpt:codeDpt-:nomDpt/commune:codeCommune-:codePostal-:nomCommune/en-triant-par-:codeTriCentre`,
                 rechercheCommuneDescriptor.routerUrl
             ],
             analyticsViewName: (pathParams) => searchTypeConfigFromPathParam(pathParams).analytics.searchResultsByCity,
@@ -203,11 +203,11 @@ class Routing {
     }
 
     public getLinkToRendezVousAvecDepartement(codeDepartement: string, pathLibelleDepartement: string, searchType: SearchType, online: boolean) {
-        return `${this.basePath}centres-vaccination-covid-dpt${codeDepartement}-${pathLibelleDepartement}/recherche-${searchTypeConfigFor(searchType).pathParam}/online-${online?'oui':'non'}`;
+        return `${this.basePath}dpt${codeDepartement}-${pathLibelleDepartement}/recherche-${searchTypeConfigFor(searchType).pathParam}/online-${online?'oui':'non'}`;
     }
 
     public navigateToRendezVousAvecCommune(codeTriCentre: CodeTriCentre, codeDepartement: string, pathLibelleDepartement: string, codeCommune: string, codePostal: string, pathLibelleCommune: string, searchType: SearchType, online: boolean) {
-        page(`${this.basePath}centres-vaccination-covid-dpt${codeDepartement}-${pathLibelleDepartement}/commune${codeCommune}-${codePostal}-${pathLibelleCommune}/recherche-${searchTypeConfigFor(searchType).pathParam}/en-triant-par-${codeTriCentre}/online-${online?'oui':'non'}`);
+        page(`${this.basePath}dpt${codeDepartement}-${pathLibelleDepartement}/commune${codeCommune}-${codePostal}-${pathLibelleCommune}/recherche-${searchTypeConfigFor(searchType).pathParam}/en-triant-par-${codeTriCentre}/online-${online?'oui':'non'}`);
     }
 
     navigateToHome() {
