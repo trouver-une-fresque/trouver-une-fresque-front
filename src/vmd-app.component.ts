@@ -37,6 +37,7 @@ export class VmdAppComponent extends LitElement {
 
     render() {
         return html`
+        <div class="app-wrapper">
             <div class="container">
                 <div class="row align-items-center justify-content-between">
                     <a href="${Router.basePath}" class="col-auto">
@@ -77,6 +78,7 @@ export class VmdAppComponent extends LitElement {
                     </div>
                 </div>
             </footer>
+        </div>
         `;
     }
 
