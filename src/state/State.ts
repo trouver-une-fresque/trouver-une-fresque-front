@@ -569,12 +569,12 @@ export class State {
 
     async workshopsPour(codesDepartements: CodeDepartement[]): Promise<WorkshopsParDepartement> {
         const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
-        const workshops = await fetch(urlGenerator.workshops(), { cache: 'no-cache' }).then(resp => resp.json());
+        const workshops : Workshop[] = await fetch(urlGenerator.workshops(), { cache: 'no-cache' }).then(resp => resp.json());
         
         const workshopsParDepartement : WorkshopsParDepartement={
             workshopsDisponibles: workshops.filter((workshop: Workshop) => codesDepartements.includes(workshop.department)),
             codeDepartements: codesDepartements,
-            derniereMiseAJour: new Date().toISOString()
+            derniereMiseAJour: workshops.length?workshops[0].scrape_date : new Date().toISOString()
         }
 
         return workshopsParDepartement;
