@@ -54,10 +54,12 @@ export class VmdAppComponent extends LitElement {
                 </div>
             </div>
 
+            <div class="app-content">
             ${this.viewTemplateResult?this.viewTemplateResult(html`
               <slot name="main-title" slot="main-title"></slot>
               <slot name="about" slot="about"></slot>
-            `):html``}
+              `):html``}
+            </div>
 
             <footer class="row justify-content-between">
                 <div class="col-auto">

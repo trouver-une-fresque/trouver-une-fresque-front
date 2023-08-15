@@ -17,9 +17,6 @@ html {
 body {
   font-size: 1.6rem;
   height: 100%;
-  padding: {
-    bottom: 3.2rem;
-  }
 }
 
 .app-wrapper {
@@ -28,13 +25,18 @@ body {
   flex-direction: column;
 }
 
-.container {
-  flex: 1;
+.app-content {
+  flex:1;
+}
+
+.container-xxl {
+  height: 100%;
 }
 
 footer {
   margin: {
     top: 12rem !important;
+    bottom: 1rem;
   }
   color: $gray-600;
 }

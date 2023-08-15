@@ -19,7 +19,6 @@ export class TufMentionsComponent extends LitElement {
     render() {
         return html`
             <div class="container">
-                <hr />
                 <h3>Mentions légales</h3>
                 <p>Le présent site est édité par Thomas Bouvier et Timothé Frignac et hébergé par la société TODO</p>
                 <p>Tous doits réservés</p>
