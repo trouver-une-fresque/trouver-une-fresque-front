@@ -668,14 +668,14 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
     }
 
     libelleLieuSelectionne(): TemplateResult {
-        let nom = '???'
+        let nom = '???';
         if (this.currentSearch) {
           const commune = this.currentSearch.commune
           nom = `${commune.nom} (${commune.codePostal})`
         }
         return html`
           autour de
-          <span class="fw-bold">${nom}</span>
+          <span class="fw-bold">${nom}${this._onlineEvents?' ou En Ligne':''}</span>
         `
     }
 
@@ -745,7 +745,7 @@ export class VmdRdvParDepartementView extends AbstractVmdRdvView {
         }
         return html`
           pour
-          <span class="fw-bold">${nom}</span>
+          <span class="fw-bold">${nom}${this._onlineEvents?' ou En Ligne':''}</span>
         `
     }
 
