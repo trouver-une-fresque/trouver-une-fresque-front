@@ -13,14 +13,14 @@ import {
     ATELIERS,
 } from "../state/State";
 import {Router} from "../routing/Router";
-import appointmentCardCss from "./vmd-appointment-card.component.scss";
+import appointmentCardCss from "./tuf-workshop-card.component.scss";
 import {TemplateResult} from "lit-html";
 import {CSS_Global} from "../styles/ConstructibleStyleSheets";
 
 type WorkshopCliqueContext = {workshop: Workshop};
 export type WorkshopCliqueCustomEvent = CustomEvent<WorkshopCliqueContext>;
 
-@customElement('vmd-appointment-card')
+@customElement('tuf-workshop-card')
 export class VmdAppointmentCardComponent extends LitElement {
 
     //language=css

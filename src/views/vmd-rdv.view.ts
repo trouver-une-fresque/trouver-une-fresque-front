@@ -34,7 +34,7 @@ import { fr } from 'date-fns/locale'
 import {Strings} from "../utils/Strings";
 import {DEPARTEMENTS_LIMITROPHES} from "../utils/Departements";
 import {TemplateResult} from "lit-html";
-import {WorkshopCliqueCustomEvent} from "../components/vmd-appointment-card.component";
+import {WorkshopCliqueCustomEvent} from "../components/tuf-workshop-card.component";
 import {delay, setDebouncedInterval} from "../utils/Schedulers";
 import {ArrayBuilder} from "../utils/Arrays";
 import {CSS_Global} from "../styles/ConstructibleStyleSheets";
@@ -318,7 +318,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
                       ${repeat(this.cartesAffichees || [],
                                   (c => `${c.department}||${c.title}||${c.workshop_type}}`), 
                                   (workshop, index) => {
-                                    return html`<vmd-appointment-card
+                                    return html`<tuf-workshop-card
                               style="--list-index: ${index}"
                               .workshop="${workshop}"
                               theme="${searchTypeConfig.theme}"
