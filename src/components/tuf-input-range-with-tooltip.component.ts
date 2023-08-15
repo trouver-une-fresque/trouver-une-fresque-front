@@ -14,7 +14,7 @@ import {classMap} from "lit-html/directives/class-map";
 export type Options = {code: string|number, libelle: string};
 
 @customElement('tuf-input-range-with-tooltip')
-export class VmdInputRangeWithTooltipComponent extends LitElement {
+export class TufInputRangeWithTooltipComponent extends LitElement {
 
     //language=css
     static styles = [

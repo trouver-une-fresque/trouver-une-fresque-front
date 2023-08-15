@@ -11,7 +11,7 @@ const METADATA_WIDTH_CLASSES: {[type in MetadataWidthType]: string} = {
 
 
 @customElement('tuf-workshop-metadata')
-export class VmdAppointmentMetadataComponent extends LitElement {
+export class TufAppointmentMetadataComponent extends LitElement {
 
     //language=css
     static styles = [

@@ -12,7 +12,7 @@ export type Option = {
 };
 
 @customElement('tuf-button-switch')
-export class VmdButtonSwitchComponent extends LitElement {
+export class TufButtonSwitchComponent extends LitElement {
 
     //language=css
     static styles = [

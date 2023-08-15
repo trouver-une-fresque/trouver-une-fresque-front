@@ -21,7 +21,7 @@ type WorkshopCliqueContext = {workshop: Workshop};
 export type WorkshopCliqueCustomEvent = CustomEvent<WorkshopCliqueContext>;
 
 @customElement('tuf-workshop-card')
-export class VmdAppointmentCardComponent extends LitElement {
+export class TufAppointmentCardComponent extends LitElement {
 
     //language=css
     static styles = [

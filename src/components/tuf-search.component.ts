@@ -11,7 +11,7 @@ import {
 } from "../components/tuf-commune-or-departement-selector.component";
 
 @customElement('tuf-search')
-export class VmdSearchComponent extends LitElement {
+export class TufSearchComponent extends LitElement {
 
     //language=css
     static styles = [

@@ -6,7 +6,7 @@ import {ServiceWorkers} from "./utils/ServiceWorkers";
 import {RemoteConfig} from "./utils/RemoteConfig";
 
 @customElement('tuf-app')
-export class VmdAppComponent extends LitElement {
+export class TufAppComponent extends LitElement {
 
     //language=css
     static styles = [

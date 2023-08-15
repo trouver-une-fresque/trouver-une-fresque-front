@@ -41,7 +41,7 @@ import {CSS_Global} from "../styles/ConstructibleStyleSheets";
 import {InfiniteScroll} from "../state/InfiniteScroll";
 import {DisclaimerSeverity, RemoteConfig} from "../utils/RemoteConfig";
 
-export abstract class AbstractVmdRdvView extends LitElement {
+export abstract class AbstractTufRdvView extends LitElement {
     DELAI_VERIFICATION_MISE_A_JOUR = 45000
     DELAI_VERIFICATION_SCROLL = 1000;
     SCROLL_OFFSET = 200;
@@ -485,7 +485,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
 }
 
 @customElement('tuf-workshop-par-commune')
-export class VmdRdvParCommuneView extends AbstractVmdRdvView {
+export class TufRdvParCommuneView extends AbstractTufRdvView {
     @internalProperty() protected currentSearch: SearchRequest.ByCommune | undefined = undefined
     @property({type: String}) set searchType(type: SearchType) {
       this._searchType = type
@@ -582,7 +582,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
 }
 
 @customElement('tuf-workshop-par-departement')
-export class VmdRdvParDepartementView extends AbstractVmdRdvView {
+export class TufRdvParDepartementView extends AbstractTufRdvView {
     @property({type: String})
     set searchType (type: SearchType) {
       this._searchType = type

@@ -1,7 +1,7 @@
 import {LitElement, html, customElement, css} from 'lit-element';
 
 @customElement('tuf-apropos')
-export class VmdAproposComponent extends LitElement {
+export class TufAproposComponent extends LitElement {
 
     //language=css
     static styles = [

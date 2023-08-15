@@ -12,7 +12,7 @@ import {
 import {CSS_Global, CSS_Home} from "../styles/ConstructibleStyleSheets";
 
 @customElement('tuf-home')
-export class VmdHomeView extends LitElement {
+export class TufHomeView extends LitElement {
 
     //language=css
     static styles = [
