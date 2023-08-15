@@ -7,13 +7,13 @@ import {
     unsafeCSS,
     internalProperty, query
 } from 'lit-element';
-import inputRangeWithTooltipCss from "./vmd-input-range-with-tooltip.component.scss";
+import inputRangeWithTooltipCss from "./tuf-input-range-with-tooltip.component.scss";
 import {styleMap} from "lit-html/directives/style-map";
 import {classMap} from "lit-html/directives/class-map";
 
 export type Options = {code: string|number, libelle: string};
 
-@customElement('vmd-input-range-with-tooltip')
+@customElement('tuf-input-range-with-tooltip')
 export class VmdInputRangeWithTooltipComponent extends LitElement {
 
     //language=css

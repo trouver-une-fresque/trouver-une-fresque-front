@@ -521,7 +521,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
             Distance :
             </label>
             <div class="px-0 col">
-              <vmd-input-range-with-tooltip
+              <tuf-input-range-with-tooltip
                   id="searchAppointment-distance" codeSelectionne="${this._distanceSelectionnee}"
                   theme="${this.searchTypeConfig.theme}"
                   .options="${[
@@ -531,7 +531,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
                     {code: 500, libelle:"<500km"}, {code: 100000, libelle:"∞"}
                   ]}"
                   @option-selected="${(e: CustomEvent<{value: number}>) => { this._distanceSelectionnee = e.detail.value; this.rafraichirDonneesAffichees(); }}"
-              ></vmd-input-range-with-tooltip>
+              ></tuf-input-range-with-tooltip>
             </div>
           </div>
             `
