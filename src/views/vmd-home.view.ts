@@ -76,7 +76,9 @@ export class VmdHomeView extends LitElement {
                   ${Object.values(ATELIERS).filter(a => a.promoted).map(atelier => {
                       return html`
                         <div class="col-auto">
-                          <img class="platforms-logo ${atelier.styleCode}" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Ateliers ${atelier.nom}">
+                          <a href="${atelier.website}" class="platforms-link">
+                            <img class="platforms-logo ${atelier.styleCode}" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Ateliers ${atelier.nom}">
+                          </a>
                         </div>
                       `
                   })}
