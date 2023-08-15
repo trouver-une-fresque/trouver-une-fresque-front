@@ -5,7 +5,7 @@ import {CSS_Global} from "./styles/ConstructibleStyleSheets";
 import {ServiceWorkers} from "./utils/ServiceWorkers";
 import {RemoteConfig} from "./utils/RemoteConfig";
 
-@customElement('vmd-app')
+@customElement('tuf-app')
 export class VmdAppComponent extends LitElement {
 
     //language=css

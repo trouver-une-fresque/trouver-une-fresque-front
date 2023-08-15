@@ -1,4 +1,4 @@
-import './vmd-app.component'
+import './tuf-app.component'
 import './components/tuf-search.component'
 import './components/tuf-workshop-card.component'
 import './components/tuf-workshop-metadata.component'
