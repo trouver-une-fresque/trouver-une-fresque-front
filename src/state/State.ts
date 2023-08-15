@@ -66,18 +66,6 @@ enum TypeAtelierEnum {
 
 export type TypeAtelier = keyof typeof TypeAtelierEnum;
 
-export type Plateforme = {
-    // Should be the same than PLATEFORMES' key
-    code: TypePlateforme;
-    logo: string;
-    nom: string;
-    // Should we do promotion of this plateform ? for example on home screen ?
-    // (typically, it may be not a good idea to promote the platform while JSON is not producing data for it yet)
-    promoted: boolean;
-    website: string;
-    // Used for specific styling on logos, see for example _searchAppointment.scss
-    styleCode: string;
-};
 export type Atelier = {
     // Should be the same than PLATEFORMES' key
     code: TypeAtelier;
@@ -121,46 +109,7 @@ export const libelleUrlPathDuDepartement = (departement: Departement) => {
     return Strings.toReadableURLPathValue(departement.nom_departement);
 }
 
-export type TypeLieu = 'vaccination-center'|'drugstore'|'general-practitioner';
-export const TYPES_LIEUX: {[k in TypeLieu]: string} = {
-    "vaccination-center": 'Centre de vaccination',
-    "drugstore": 'Pharmacie',
-    "general-practitioner": 'Médecin généraliste',
-};
 export type ISODateString = string
-export type WeekDay = "lundi"|"mardi"|"mercredi"|"jeudi"|"vendredi"|"samedi"|"dimanche"
-export type BusinessHours = Record<WeekDay,string>;
-export type VaccineType = "AstraZeneca"|"Janssen"|"Pfizer-BioNTech"|"Moderna"|"ARNm";
-export type AppointmentPerVaccine = {
-    vaccine_type: VaccineType;
-    appointments: number;
-};
-export type AppointmentSchedule = {
-    name: string;
-    from: string; // Should be better to have ISODateString here
-    to: string; // Should be better to have ISODateString here
-    // appointments_per_vaccine: AppointmentPerVaccine[];
-    total: number;
-};
-export type Lieu = {
-    appointment_count: number;
-    departement: CodeDepartement;
-    location: Location,
-    nom: string;
-    url: string;
-    appointment_by_phone_only: boolean;
-    appointment_schedules: AppointmentSchedule[]|undefined;
-    plateforme: TypePlateforme;
-    prochain_rdv: ISODateString|null;
-    internal_id: string;
-    metadata: {
-        address: string;
-        phone_number: string|undefined;
-        business_hours: BusinessHours|undefined
-    },
-    type: TypeLieu;
-    vaccine_type: VaccineType
-};
 
 export type Workshop = {
     address: string;
@@ -184,62 +133,13 @@ export type Workshop = {
     workshop_type: number;
     zip_code: string;
 };
-function transformLieu(rawLieu: any): Lieu {
-    return {
-        ...rawLieu,
-        appointment_count: rawLieu.appointment_count || 0,
-        metadata: {
-            ...rawLieu.metadata,
-            address: (typeof rawLieu.metadata.address === 'string')?
-                rawLieu.metadata.address
-                :[
-                    rawLieu.metadata.address.adr_num,
-                    rawLieu.metadata.address.adr_voie,
-                    rawLieu.metadata.address.com_cp,
-                    rawLieu.metadata.address.com_nom
-                ].filter(val => !!val).join(" "),
-        },
-        vaccine_type: rawLieu.vaccine_type?((rawLieu.vaccine_type.length===undefined?[rawLieu.vaccine_type]:rawLieu.vaccine_type)).join(", "):undefined
-    };
-}
 
 export type Coordinates = { latitude: number, longitude: number }
 export type Location = Coordinates & {city: string, cp: string}
 
 
-export type CreneauxParLieu = {
-    lieu: string;
-    creneaux: number;
-}
-export type RendezVousDuJour = {
-    date: string; // "2021-05-23"
-    total: number;
-    creneauxParLieu: CreneauxParLieu[];
-}
-
-export type LieuxParDepartement = {
-    lieuxDisponibles: Lieu[];
-    lieuxIndisponibles: Lieu[];
-    codeDepartements: CodeDepartement[];
-    derniereMiseAJour: ISODateString;
-};
-
 export type WorkshopsParDepartement = {
     workshopsDisponibles: Workshop[];
-    codeDepartements: CodeDepartement[];
-    derniereMiseAJour: ISODateString;
-};
-
-export type LieuxParDepartement_JSON = {
-    centres_disponibles: Lieu[];
-    centres_indisponibles: Lieu[];
-    last_updated: string;
-};
-
-export type LieuAffichableAvecDistance = Lieu & { disponible: boolean, distance: number|undefined };
-export type LieuxAvecDistanceParDepartement = {
-    lieuxMatchantCriteres: LieuAffichableAvecDistance[];
-    lieuxDisponibles: LieuAffichableAvecDistance[];
     codeDepartements: CodeDepartement[];
     derniereMiseAJour: ISODateString;
 };
@@ -251,21 +151,6 @@ export type WorkshopsAvecDistanceParDepartement = {
     codeDepartements: CodeDepartement[];
     derniereMiseAJour: ISODateString;
 };
-export function typeActionPour(lieuAffichable: LieuAffichableAvecDistance): 'actif-via-plateforme'|'inactif-via-plateforme'|'actif-via-tel'|'inactif' {
-    const phoneOnly = lieuAffichable.appointment_by_phone_only && lieuAffichable.metadata.phone_number;
-    if(phoneOnly) { // Phone only may have url, but we should ignore it !
-        return 'actif-via-tel';
-    } else if(lieuAffichable && lieuAffichable.appointment_count !== 0){
-        return 'actif-via-plateforme';
-    } else if(lieuAffichable && lieuAffichable.appointment_count === 0){
-        return 'inactif-via-plateforme';
-    } else {
-        return 'inactif';
-    }
-}
-export function isLieuActif(lieuAffichable: LieuAffichableAvecDistance) {
-    return ['actif-via-tel', 'actif-via-plateforme'].includes(typeActionPour(lieuAffichable));
-}
 
 function convertDepartementForSort(codeDepartement: CodeDepartement) {
     switch(codeDepartement) {
@@ -313,8 +198,6 @@ export type SearchType = "standard" | "atelier" |"formation"|"junior";
 export const TYPE_RECHERCHE_PAR_DEFAUT: SearchType = "atelier";
 
 export type SearchTypeConfig = {
-    cardAppointmentsExtractor: (lieu: Lieu, daySelectorDisponible: boolean, creneauxParLieux: CreneauxParLieu[]) => number;
-    lieuConsidereCommeDisponible: (lieu: LieuAffichableAvecDistance, creneauxParLieu: CreneauxParLieu|undefined) => boolean;
     pathParam: string;
     standardTabSelected: boolean;
     excludeAppointmentByPhoneOnly: boolean;
@@ -324,10 +207,6 @@ export type SearchTypeConfig = {
 const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type}} = {
     'standard': {
         type: 'standard',
-        cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
-            ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
-            :lieu.appointment_count,
-        lieuConsidereCommeDisponible: (lieu, creneauxParLieu) => lieu.appointment_by_phone_only || (creneauxParLieu?.creneaux || 0) > 0,
         pathParam: 'standard',
         standardTabSelected: true,
         excludeAppointmentByPhoneOnly: false,
@@ -336,10 +215,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
     },
     'atelier': {
         type: 'atelier',
-        cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
-            ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
-            :lieu.appointment_count,
-        lieuConsidereCommeDisponible: (lieu, creneauxParLieu) => lieu.appointment_by_phone_only || (creneauxParLieu?.creneaux || 0) > 0,
         pathParam: 'atelier',
         standardTabSelected: true,
         excludeAppointmentByPhoneOnly: false,
@@ -348,10 +223,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
     },
     'formation': {
         type: 'formation',
-        cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
-            ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
-            :lieu.appointment_count,
-        lieuConsidereCommeDisponible: (lieu, creneauxParLieu) => lieu.appointment_by_phone_only || (creneauxParLieu?.creneaux || 0) > 0,
         pathParam: 'formation',
         standardTabSelected: true,
         excludeAppointmentByPhoneOnly: false,
@@ -360,10 +231,6 @@ const SEARCH_TYPE_CONFIGS: {[type in SearchType]: SearchTypeConfig & {type: type
     },
     'junior': {
         type: 'junior',
-        cardAppointmentsExtractor: (lieu, daySelectorDisponible, creneauxParLieux) => daySelectorDisponible
-            ?creneauxParLieux.find(cpl => cpl.lieu === lieu.internal_id)?.creneaux || 0
-            :lieu.appointment_count,
-        lieuConsidereCommeDisponible: (lieu, creneauxParLieu) => lieu.appointment_by_phone_only || (creneauxParLieu?.creneaux || 0) > 0,
         pathParam: 'junior',
         standardTabSelected: true,
         excludeAppointmentByPhoneOnly: false,

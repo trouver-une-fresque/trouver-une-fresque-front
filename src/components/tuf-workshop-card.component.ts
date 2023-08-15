@@ -129,7 +129,7 @@ export class TufAppointmentCardComponent extends LitElement {
                     <div class="row align-items-center ">
                         <div class="col col-logo">
                           ${atelier?html`
-                          <img class="rdvPlatformLogo ${atelier.styleCode}" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Créneau de vaccination ${atelier.nom}">
+                          <img class="rdvPlatformLogo ${atelier.styleCode}" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Atelier ${atelier.nom}">
                           `:html``}
                         </div>
                         <div class="col">
