@@ -11,7 +11,7 @@ import {
 import {repeat} from "lit-html/directives/repeat";
 import {styleMap} from "lit-html/directives/style-map";
 import {Router} from "../routing/Router";
-import rdvViewCss from "./vmd-rdv.view.scss";
+import rdvViewCss from "./tuf-workshop.view.scss";
 import distanceEntreDeuxPoints from "../distance"
 import {
     CodeDepartement,
@@ -484,7 +484,7 @@ export abstract class AbstractVmdRdvView extends LitElement {
     abstract filtrerWorkshopsMatchantLesCriteres(workshopsParDepartement: WorkshopsParDepartement, search: SearchRequest): WorkshopsAffichableAvecDistance[];
 }
 
-@customElement('vmd-rdv-par-commune')
+@customElement('tuf-workshop-par-commune')
 export class VmdRdvParCommuneView extends AbstractVmdRdvView {
     @internalProperty() protected currentSearch: SearchRequest.ByCommune | undefined = undefined
     @property({type: String}) set searchType(type: SearchType) {
@@ -581,7 +581,7 @@ export class VmdRdvParCommuneView extends AbstractVmdRdvView {
     }
 }
 
-@customElement('vmd-rdv-par-departement')
+@customElement('tuf-workshop-par-departement')
 export class VmdRdvParDepartementView extends AbstractVmdRdvView {
     @property({type: String})
     set searchType (type: SearchType) {

@@ -59,14 +59,14 @@ class Routing {
                 rechercheDepartementDescriptor.routerUrl
             ],
             viewContent: async (params) => {
-                await import('../views/vmd-rdv.view');
+                await import('../views/tuf-workshop.view');
                 return (subViewSlot) =>
-                    html`<vmd-rdv-par-departement
+                    html`<tuf-workshop-par-departement
                         searchType="${searchTypeConfigFromPathParam(params).type}"
                         codeDepartementSelectionne="${params[`codeDpt`]}"
                         onlineEventsSelectionne="${params[`includesOnline`]}">
                       ${subViewSlot}
-                    </vmd-rdv-par-departement>`
+                    </tuf-workshop-par-departement>`
             },
             pageTitleProvider: (params) =>
                 State.current.chercheDepartementParCode(params[`codeDpt`])
@@ -79,16 +79,16 @@ class Routing {
                 rechercheCommuneDescriptor.routerUrl
             ],
             viewContent: async (params) => {
-                await import('../views/vmd-rdv.view');
+                await import('../views/tuf-workshop.view');
                 return (subViewSlot) =>
-                    html`<vmd-rdv-par-commune
+                    html`<tuf-workshop-par-commune
                     searchType="${searchTypeConfigFromPathParam(params).type}"
                     codeCommuneSelectionne="${params[`codeCommune`]}"
                     codePostalSelectionne="${params[`codePostal`]}"
                     critèreDeTri="${params[`codeTriCentre`]}"
                     onlineEventsSelectionne="${params[`includesOnline`]}">
                   ${subViewSlot}
-                </vmd-rdv-par-commune>`
+                </tuf-workshop-par-commune>`
             },
             pageTitleProvider: (params) =>
                 State.current.chercheCommuneParCode(params['codePostal'], params['codeCommune'])
