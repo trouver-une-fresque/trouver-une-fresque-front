@@ -8,7 +8,7 @@ import {
 import {
     CommuneSelected,
     DepartementSelected
-} from "../components/vmd-commune-or-departement-selector.component";
+} from "../components/tuf-commune-or-departement-selector.component";
 
 @customElement('vmd-search')
 export class VmdSearchComponent extends LitElement {
@@ -44,13 +44,13 @@ export class VmdSearchComponent extends LitElement {
 
     render() {
         return html`
-            <vmd-commune-or-departement-selector class="mb-3"
+            <tuf-commune-or-departement-selector class="mb-3"
                   @on-commune-selected="${(event: CustomEvent<CommuneSelected>) => this.onCommuneSelected(event.detail.commune)}"
                   @on-departement-selected="${(event: CustomEvent<DepartementSelected>) => this.onDepartementSelected(event.detail.departement)}"
                   .suggest="${State.current.autocomplete.suggest.bind(State.current.autocomplete)}"
                   .value="${this.currentSelection}"
             >
-            </vmd-commune-or-departement-selector>
+            </tuf-commune-or-departement-selector>
         `;
     }
 

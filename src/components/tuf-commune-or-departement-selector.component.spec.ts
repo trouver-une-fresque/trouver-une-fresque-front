@@ -3,7 +3,7 @@ import { html } from 'lit-html'
 import { screen } from "testing-library__dom";
 import userEvent from "@testing-library/user-event"
 import { fixture } from "@open-wc/testing-helpers";
-import './vmd-commune-or-departement-selector.component'
+import './tuf-commune-or-departement-selector.component'
 
 import { Commune, Departement } from '../state/State'
 import { delay } from '../utils/Schedulers'
@@ -24,7 +24,7 @@ const communeDeauville: Commune = {
   latitude: 49.3531
 }
 
-describe('<vmd-commune-or-departement-selector />', () => {
+describe('<tuf-commune-or-departement-selector />', () => {
   let onCommuneSelected = jest.fn()
   let onDepartementSelected = jest.fn()
   let suggest = jest.fn(() => Promise.resolve([] as any[]))
@@ -51,7 +51,7 @@ describe('<vmd-commune-or-departement-selector />', () => {
     describe('and is a département', () => {
       beforeEach(async () => {
         await fixture(html`
-          <vmd-commune-or-departement-selector
+          <tuf-commune-or-departement-selector
             @on-commune-selected="${onCommuneSelected}"
             @on-departement-selected="${onDepartementSelected}"
             .suggest="${suggest}"
@@ -69,7 +69,7 @@ describe('<vmd-commune-or-departement-selector />', () => {
     describe('and is a commune', () => {
       beforeEach(async () => {
         await fixture(html`
-          <vmd-commune-or-departement-selector
+          <tuf-commune-or-departement-selector
             @on-commune-selected="${onCommuneSelected}"
             @on-departement-selected="${onDepartementSelected}"
             .suggest="${suggest}"
@@ -88,7 +88,7 @@ describe('<vmd-commune-or-departement-selector />', () => {
       it('selects all the content', async () => {
         // Given
         await fixture(html`
-          <vmd-commune-or-departement-selector
+          <tuf-commune-or-departement-selector
             @on-commune-selected="${onCommuneSelected}"
             @on-departement-selected="${onDepartementSelected}"
             .suggest="${suggest}"
@@ -109,7 +109,7 @@ describe('<vmd-commune-or-departement-selector />', () => {
     const value = undefined
     beforeEach(async () => {
       await fixture(html`
-        <vmd-commune-or-departement-selector
+        <tuf-commune-or-departement-selector
           @on-commune-selected="${onCommuneSelected}"
           @on-departement-selected="${onDepartementSelected}"
           .suggest="${suggest}"
