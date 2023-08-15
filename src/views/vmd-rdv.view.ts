@@ -271,19 +271,16 @@ export abstract class AbstractVmdRdvView extends LitElement {
                     />
               </div>
               ${this.options.criteresDeRechercheAdditionnels()}
-              ${false?html`
+              ${true?html`
               <div class="rdvForm-fields row align-items-center mb-3 mb-md-5">
                 <label for="searchAppointment-heures" class="col-sm-24 col-md-auto mb-md-1 label-for-search p-3 ps-1">
-                  Horaires :
+                  Inclure les ateliers en ligne :
                 </label>
                 <div class="col">
-                  <vmd-button-switch class="mb-3" style="display: inline-block"
-                                     codeSelectionne="allDay"
-                                     .options="${[{code:"allDay", libelle: "Toute la journée"}, {code:"horaire", libelle: "Plages horaires:"}]}">
-                  </vmd-button-switch>
-                  <div class="time-range"><input type="time" /> - <input type="time" /></div>
-                  <div class="time-range"><input type="time" /> - <input type="time" /></div>
-                  <button class="btn btn-primary">+</button>
+                  <tuf-toggle-switch class="mb-3" style="display: inline-block"
+                                     codeSelectionne="no"
+                                     .checked="${true}">
+                  </tuf-toggle-switch>
                 </div>
               </div>`:html``}
                 <div class="rdvForm-fields row align-items-center mb-3 mb-md-5">
