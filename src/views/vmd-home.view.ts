@@ -32,7 +32,7 @@ export class VmdHomeView extends LitElement {
       const searchType: SearchType = TYPE_RECHERCHE_PAR_DEFAUT;
       if (SearchRequest.isByDepartement(event.detail)) {
         const departement = event.detail.departement
-        Router.navigateToRendezVousAvecDepartement(departement.code_departement, libelleUrlPathDuDepartement(departement), searchType)
+        Router.navigateToRendezVousAvecDepartement(departement.code_departement, libelleUrlPathDuDepartement(departement), searchType, false)
       } else {
         const commune = event.detail.commune;
         const departements = await State.current.departementsDisponibles();
@@ -50,7 +50,8 @@ export class VmdHomeView extends LitElement {
             commune.code,
             commune.codePostal,
             libelleUrlPathDeCommune(commune!),
-            searchType
+            searchType,
+            false
         );
       }
     }
