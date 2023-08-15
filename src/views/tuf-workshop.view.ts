@@ -25,7 +25,6 @@ import {
     SearchType,
     State,
     CodeTriCentre,
-    searchTypeConfigFor,
     searchTypeConfigFromSearch,
     TYPE_RECHERCHE_PAR_DEFAUT, WorkshopsParDepartement
 } from "../state/State";
@@ -35,7 +34,7 @@ import {Strings} from "../utils/Strings";
 import {DEPARTEMENTS_LIMITROPHES} from "../utils/Departements";
 import {TemplateResult} from "lit-html";
 import {WorkshopCliqueCustomEvent} from "../components/tuf-workshop-card.component";
-import {delay, setDebouncedInterval} from "../utils/Schedulers";
+import {delay} from "../utils/Schedulers";
 import {ArrayBuilder} from "../utils/Arrays";
 import {CSS_Global} from "../styles/ConstructibleStyleSheets";
 import {InfiniteScroll} from "../state/InfiniteScroll";
@@ -233,7 +232,6 @@ export abstract class AbstractTufRdvView extends LitElement {
     render() {
         const countWorkshopsDisponibles = (this.workshopsParDepartementAffiches?.workshopsDisponibles || []).length;
         const searchTypeConfig = this.searchTypeConfig;
-        const standardMode = searchTypeConfig.standardTabSelected;
 
         return html`
             <div class="criteria-container text-dark rounded-3 py-5 bg-std">
@@ -384,9 +382,9 @@ export abstract class AbstractTufRdvView extends LitElement {
         const currentSearch = this.currentSearch
         if(currentSearch) {
 
-            const codeDepartement = SearchRequest.isByDepartement(currentSearch)
-              ? currentSearch.departement.code_departement
-              : currentSearch.commune.codeDepartement
+            // const codeDepartement = SearchRequest.isByDepartement(currentSearch)
+            //   ? currentSearch.departement.code_departement
+            //   : currentSearch.commune.codeDepartement
             try {   
                 this.searchInProgress = true;
                 await delay(1) // give some time (one tick) to render loader before doing the heavy lifting
@@ -424,7 +422,7 @@ export abstract class AbstractTufRdvView extends LitElement {
     rafraichirDonneesAffichees() {
 
         if(this.currentSearch && this.workshopsParDepartement) {
-            const searchTypeConfig = searchTypeConfigFor(this.currentSearch.type);
+            // const searchTypeConfig = searchTypeConfigFor(this.currentSearch.type);
             const workshopsMatchantCriteres = this.filtrerWorkshopsMatchantLesCriteres(this.workshopsParDepartement, this.currentSearch);
             // const workshopsMatchantCriteres = this.workshopsParDepartement;
 
@@ -448,9 +446,9 @@ export abstract class AbstractTufRdvView extends LitElement {
         Router.navigateToUrlIfPossible(workshop.source_link);
     }
 
-    private currentTri(): CodeTriCentre|"unknown" {
-      return this.currentSearch?this.currentSearch.tri:'unknown';
-    }
+    // private currentTri(): CodeTriCentre|"unknown" {
+    //   return this.currentSearch?this.currentSearch.tri:'unknown';
+    // }
 
     // FIXME move me to testable files
     protected extraireFormuleDeTri(workshop: WorkshopsAffichableAvecDistance, tri: CodeTriCentre) {
