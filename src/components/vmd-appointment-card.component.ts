@@ -69,7 +69,16 @@ export class VmdAppointmentCardComponent extends LitElement {
                 cardLink:(content: TemplateResult) => TemplateResult,
                 cardTitle: string,
                 disabledBG: boolean,
-                actions: TemplateResult|undefined
+                actions: TemplateResult|undefined,
+                workshopDate: string|undefined
+            };
+
+            const dateOptions: Intl.DateTimeFormatOptions = {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric"
             };
 
                 let specificCardConfig: { disabledBG: boolean, cardTitle: string, libelleBouton: string, typeBouton: 'btn-info'|'btn-primary', onclick: ()=>void };
@@ -105,7 +114,8 @@ export class VmdAppointmentCardComponent extends LitElement {
                         ${atelier.nom?html`
                         `:html``}
                       </div>
-                    `
+                    `,
+                    workshopDate: new Intl.DateTimeFormat("fr-FR", dateOptions).format(new Date(this.workshop.start_date)) 
                 };
 
             return cardConfig.cardLink(html`
@@ -129,7 +139,7 @@ export class VmdAppointmentCardComponent extends LitElement {
                             <div class="row">
                               <vmd-appointment-metadata class="mb-2" widthType="full-width">
                                 <div slot="content">
-                                  <span class="fw-bold">${this.workshop.title}</span>
+                                  <span class="fw-bold">${cardConfig.workshopDate}</span>
                                   <br/>
                                   <span class="text-description">${this.workshop.address}, ${this.workshop.city} (${this.workshop.department})</span>
                                 </div>
