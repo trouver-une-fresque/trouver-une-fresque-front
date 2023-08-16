@@ -18,12 +18,11 @@ jobs:
       - run: npm run build
         env:
           BASE_URL:  "/"
-      - name: rsync deployments
-        uses: burnett01/rsync-deployments@4.1
+      - name: Deploy to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          switches: -avz --delete --exclude ".git*" --exclude "offline/*"
-          path: ./dist/
-          remote_path: ${{ secrets.DEPLOY_PATH }}
-          remote_host: ${{ secrets.DEPLOY_IP }}
-          remote_user: ubuntu
-          remote_key: ${{ secrets.DEPLOY_KEY }}
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          local-dir: ./dist  # Change this to your build output directory
+          server-dir: /public_html
