@@ -75,10 +75,7 @@ export class TufAppComponent extends LitElement {
                             <a href="${Router.basePath}mentions-legales">Mentions légales</a>
                         </div>
                         <div class="col-auto">
-                            <a href="https://covidtracker.fr/contact" target="_blank" rel="noreferrer">Contactez-nous</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="https://twitter.com/tbouvier_" target="_blank" rel="noreferrer">Twitter</a>
+                            <a href="mailto:contact@trouverunefresque.org" rel="noreferrer">Contactez-nous</a>
                         </div>
                     </div>
                 </div>
