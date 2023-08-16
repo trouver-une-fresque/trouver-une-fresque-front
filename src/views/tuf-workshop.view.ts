@@ -410,12 +410,6 @@ export abstract class AbstractTufRdvView extends LitElement {
         } else {
             this.cartesAffichees = [];
         }
-        this.disclaimerEnabled = await RemoteConfig.INSTANCE.disclaimerEnabled();
-        // Refresh only if needed
-        if (this.disclaimerEnabled) {
-            this.disclaimerMessage = await RemoteConfig.INSTANCE.disclaimerMessage();
-            this.disclaimerSeverity = await RemoteConfig.INSTANCE.disclaimerSeverity();
-        }
     }
 
 

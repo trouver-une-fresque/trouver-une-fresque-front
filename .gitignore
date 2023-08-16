@@ -11,3 +11,4 @@ types
 !/mobile/www/.dirkeep
 .idea
 *~
+.env
