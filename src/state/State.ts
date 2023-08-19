@@ -1,7 +1,7 @@
 import {Strings} from "../utils/Strings";
 import { Autocomplete } from './Autocomplete'
 import { Memoize } from 'typescript-memoize'
-import {RemoteConfig} from "../utils/RemoteConfig";
+import { RemoteConfig } from "../utils/RemoteConfig";
 
 export type CodeTrancheAge = 'plus75ans';
 export type TrancheAge = {
@@ -283,17 +283,8 @@ export class State {
     }
 
     async allWorkshops(): Promise<WorkshopsParDepartement> {
-        const headers = {
-            'apikey': import.meta.env.VITE_API_KEY,
-            'Content-Type': 'application/json'
-        };
-
         const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
-        const workshops : Workshop[] = await fetch(urlGenerator.workshops(), {
-            method: 'GET',
-            headers: headers,
-            cache: 'no-cache'
-        }).then(resp => resp.json());
+        const workshops : Workshop[] = await fetch(urlGenerator.workshops()).then(resp => resp.json());
         return {
             workshopsDisponibles: workshops,
             codeDepartements: [],
@@ -302,17 +293,8 @@ export class State {
     }
 
     async workshopsPour(codesDepartements: CodeDepartement[]): Promise<WorkshopsParDepartement> {
-        const headers = {
-            'apikey': import.meta.env.VITE_API_KEY,
-            'Content-Type': 'application/json'
-        };
-
         const urlGenerator = await RemoteConfig.INSTANCE.urlGenerator();
-        const workshops : Workshop[] = await fetch(urlGenerator.workshops(), {
-            method: 'GET',
-            headers: headers,
-            cache: 'no-cache'
-        }).then(resp => resp.json());
+        const workshops : Workshop[] = await fetch(urlGenerator.workshops()).then(resp => resp.json());
         
         const workshopsParDepartement : WorkshopsParDepartement={
             workshopsDisponibles: workshops.filter((workshop: Workshop) => workshop.online || codesDepartements.includes(workshop.department)),
