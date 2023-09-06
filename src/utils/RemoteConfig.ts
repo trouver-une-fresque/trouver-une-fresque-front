@@ -14,7 +14,7 @@ const REMOTE_CONFIG_ENTRIES: RemoteConfigEntries = {
     "path_data_department": "/vitemadose/{code}.json",
     "path_list_departments": "/vitemadose/departements.json",
     "url_base": "https://vitemadose.gitlab.io",
-    "api_base": "http://localhost:8000",
+    "api_base": "https://marbeuf.ddns.net/trouverunefresque",
 };
 
 const REMOTE_CONFIG_ENTRIES_FALLBACK: RemoteConfigEntries = {
@@ -64,7 +64,7 @@ export class RemoteConfig {
                 this._urlGenerator = {
                     listDepartements: () => `${urlBase}${departementsListPath}`,
                     infosDepartement: (codeDepartement) => `${urlBase}${infosDepartementPath.replace('{code}', codeDepartement)}`,
-                    workshops: () => `${apiBase}/events`
+                    workshops: () => `${apiBase}`
                 };
             }
 
