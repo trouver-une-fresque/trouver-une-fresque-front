@@ -38,7 +38,7 @@ import {delay} from "../utils/Schedulers";
 import {ArrayBuilder} from "../utils/Arrays";
 import {CSS_Global} from "../styles/ConstructibleStyleSheets";
 import {InfiniteScroll} from "../state/InfiniteScroll";
-import {DisclaimerSeverity, RemoteConfig} from "../utils/RemoteConfig";
+import {DisclaimerSeverity} from "../utils/RemoteConfig";
 
 export abstract class AbstractTufRdvView extends LitElement {
     DELAI_VERIFICATION_MISE_A_JOUR = 45000
