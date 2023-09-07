@@ -500,7 +500,7 @@ export class TufRdvParCommuneView extends AbstractTufRdvView {
     @internalProperty() private _searchType: SearchType | undefined = undefined;
     @internalProperty() private _codeCommuneSelectionne: string | undefined = undefined;
     @internalProperty() private _codePostalSelectionne: string | undefined = undefined;
-    @internalProperty() private _distanceSelectionnee: number = 100;
+    @internalProperty() private _distanceSelectionnee: number = 50;
 
     private currentSearchMarker = {}
 
