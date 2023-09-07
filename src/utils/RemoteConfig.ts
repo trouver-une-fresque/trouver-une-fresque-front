@@ -13,7 +13,7 @@ const REMOTE_CONFIG_ENTRIES: RemoteConfigEntries = {
     "path_contributors": "/vitemadose/contributors_all.json",
     "path_data_department": "/vitemadose/{code}.json",
     "path_list_departments": "/vitemadose/departements.json",
-    "url_base": "https://trouverunefresque.org",
+    "url_base": "https://vitemadose.gitlab.io",
     "api_base": "https://marbeuf.ddns.net/trouverunefresque",
 };
 
@@ -21,7 +21,7 @@ const REMOTE_CONFIG_ENTRIES_FALLBACK: RemoteConfigEntries = {
     "path_contributors": "/vitemadose/contributors_all.json",
     "path_data_department": "/vitemadose/{code}.json",
     "path_list_departments": "/vitemadose/departements.json",
-    "url_base": "https://trouverunefresque.org",
+    "url_base": "https://vitemadose.gitlab.io",
     "api_base": undefined,
 };
 
