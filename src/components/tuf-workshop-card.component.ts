@@ -145,7 +145,7 @@ export class TufAppointmentCardComponent extends LitElement {
                                   ${this.workshop.online?html`
                                   <span class="text-description">En ligne</span>
                                   `:html`
-                                  <span class="text-description">${this.workshop.address}, ${this.workshop.city} (${this.workshop.department})</span>
+                                  <span class="text-description">${this.workshop.location_name? this.workshop.location_name + ", ":""}${this.workshop.address}, ${this.workshop.city} (${this.workshop.department})</span>
                                   `}
                                 </div>
                               </tuf-workshop-metadata>
