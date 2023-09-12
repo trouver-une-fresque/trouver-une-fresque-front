@@ -1,6 +1,6 @@
 {
-  "short_name": "Trouver Une Fresque",
-  "name": "TrouverUneFresque : Trouver une fresque facilement et rapidement",
+  "short_name": "Trouver une Fresque",
+  "name": "Trouver une Fresque : le moteur de recherche qui vous permet de trouver une fresque près de chez vous.",
   "icons": [
     {
       "src": "/assets/images/favicon/android-chrome-192x192.png",
@@ -18,7 +18,7 @@
   "display": "minimal-ui",
   "theme_color": "#5561d9",
   "shortcuts": [],
-  "description": "Trouver une fresque facilement et rapidement",
+  "description": "Trouver une Fresque répertorie la majorité des fresques en France et vous permet de trouver un atelier proche de chez vous.",
   "screenshots": [
     {
       "src": "/assets/images/social/trouverunefresque.png",
