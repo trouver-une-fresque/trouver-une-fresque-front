@@ -7,15 +7,15 @@
     <!-- Home Page -->
 
     <url>
-        <loc>https://vitemadose.covidtracker.fr</loc>
+        <loc>https://trouverunefresque.org</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
 
-    <!-- Statistiques -->
+    <!-- carte -->
 
     <url>
-        <loc>https://vitemadose.covidtracker.fr/statistiques</loc>
+        <loc>https://trouverunefresque.org/statistiques</loc>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
@@ -23,31 +23,15 @@
     <!-- Chronodose -->
 
     <url>
-        <loc>https://vitemadose.covidtracker.fr/chronodose</loc>
+        <loc>https://trouverunefresque.org/carte</loc>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
-    </url>
-
-    <!-- Lieux -->
-
-    <url>
-        <loc>https://vitemadose.covidtracker.fr/lieux</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
-    </url>
-
-    <!-- Statistiques -->
-
-    <url>
-        <loc>https://vitemadose.covidtracker.fr/apropos</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.5</priority>
     </url>
 
     <!-- A Propos -->
 
     <url>
-        <loc>https://vitemadose.covidtracker.fr/apropos</loc>
+        <loc>https://trouverunefresque.org/apropos</loc>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
