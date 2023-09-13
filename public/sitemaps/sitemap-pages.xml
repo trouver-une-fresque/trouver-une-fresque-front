@@ -15,14 +15,6 @@
     <!-- carte -->
 
     <url>
-        <loc>https://trouverunefresque.org/statistiques</loc>
-        <changefreq>daily</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Chronodose -->
-
-    <url>
         <loc>https://trouverunefresque.org/carte</loc>
         <changefreq>monthly</changefreq>
         <priority>1</priority>
