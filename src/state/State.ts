@@ -92,7 +92,7 @@ export const ATELIERS: Record<number, Atelier> = {
     5: { code: 'FresqueAlimentation', logo: 'logo_fresqueAlimentation.svg', nom: 'Fresque de l\'Alimentation', promoted: true, website: 'https://fresquealimentation.org/', styleCode: '_fresqueAlimentation' },
     9: { code: 'OGRE', logo: 'logo_OGRE.png', nom: 'OGRE', promoted: true, website: 'https://atelierogre.org/', styleCode: '_logoOGRE' },
     6: { code: 'FresqueConstruction', logo: 'logo_fresqueConstruction.webp', nom: 'Fresque de la Construction', promoted: true, website: 'https://www.fresquedelaconstruction.org/', styleCode: '_fresqueConstruction' },
-    8: { code: 'FresqueSexisme', logo: 'logo_fresqueSexisme.png', nom: 'Fresque du Sexisme', promoted: true, website: 'https://www.facebook.com/FresqueDuSexisme/', styleCode: '_fresqueSexisme' },
+    8: { code: 'FresqueSexisme', logo: 'logo_fresqueSexisme.png', nom: 'Fresque du Sexisme', promoted: false, website: 'https://www.facebook.com/FresqueDuSexisme/', styleCode: '_fresqueSexisme' },
     10: { code: 'AtelierNosViesBasCarbone', logo: 'logo_NVBC.png', nom: 'Nos Vies Bas Carbone', promoted: true, website: 'https://www.nosviesbascarbone.org/', styleCode: '_atelierNVBC' },
     11: { code: 'FresqueDeLeau', logo: 'logo_fresqueDeLeau.png', nom: 'Fresque de l\'Eau', promoted: true, website: 'https://www.eaudyssee.org/', styleCode: '_fresqueDeLeau' },
 };
