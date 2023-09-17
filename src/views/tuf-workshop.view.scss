@@ -87,3 +87,54 @@ tuf-workshop-card {
     border-top-left-radius: 1.5rem;
     border-top-right-radius: 1.5rem;
 }
+
+.card {
+  max-width: 80vw;
+  margin: auto;
+  overflow: hidden;
+
+  .highlight-text {
+    display: none;
+    text-align: center;
+    font-weight: bold;
+    margin: 0px;
+    padding: 5px;
+  }
+
+  &.highlighted .highlight-text {
+      display: block;     
+  }
+
+  .distance {
+    font-weight: lighter;
+    font-size: 80%;
+  }
+
+  .text-description {
+    color: $gray-600;
+  }
+
+  &.bg-disabled {
+    .text-description {
+      color: $gray-700;
+    }
+  }
+
+  &.clickable {
+    &:hover {
+      background-color: darken($card-bg, 3%);
+    }
+
+    &.bg-disabled {
+      &:hover {
+        background-color: darken($gray-400, 3%);
+      }
+    }
+
+    cursor: pointer;
+  }
+
+  @include media-breakpoint-up(xl) {
+    max-width: 65vw;
+  }
+}

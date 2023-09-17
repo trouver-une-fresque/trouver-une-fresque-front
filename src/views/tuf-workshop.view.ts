@@ -313,7 +313,9 @@ export abstract class AbstractTufRdvView extends LitElement {
                 <div class="spacer mt-5 mb-5"></div>
 
 
-                ${countWorkshopsDisponibles?html`
+                ${countWorkshopsDisponibles?
+                  
+                  html`
                 <div class="resultats px-2 py-5 text-dark bg-light rounded-resultats-top">
                   <div id="scroller">
                       ${repeat(this.cartesAffichees || [],
@@ -329,7 +331,36 @@ export abstract class AbstractTufRdvView extends LitElement {
                       })}
                       <div id="sentinel"></div>
                   </div>
-                </div>`:html``}
+                </div>`
+                
+                :
+                this.currentSearch?.online == false?
+                html`
+                <div class="resultats px-2 py-5 text-dark bg-light rounded-resultats-top">
+                  <div id="scroller">
+                      <div class="card rounded-3 mb-5 search-standard">
+                          <div class="card-body p-4">
+                              <div class="row align-items-center ">
+                                  <div class="col">
+                                      <div class="col card-title h5 text-center">
+                                        Souhaitez vous inclure les ateliers en ligne?
+                                      </div>
+                                  </div>
+
+                                  <div class="col-24 col-md-auto text-center mt-4 mt-md-0">
+                                    <button type="button" @click="${() => { this.updateResultsWithOnline(true); } }"
+                                      class="btn btn-lg btn-primary">
+                                      Voir les ateliers en ligne
+                                    </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div id="sentinel"></div>
+                  </div>
+                </div>`
+                :html``
+                }
                 
             `}
         `;
