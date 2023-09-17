@@ -86,7 +86,7 @@ export const ATELIERS: Record<number, Atelier> = {
     2: { code: 'FresqueBiodiversite', logo: 'logo_fresqueBiodiversite.svg', nom: 'Fresque de la Biodiversité', promoted: true, website: 'https://www.fresquedelabiodiversite.org/', styleCode: '_fresqueBiodiversite' },
     1: { code: 'FresqueOceane', logo: 'logo_fresqueOceane.webp', nom: 'Fresque Océane', promoted: true, website: 'https://www.fresqueoceane.org/', styleCode: '_fresqueOceane' },
     4: { code: 'FresqueAgriAlim', logo: 'logo_fresqueAgriAlim.png', nom: 'Fresque Agri\'Alim', promoted: true, website: 'https://fresqueagrialim.org/', styleCode: '_fresqueAgriAlim' },
-    3: { code: 'FresqueNumerique', logo: 'logo_fresqueNumerique.png', nom: 'Fresque du Numérique', promoted: true, website: 'https://www.fresquedunumerique.org/', styleCode: '_fresqueNumerique' },
+    3: { code: 'FresqueNumerique', logo: 'logo_fresqueNumerique.png', nom: 'Fresque du Numérique', promoted: false, website: 'https://www.fresquedunumerique.org/', styleCode: '_fresqueNumerique' },
     0: { code: 'FresqueNouveauxRecits', logo: 'logo_fresqueNouveauxRecits.png', nom: 'Fresque des Nouveaux Récits', promoted: true, website: 'https://www.fresquedesnouveauxrecits.org/', styleCode: '_fresqueNouveauRevits' },
     7: { code: 'FresqueMobilite', logo: 'logo_fresqueMobilite.png', nom: 'Fresque de la Mobilité', promoted: true, website: 'https://fresquedelamobilite.org/', styleCode: '_fresqueMobilite' },
     5: { code: 'FresqueAlimentation', logo: 'logo_fresqueAlimentation.svg', nom: 'Fresque de l\'Alimentation', promoted: true, website: 'https://fresquealimentation.org/', styleCode: '_fresqueAlimentation' },
