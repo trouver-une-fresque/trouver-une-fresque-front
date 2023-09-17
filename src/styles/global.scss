@@ -6,6 +6,7 @@
 
 @import "./fontello-icons";
 @import "./global-variables";
+@import "./bootstrap-variables";
 
 //$base-color: #ffbf16;
 
@@ -110,4 +111,10 @@ select[required]:invalid {
 
 .btn-primary{
   color: white;
+}
+
+.disclaimer {
+  color: black;
+  border-bottom: 1px solid lightgrey;
+  margin-bottom: 1rem;
 }

@@ -64,18 +64,26 @@ export class TufAppComponent extends LitElement {
               `):html``}
             </div>
 
-            <footer class="row justify-content-between">
-                <div class="col-auto">
-                    Trouver une Fresque -
-                    <a href="https://github.com/trouver-une-fresque/trouver-une-fresque-front/blob/main/LICENSE">(CC BY-NC-SA 4.0)</a>
+            
+            <footer>
+                <div class="container-xxl">
+                    <div class="disclaimer">
+                        <p >Trouver une Fresque n'est pas un outil officiel, n'est PAS exhaustif et ne remplace pas une recherche manuelle notamment dans le cas où aucun atelier disponible n'est proposé sur notre site.</p>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <div class="row">
-                        <div class="col-auto">
-                            <a href="${Router.basePath}mentions-legales">Mentions légales</a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="mailto:contact@trouverunefresque.org" rel="noreferrer">Contactez-nous</a>
+                <div class="row justify-content-between">
+                    <div class="col-auto">
+                        Trouver une Fresque -
+                        <a href="https://github.com/trouver-une-fresque/trouver-une-fresque-front/blob/main/LICENSE">(CC BY-NC-SA 4.0)</a>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row">
+                            <div class="col-auto">
+                                <a href="${Router.basePath}mentions-legales">Mentions légales</a>
+                            </div>
+                            <div class="col-auto">
+                                <a href="mailto:contact@trouverunefresque.org" rel="noreferrer">Contactez-nous</a>
+                            </div>
                         </div>
                     </div>
                 </div>
