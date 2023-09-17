@@ -280,18 +280,21 @@ export abstract class AbstractTufRdvView extends LitElement {
                 <h3 class="fw-normal text-center h4 search-standard"
                     style="${styleMap({display: (this.workshopsParDepartementAffiches) ? 'block' : 'none'})}">
                     ${countWorkshopsDisponibles?
+                      
                       html`
                     <i class="bi vmdicon-calendar2-check-fill text-success me-2 fs-3 col-auto"></i>
                     <span class="col col-sm-auto">
                     ${countWorkshopsDisponibles.toLocaleString()} ${searchTypeConfig.type=="junior"?"atelier":searchTypeConfig.type}${Strings.plural(countWorkshopsDisponibles, "s")} trouvé${Strings.plural(countWorkshopsDisponibles)}
                     ${this.libelleLieuSelectionne()}
-                    </span>`:
-                      html`
+                    </span>`
+                    
+                    :html`
                       <i class="bi vmdicon-calendar-x-fill text-black-50 me-2 fs-3 col-auto"></i>
                     <span class="col col-sm-auto">
-                    ${countWorkshopsDisponibles.toLocaleString()} ${searchTypeConfig.type=="junior"?"atelier":searchTypeConfig.type}${Strings.plural(countWorkshopsDisponibles, "s")} trouvé${Strings.plural(countWorkshopsDisponibles)}
-                    ${this.libelleLieuSelectionne()}
-                    `}
+                    ${countWorkshopsDisponibles.toLocaleString()} ${searchTypeConfig.type=="junior"?"atelier":searchTypeConfig.type}${Strings.plural(countWorkshopsDisponibles, "s")} recensé${Strings.plural(countWorkshopsDisponibles)}
+                    sur notre plateforme${this.libelleLieuSelectionne()}
+                    `
+                    }
                   <br/>
                   ${(this.workshopsParDepartementAffiches && this.workshopsParDepartementAffiches.derniereMiseAJour) ?
                       html`
