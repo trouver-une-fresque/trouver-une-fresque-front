@@ -86,7 +86,7 @@ export class TufAppointmentCardComponent extends LitElement {
                 if(this.workshop.sold_out) {
                     specificCardConfig = {
                         disabledBG: true,
-                        cardTitle: `${this.workshop.training?'Formation':'Atelier'} ${this.workshop.kids?'Junior ':''} ${atelier.nom} complet.`,
+                        cardTitle: `${this.workshop.online?'👩🏽‍💻 ':''}${this.workshop.training?'Formation':'Atelier'} ${this.workshop.kids?'Junior ':''} ${atelier.nom} complet.`,
                         libelleBouton: 'Vérifier sur la page de l\'évènement',
                         typeBouton: 'btn-info',
                         onclick: () => this.verifierRdv()
