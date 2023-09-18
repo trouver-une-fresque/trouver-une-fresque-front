@@ -1,0 +1,16 @@
+# .github/release.yml
+
+changelog:
+  categories:
+    - title: ✨ Workshops
+      labels:
+        - workshop
+
+    - title: 🏕 Features
+      labels:
+        - enhancement
+
+    - title: 🐛 Bug Fixes
+      labels:
+        - "bug fix"
+
