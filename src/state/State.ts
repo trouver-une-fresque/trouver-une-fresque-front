@@ -87,7 +87,7 @@ export const ATELIERS: Record<number, Atelier> = {
     300: { code: 'FresqueEcoCirculaire', logo: 'logo_fresqueEcoCirculaire.webp', nom: 'Fresque de l\'économie circulaire', promoted: true, website: 'https://www.lafresquedeleconomiecirculaire.com/', styleCode: '_fresqueEcoCirc' },
     200: { code: 'FresqueClimat', logo: 'logo_fresqueClimat.png', nom: 'Fresque du Climat', promoted: true, website: 'https://fresqueduclimat.org/', styleCode: '_fresqueClimat' },
     100: { code: '2tonnes', logo: 'logo_2tonnes.webp', nom: '2tonnes', promoted: true, website: 'https://www.2tonnes.org/', styleCode: '_2tonnes' },
-    2: { code: 'FresqueBiodiversite', logo: 'logo_fresqueBiodiversite.svg', nom: 'Fresque de la Biodiversité', promoted: true, website: 'https://www.fresquedelabiodiversite.org/', styleCode: '_fresqueBiodiversite' },
+    2: { code: 'FresqueBiodiversite', logo: 'logo_fresqueBiodiversite.svg', nom: 'Fresque de la Biodiversité', promoted: false, website: 'https://www.fresquedelabiodiversite.org/', styleCode: '_fresqueBiodiversite' },
     1: { code: 'FresqueOceane', logo: 'logo_fresqueOceane.webp', nom: 'Fresque Océane', promoted: true, website: 'https://www.fresqueoceane.org/', styleCode: '_fresqueOceane' },
     4: { code: 'FresqueAgriAlim', logo: 'logo_fresqueAgriAlim.png', nom: 'Fresque Agri\'Alim', promoted: true, website: 'https://fresqueagrialim.org/', styleCode: '_fresqueAgriAlim' },
     3: { code: 'FresqueNumerique', logo: 'logo_fresqueNumerique.png', nom: 'Fresque du Numérique', promoted: false, website: 'https://www.fresquedunumerique.org/', styleCode: '_fresqueNumerique' },
