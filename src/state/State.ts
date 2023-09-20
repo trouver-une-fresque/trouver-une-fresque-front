@@ -62,6 +62,7 @@ enum TypeAtelierEnum {
   "AtelierNosViesBasCarbone" = 10,
   "FresqueDeLeau" = 11,
   "FutursProches" = 12,
+  "FresqueDiversite" = 13,
   "2tonnes" = 100,
   "FresqueClimat" = 200,
   "FresqueEcoCirculaire" = 300,
@@ -99,6 +100,7 @@ export const ATELIERS: Record<number, Atelier> = {
     10: { code: 'AtelierNosViesBasCarbone', logo: 'logo_NVBC.png', nom: 'Nos Vies Bas Carbone', promoted: true, website: 'https://www.nosviesbascarbone.org/', styleCode: '_atelierNVBC' },
     11: { code: 'FresqueDeLeau', logo: 'logo_fresqueDeLeau.png', nom: 'Fresque de l\'Eau', promoted: true, website: 'https://www.eaudyssee.org/', styleCode: '_fresqueDeLeau' },
     12: { code: 'FutursProches', logo: 'logo_FutursProches.png', nom: 'Futurs Proches', promoted: true, website: 'https://futursproches.com/', styleCode: '_futursProches' },
+    13: { code: 'FresqueDiversite', logo: 'logo_fresqueDiversite.png', nom: 'Fresque de la Diversité', promoted: true, website: 'https://fresquedeladiversite.org/', styleCode: '_fresqueDiversite' },
 };
 
 export type CodeDepartement = string;
