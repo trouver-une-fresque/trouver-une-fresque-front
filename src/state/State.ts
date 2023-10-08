@@ -103,7 +103,7 @@ export const ATELIERS: Record<number, Atelier> = {
     11: { code: 'FresqueDeLeau', logo: 'logo_fresqueDeLeau.png', nom: 'Fresque de l\'Eau', promoted: true, website: 'https://www.eaudyssee.org/', styleCode: '_fresqueDeLeau' },
     12: { code: 'FutursProches', logo: 'logo_FutursProches.png', nom: 'Futurs Proches', promoted: true, website: 'https://futursproches.com/', styleCode: '_futursProches' },
     13: { code: 'FresqueDiversite', logo: 'logo_fresqueDiversite.png', nom: 'Fresque de la Diversité', promoted: true, website: 'https://fresquedeladiversite.org/', styleCode: '_fresqueDiversite' },
-    14: { code: 'FresqueDuTextile', logo: 'logo_greenDonut.png', nom: 'Fresque du Textile', promoted: true, website: 'https://greendonut.org/', styleCode: '_fresqueTextile' },
+    14: { code: 'FresqueDuTextile', logo: 'logo_FresqueTextile.jpg', nom: 'Fresque du Textile', promoted: true, website: 'https://greendonut.org/', styleCode: '_fresqueTextile' },
     15: { code: 'FresqueDesDechets', logo: 'logo_greenDonut.png', nom: 'Fresque des Déchets', promoted: false, website: 'https://greendonut.org/', styleCode: '_fresqueDechets' },
 };
 
