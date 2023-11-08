@@ -69,6 +69,7 @@ enum TypeAtelierEnum {
   "FresqueClimat" = 200,
   "FresqueEcoCirculaire" = 300,
   "FresqueFrontieresPlanetaires" = 500,
+  "HorizonsDecarbones" = 501,
 }
 
 export type TypeAtelier = keyof typeof TypeAtelierEnum;
@@ -88,6 +89,7 @@ export type Atelier = {
 
 export const ATELIERS: Record<number, Atelier> = {
     500: { code: 'FresqueFrontieresPlanetaires', logo: 'logo_FDFP.png', nom: 'Fresque des frontières planétaires', promoted: true, website: 'https://fresquefrontieresplanetaires.earth/', styleCode: '_fresqueFrontieresPlanetaires' },
+    501: { code: 'HorizonsDecarbones', logo: 'logo_HD.png', nom: 'Atelier Horizons Décarbonés', promoted: true, website: 'https://www.horizons-decarbones.earth/', styleCode: '_horizonsDecarbones' },
     300: { code: 'FresqueEcoCirculaire', logo: 'logo_fresqueEcoCirculaire.webp', nom: 'Fresque de l\'économie circulaire', promoted: true, website: 'https://www.lafresquedeleconomiecirculaire.com/', styleCode: '_fresqueEcoCirc' },
     200: { code: 'FresqueClimat', logo: 'logo_fresqueClimat.png', nom: 'Fresque du Climat', promoted: true, website: 'https://fresqueduclimat.org/', styleCode: '_fresqueClimat' },
     100: { code: '2tonnes', logo: 'logo_2tonnes.webp', nom: '2tonnes', promoted: true, website: 'https://www.2tonnes.org/', styleCode: '_2tonnes' },
