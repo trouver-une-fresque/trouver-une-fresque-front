@@ -12,9 +12,13 @@ export class TufAppComponent extends LitElement {
     static styles = [
         CSS_Global,
         css`
-            .appLogo {}
+            .appLogo {
+                max-width: 250px;
+            }
             .appLogo._phone {
-                max-width: 25vw;
+                max-width: 130px;
+                margin-top: 10px;
+                margin-bottom: 10px;
             }
         `
     ];
@@ -41,8 +45,8 @@ export class TufAppComponent extends LitElement {
             <div class="container">
                 <div class="row align-items-center justify-content-between">
                     <a href="${Router.basePath}" class="col-auto">
-                        <img src="${Router.basePath}assets/images/svg/tuf-logo-portrait.svg" class="d-block d-sm-none appLogo _phone" alt="Trouvez une fresque">
-                        <img src="${Router.basePath}assets/images/svg/tuf-logo-landscape.svg" class="d-none d-sm-block appLogo" alt="Trouvez une fresque">
+                        <img src="${Router.basePath}assets/images/svg/tuf-logo-landscape.webp" class="d-block d-sm-none appLogo _phone" alt="Trouvez une fresque">
+                        <img src="${Router.basePath}assets/images/svg/tuf-logo-landscape.webp" class="d-none d-sm-block appLogo" alt="Trouvez une fresque">
                     </a>
                     <div class="col">
                         <div class="row justify-content-end gx-5">
