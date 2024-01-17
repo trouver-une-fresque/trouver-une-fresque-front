@@ -551,8 +551,8 @@ export class TufRdvParCommuneView extends AbstractTufRdvView {
                   id="searchAppointment-distance" codeSelectionne="${this._distanceSelectionnee}"
                   theme="${this.searchTypeConfig.theme}"
                   .options="${[
-                    {code: 5, libelle:"<5km"},
-                    {code: 10, libelle:"<10km"}, {code: 50, libelle:"<50km"},
+                    {code: 5, libelle:"<5km"}, {code: 10, libelle:"<10km"},
+                    {code: 25, libelle:"<25km"}, {code: 50, libelle:"<50km"},
                     {code: 100, libelle:"<100km"}, {code: 250, libelle:"<250km"},
                     {code: 500, libelle:"<500km"}, {code: 100000, libelle:"∞"}
                   ]}"
