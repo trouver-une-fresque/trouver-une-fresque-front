@@ -118,3 +118,12 @@ select[required]:invalid {
   border-bottom: 1px solid lightgrey;
   margin-bottom: 1rem;
 }
+
+.appLogo {
+  max-width: 250px;
+}
+.appLogo._phone {
+  max-width: 130px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
