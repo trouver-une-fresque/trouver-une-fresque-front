@@ -11,16 +11,7 @@ export class TufAppComponent extends LitElement {
     //language=css
     static styles = [
         CSS_Global,
-        css`
-            .appLogo {
-                max-width: 250px;
-            }
-            .appLogo._phone {
-                max-width: 130px;
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-        `
+        css``
     ];
 
     @property({type: Object, attribute: false}) viewTemplateResult: SlottedTemplateResultFactory|undefined = undefined;
