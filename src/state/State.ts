@@ -67,6 +67,7 @@ enum TypeAtelierEnum {
   "FresqueDesDechets" = 15,
   "PuzzleClimat" = 16,
   "FresqueFinance" = 17,
+  "FresqueRSE" = 18,
   "2tonnes" = 100,
   "FresqueClimat" = 200,
   "FresqueEcoCirculaire" = 300,
@@ -115,6 +116,7 @@ export const ATELIERS: Record<number, Atelier> = {
     15: { code: 'FresqueDesDechets', logo: 'logo_greenDonut.webp', nom: 'Fresque des Déchets', promoted: false, website: 'https://greendonut.org/', styleCode: '_fresqueDechets' },
     16: { code: 'PuzzleClimat', logo: 'logo_puzzleClimat.webp', nom: 'Puzzle Climat', promoted: true, website: 'https://www.puzzleclimat.org/', styleCode: '_puzzleClimat' },
     17: { code: 'FresqueFinance', logo: 'logo_fresqueFinance.webp', nom: 'Fresque de la finance', promoted: true, website: '', styleCode: '_fresqueFinance' },
+    18: { code: 'FresqueRSE', logo: 'logo_FresqueRSE.webp', nom: 'Fresque de la RSE', promoted: true, website: 'https://fresquedelarse.org/', styleCode: '_fresqueRSE' },
 };
 
 export type CodeDepartement = string;
