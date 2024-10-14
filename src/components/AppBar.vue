@@ -1,18 +1,19 @@
 <template>
-  <v-toolbar height="90px">
+  <v-toolbar>
     <!-- main logo -->
-
-    <v-img
-      contain
-      max-width="250"
-      src="/assets/images/svg/tuf-logo-landscape.webp"
-      to="/"
-    />
+    <router-link to="/">
+      <v-img
+        contain
+        src="/assets/images/svg/tuf-logo-landscape.webp"
+        width="200"
+      />
+    </router-link>
     <v-spacer />
 
     <!-- navigation links -->
     <v-tabs
       v-model="activeTab"
+      color="primary"
       hide-slider
     >
       <v-tab
@@ -40,7 +41,6 @@
   const links = [
     { id: 1, to: '/carte', text: 'carte', icon: 'mdi-map' },
     { id: 2, to: '/apropos', text: 'About', icon: 'mdi-information' },
-    { id: 3, to: '/contact', text: 'Contact', icon: 'mdi-email' },
   ]
 </script>
 

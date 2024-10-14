@@ -7,11 +7,27 @@
 // Composables
 import { setupLayouts } from 'virtual:generated-layouts'
 import { createRouter, createWebHistory } from 'vue-router/auto'
-import { routes } from 'vue-router/auto-routes'
+import { routes as autoRoutes } from 'vue-router/auto-routes'
+
+// Import your components
+import Apropos from '@/pages/Apropos.vue'
+import Carte from '@/pages/Carte.vue'
+
+// Define additional routes
+const additionalRoutes = [
+  {
+    path: '/carte',
+    component: Carte,
+  },
+  {
+    path: '/apropos',
+    component: Apropos,
+  },
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: setupLayouts(routes),
+  routes: setupLayouts([...autoRoutes, ...additionalRoutes]),
 })
 
 // Workaround for https://github.com/vitejs/vite/issues/11804
