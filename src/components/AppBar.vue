@@ -11,10 +11,7 @@
     <v-spacer />
 
     <!-- navigation links -->
-    <v-tabs
-      v-model="activeTab"
-      hide-slider
-    >
+    <v-tabs v-model="activeTab" hide-slider>
       <v-tab
         v-for="link in links"
         :key="link.id"

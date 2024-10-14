@@ -17,7 +17,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          BASE_URL:  "https://trouverunefresque.org/"
+          BASE_URL: "https://trouverunefresque.org/"
       - name: Deploy to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
