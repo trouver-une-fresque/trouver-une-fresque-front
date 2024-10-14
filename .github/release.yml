@@ -12,4 +12,4 @@ changelog:
 
     - title: 🐛 Bug Fixes
       labels:
-        - "bug fix"
+        - 'bug fix'
