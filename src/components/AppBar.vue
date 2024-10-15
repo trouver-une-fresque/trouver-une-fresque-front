@@ -1,9 +1,12 @@
 <template>
-  <v-toolbar>
+  <v-toolbar class="d-flex">
     <!-- main logo -->
-    <router-link to="/">
+    <router-link
+      class="h-100"
+      to="/"
+    >
       <v-img
-        contain
+        alt="TUF logo"
         src="/assets/images/svg/tuf-logo-landscape.webp"
         width="200"
       />
