@@ -1,36 +1,38 @@
 <template>
-  <v-toolbar class="d-flex">
-    <!-- main logo -->
-    <router-link
-      class="h-100"
-      to="/"
-    >
-      <v-img
-        alt="TUF logo"
-        :src="currentLogo"
-        width="200"
-      />
-    </router-link>
-    <v-spacer />
-
-    <!-- navigation links -->
-    <v-tabs
-      v-model="activeTab"
-      color="primary"
-      hide-slider
-    >
-      <v-tab
-        v-for="link in links"
-        :key="link.id"
-        :append-icon="link.icon"
-        exact
-        :ripple="false"
-        :to="link.to"
-        variant="text"
+  <v-toolbar class="d-flex justify-center align-center">
+    <div class="toolbar-content d-flex flex-row">
+      <!-- main logo -->
+      <router-link
+        class="h-100"
+        to="/"
       >
-        {{ link.text }}
-      </v-tab>
-    </v-tabs>
+        <v-img
+          alt="TUF logo"
+          :src="currentLogo"
+          width="200"
+        />
+      </router-link>
+      <v-spacer />
+
+      <!-- navigation links -->
+      <v-tabs
+        v-model="activeTab"
+        color="primary"
+        hide-slider
+      >
+        <v-tab
+          v-for="link in links"
+          :key="link.id"
+          :append-icon="link.icon"
+          exact
+          :ripple="false"
+          :to="link.to"
+          variant="text"
+        >
+          {{ link.text }}
+        </v-tab>
+      </v-tabs>
+    </div>
   </v-toolbar>
 </template>
 
@@ -56,4 +58,10 @@
   })
 </script>
 
-<style scoped lang="sass"></style>
+<style scoped lang="sass">
+  .toolbar-content
+    max-width: 1200px
+    width: 100%
+    height: 100%
+    margin: 0 auto
+</style>
