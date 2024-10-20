@@ -22,6 +22,7 @@
           </div>
           <div>
             <v-btn
+              class="mr-2"
               elevation="0"
               to="/mentions-legales"
               variant="text"
@@ -29,6 +30,7 @@
               Mentions légales
             </v-btn>
             <v-btn
+              class="mr-2"
               elevation="0"
               href="mailto:contact@trouverunefresque.org"
               variant="text"
