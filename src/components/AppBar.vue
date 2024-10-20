@@ -26,7 +26,7 @@
         exact
         :ripple="false"
         :to="link.to"
-        variant="plain"
+        variant="text"
       >
         {{ link.text }}
       </v-tab>
