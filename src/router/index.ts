@@ -12,6 +12,7 @@ import { routes as autoRoutes } from 'vue-router/auto-routes'
 // Import your components
 import Apropos from '@/pages/Apropos.vue'
 import Carte from '@/pages/Carte.vue'
+import Mentions from '@/pages/Mentions.vue'
 
 // Define additional routes
 const additionalRoutes = [
@@ -22,6 +23,10 @@ const additionalRoutes = [
   {
     path: '/apropos',
     component: Apropos,
+  },
+  {
+    path: '/mentions-legales',
+    component: Mentions,
   },
 ]
 

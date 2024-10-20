@@ -17,5 +17,6 @@ RouteRecordInfo
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/Apropos': RouteRecordInfo<'/Apropos', '/Apropos', Record<never, never>, Record<never, never>>,
     '/Carte': RouteRecordInfo<'/Carte', '/Carte', Record<never, never>, Record<never, never>>,
+    '/Mentions': RouteRecordInfo<'/Mentions', '/Mentions', Record<never, never>, Record<never, never>>,
   }
 }
