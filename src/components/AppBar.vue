@@ -7,7 +7,7 @@
     >
       <v-img
         alt="TUF logo"
-        src="/assets/images/svg/tuf-logo-landscape.webp"
+        :src="currentLogo"
         width="200"
       />
     </router-link>
@@ -35,7 +35,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
+  import { useTheme } from 'vuetify'
   import { useRoute } from 'vue-router'
 
   const activeTab = ref(0)
@@ -45,6 +46,14 @@
     { id: 1, to: '/carte', text: 'carte', icon: 'mdi-map' },
     { id: 2, to: '/apropos', text: 'About', icon: 'mdi-information' },
   ]
+
+  const theme = useTheme()
+
+  const currentLogo = computed(() => {
+    return theme.global.current.value.dark
+      ? '/assets/images/svg/tuf-logo-landscape-white-font.webp'
+      : '/assets/images/svg/tuf-logo-landscape.webp'
+  })
 </script>
 
 <style scoped lang="sass"></style>

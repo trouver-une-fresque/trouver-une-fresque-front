@@ -1,7 +1,8 @@
 <template>
   <v-footer app>
     <v-btn
-      variant="icon"
+      icon
+      elevation="0"
       @click="toggleTheme"
     >
       <v-icon>mdi-theme-light-dark</v-icon>
