@@ -27,8 +27,8 @@
   .search-card {
     background: linear-gradient(
       45deg,
-      rgb(var(--v-theme-primary-lighten-1)),
-      rgb(var(--v-theme-secondary))
+      rgba(var(--v-theme-secondary), 0.6),
+      rgba(var(--v-theme-primary), 0.6)
     );
   }
 </style>

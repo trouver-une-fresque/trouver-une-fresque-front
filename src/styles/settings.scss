@@ -9,6 +9,11 @@
 //   $color-pack: false
 // );
 
+// Change default Vuetify border radius
+@use 'vuetify/settings' with (
+  $border-radius-root: 18px
+);
+
 // Add margin around headings
 h1,
 h2,
