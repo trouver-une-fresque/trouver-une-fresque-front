@@ -18,5 +18,6 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'vue/html-self-closing': 'off',
     'vue/html-closing-bracket-newline': 'off',
+    'vue/attributes-order': 'off',
   },
 }

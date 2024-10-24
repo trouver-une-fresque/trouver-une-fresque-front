@@ -11,7 +11,7 @@
 
 // Change default Vuetify border radius
 @use 'vuetify/settings' with (
-  $border-radius-root: 18px
+  $border-radius-root: 12px
 );
 
 // Add margin around headings
@@ -22,6 +22,10 @@ h4,
 h5,
 h6 {
   margin: 20px 0;
+}
+
+h1 {
+  line-height: 1.2;
 }
 
 // Add margin after paragraphs
