@@ -1,5 +1,6 @@
 <template>
   <v-container max-width="1200px">
+    <!-- search card -->
     <v-card class="search-card pa-10">
       <v-card-title
         class="d-flex justify-center"
@@ -20,6 +21,12 @@
         ></v-text-field>
       </v-card-text>
     </v-card>
+
+    <!-- logo section -->
+    <div></div>
+
+    <!-- Q&A section -->
+    <QnA />
   </v-container>
 </template>
 
