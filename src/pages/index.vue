@@ -12,7 +12,6 @@
       <v-card-text class="d-flex justify-center">
         <v-text-field
           class="search-bar"
-          autofocus
           clearable
           label="Localisation"
           max-width="500px"
