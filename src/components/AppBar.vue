@@ -1,6 +1,6 @@
 <template>
   <v-toolbar class="d-flex justify-center align-center">
-    <div class="toolbar-content d-flex flex-row">
+    <div class="toolbar-content d-flex flex-row align-center">
       <!-- main logo -->
       <router-link
         class="h-100"
@@ -14,8 +14,9 @@
       </router-link>
       <v-spacer />
 
-      <!-- navigation links -->
+      <!-- navigation links (for md devices and bigger) -->
       <v-tabs
+        class="d-none d-sm-flex"
         v-model="activeTab"
         color="primary"
         hide-slider
@@ -32,6 +33,31 @@
           {{ link.text }}
         </v-tab>
       </v-tabs>
+
+      <!-- navigation links (for small devices) -->
+      <v-menu v-model="menu">
+        <template #activator="{ props }">
+          <v-btn
+            class="d-flex d-sm-none"
+            v-bind="props"
+            icon
+          >
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="link in links"
+            :key="link.id"
+            :to="link.to"
+            @click="menu = false"
+            :append-icon="link.icon"
+            color="primary"
+            :title="link.text"
+          >
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </div>
   </v-toolbar>
 </template>
@@ -43,6 +69,7 @@
 
   const activeTab = ref(0)
   const route = useRoute()
+  const menu = ref(false)
 
   const links = [
     { id: 1, to: '/carte', text: 'carte', icon: 'mdi-map' },
