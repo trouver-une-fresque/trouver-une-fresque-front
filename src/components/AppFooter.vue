@@ -10,19 +10,28 @@
           </p>
         </v-row>
         <v-row>
-          <v-divider class="mt-2"></v-divider>
+          <v-divider class="my-2"></v-divider>
         </v-row>
-        <v-row class="d-flex justify-space-between">
-          <div class="d-flex align-center">
+        <v-row class="d-flex justify-space-between align-center">
+          <v-col
+            class="pa-0 pl-3"
+            cols="12"
+            sm="auto"
+          >
             <a
               href="https://github.com/trouver-une-fresque/trouver-une-fresque-front/blob/main/LICENSE"
               style="text-decoration: none; color: inherit"
-              >Trouver Une Fresque - (CC BY-NC-SA 4.0)</a
+              >Trouver&nbsp;Une&nbsp;Fresque - (CC&nbsp;BY-NC-SA&nbsp;4.0)</a
             >
-          </div>
-          <div>
+          </v-col>
+          <v-spacer></v-spacer>
+          <v-col
+            class="pa-0"
+            cols="12"
+            sm="auto"
+          >
             <v-btn
-              class="mr-2"
+              class="mr-2 pl-3"
               elevation="0"
               to="/mentions-legales"
               variant="text"
@@ -44,7 +53,7 @@
             >
               <v-icon>mdi-theme-light-dark</v-icon>
             </v-btn>
-          </div>
+          </v-col>
         </v-row>
       </v-col>
     </v-container>
