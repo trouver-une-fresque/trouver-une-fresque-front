@@ -38,7 +38,6 @@
     for (const atelier of Object.values(ATELIERS)) {
       if (atelier.promoted) workshops.value.push(atelier)
     }
-    console.log('workshops', workshops)
   })
 </script>
 
