@@ -23,7 +23,7 @@
     </v-card>
 
     <!-- logo section -->
-    <div></div>
+    <LogoWall />
 
     <!-- Q&A section -->
     <QnA />
