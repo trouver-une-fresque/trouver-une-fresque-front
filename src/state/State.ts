@@ -127,6 +127,7 @@ export const ATELIERS: Record<number, Atelier> = {
     700: { code: 'FresqueRenovation', logo: 'logo_Fresque-de-la-renovation-noir.webp', nom: 'Fresque de la Rénovation', promoted: true, website: 'https://fresquedelarenovation.org/', styleCode: '_FresqueRenovation' },
     701: { code: 'FresqueEnergie', logo: 'logo_fresqueEnergie.png', nom: 'Fresque de l\'Énergie', promoted: true, website: 'https://fresquedelenergie.org/', styleCode: '_FresqueEnergie' },
     702: { code: 'FresqueDesPossibles', logo: 'logo_fresqueDesPossibles.png', nom: 'Fresque des Possibles', promoted: true, website: 'https://www.lelieudit.fr/la-fresque-des-possibles/', styleCode: '_FresqueDesPossibles' },
+    703: { code: 'FresqueCommunication', logo: 'logo_fresqueCommunication.webp', nom: 'Fresque de la Communication', promoted: true, website: 'https://lafresquedelacommunication.wordpress.com/', styleCode: '_FresqueCommunication' },
 };
 
 export type CodeDepartement = string;
