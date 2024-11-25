@@ -76,6 +76,7 @@ enum TypeAtelierEnum {
   "FresqueFrontieresPlanetaires" = 500,
   "HorizonsDecarbones" = 501,
   "2030Glorieuses" = 600,
+  "FresqueRenovation" = 700,
 }
 
 export type TypeAtelier = keyof typeof TypeAtelierEnum;
@@ -94,19 +95,11 @@ export type Atelier = {
 };
 
 export const ATELIERS: Record<number, Atelier> = {
-    600: { code: '2030Glorieuses', logo: 'logo_2030Glorieuses.webp', nom: 'Atelier 2030 Glorieuses', promoted: true, website: 'https://www.2030glorieuses.org/', styleCode: '_atelier2030Glorieuses' },
-    500: { code: 'FresqueFrontieresPlanetaires', logo: 'logo_FDFP.webp', nom: 'Fresque des frontières planétaires', promoted: true, website: 'https://fresquefrontieresplanetaires.earth/', styleCode: '_fresqueFrontieresPlanetaires' },
-    501: { code: 'HorizonsDecarbones', logo: 'logo_HD.webp', nom: 'Atelier Horizons Décarbonés', promoted: true, website: 'https://www.horizons-decarbones.earth/', styleCode: '_horizonsDecarbones' },
-    300: { code: 'FresqueEcoCirculaire', logo: 'logo_fresqueEcoCirculaire.webp', nom: 'Fresque de l\'économie circulaire', promoted: true, website: 'https://www.lafresquedeleconomiecirculaire.com/', styleCode: '_fresqueEcoCirc' },
-    200: { code: 'FresqueClimat', logo: 'logo_fresqueClimat.png', nom: 'Fresque du Climat', promoted: true, website: 'https://fresqueduclimat.org/', styleCode: '_fresqueClimat' },
-    100: { code: '2tonnes', logo: 'logo_2tonnes.webp', nom: '2tonnes', promoted: true, website: 'https://www.2tonnes.org/', styleCode: '_2tonnes' },
-    101: { code: 'AtelierCompteGouttes', logo: 'logo_atelier_compte_gouttes.avif', nom: 'AtelierCompteGouttes', promoted: true, website: 'https://compte-gouttes.fr/', styleCode: '_AtelierCompteGouttes' },
-    102: { code: 'FresqueBenevolat', logo: 'logo_fresqueBenevolat.svg', nom: 'FresqueBenevolat', promoted: true, website: 'https://www.jeveuxaider.gouv.fr/fresque-benevolat', styleCode: '_FresqueBenevolat' },
-    2: { code: 'FresqueBiodiversite', logo: 'logo_fresqueBiodiversite.svg', nom: 'Fresque de la Biodiversité', promoted: true, website: 'https://www.fresquedelabiodiversite.org/', styleCode: '_fresqueBiodiversite' },
+    0: { code: 'FresqueNouveauxRecits', logo: 'logo_fresqueNouveauxRecits.webp', nom: 'Fresque des Nouveaux Récits', promoted: true, website: 'https://www.fresquedesnouveauxrecits.org/', styleCode: '_fresqueNouveauRevits' },
     1: { code: 'FresqueOceane', logo: 'logo_fresqueOceane.webp', nom: 'Fresque Océane', promoted: true, website: 'https://www.fresqueoceane.org/', styleCode: '_fresqueOceane' },
+    2: { code: 'FresqueBiodiversite', logo: 'logo_fresqueBiodiversite.svg', nom: 'Fresque de la Biodiversité', promoted: true, website: 'https://www.fresquedelabiodiversite.org/', styleCode: '_fresqueBiodiversite' },
     4: { code: 'FresqueAgriAlim', logo: 'logo_fresqueAgriAlim.webp', nom: 'Fresque Agri\'Alim', promoted: true, website: 'https://fresqueagrialim.org/', styleCode: '_fresqueAgriAlim' },
     3: { code: 'FresqueNumerique', logo: 'logo_fresqueNumerique.png', nom: 'Fresque du Numérique', promoted: true, website: 'https://www.fresquedunumerique.org/', styleCode: '_fresqueNumerique' },
-    0: { code: 'FresqueNouveauxRecits', logo: 'logo_fresqueNouveauxRecits.webp', nom: 'Fresque des Nouveaux Récits', promoted: true, website: 'https://www.fresquedesnouveauxrecits.org/', styleCode: '_fresqueNouveauRevits' },
     7: { code: 'FresqueMobilite', logo: 'logo_fresqueMobilite.png', nom: 'Fresque de la Mobilité', promoted: true, website: 'https://fresquedelamobilite.org/', styleCode: '_fresqueMobilite' },
     5: { code: 'FresqueAlimentation', logo: 'logo_fresqueAlimentation.svg', nom: 'Fresque de l\'Alimentation', promoted: true, website: 'https://fresquealimentation.org/', styleCode: '_fresqueAlimentation' },
     9: { code: 'OGRE', logo: 'logo_OGRE.png', nom: 'OGRE', promoted: true, website: 'https://atelierogre.org/', styleCode: '_logoOGRE' },
@@ -121,6 +114,15 @@ export const ATELIERS: Record<number, Atelier> = {
     16: { code: 'PuzzleClimat', logo: 'logo_puzzleClimat.webp', nom: 'Puzzle Climat', promoted: true, website: 'https://www.puzzleclimat.org/', styleCode: '_puzzleClimat' },
     17: { code: 'FresqueFinance', logo: 'logo_fresqueFinance.webp', nom: 'Fresque de la finance', promoted: true, website: '', styleCode: '_fresqueFinance' },
     18: { code: 'FresqueRSE', logo: 'logo_FresqueRSE.webp', nom: 'Fresque de la RSE', promoted: true, website: 'https://fresquedelarse.org/', styleCode: '_fresqueRSE' },
+    100: { code: '2tonnes', logo: 'logo_2tonnes.webp', nom: '2tonnes', promoted: true, website: 'https://www.2tonnes.org/', styleCode: '_2tonnes' },
+    101: { code: 'AtelierCompteGouttes', logo: 'logo_atelier_compte_gouttes.avif', nom: 'AtelierCompteGouttes', promoted: true, website: 'https://compte-gouttes.fr/', styleCode: '_AtelierCompteGouttes' },
+    200: { code: 'FresqueClimat', logo: 'logo_fresqueClimat.png', nom: 'Fresque du Climat', promoted: true, website: 'https://fresqueduclimat.org/', styleCode: '_fresqueClimat' },
+    102: { code: 'FresqueBenevolat', logo: 'logo_fresqueBenevolat.svg', nom: 'Fresque du Benevolat', promoted: true, website: 'https://www.jeveuxaider.gouv.fr/fresque-benevolat', styleCode: '_FresqueBenevolat' },
+    300: { code: 'FresqueEcoCirculaire', logo: 'logo_fresqueEcoCirculaire.webp', nom: 'Fresque de l\'économie circulaire', promoted: true, website: 'https://www.lafresquedeleconomiecirculaire.com/', styleCode: '_fresqueEcoCirc' },
+    500: { code: 'FresqueFrontieresPlanetaires', logo: 'logo_FDFP.webp', nom: 'Fresque des frontières planétaires', promoted: true, website: 'https://fresquefrontieresplanetaires.earth/', styleCode: '_fresqueFrontieresPlanetaires' },
+    501: { code: 'HorizonsDecarbones', logo: 'logo_HD.webp', nom: 'Atelier Horizons Décarbonés', promoted: true, website: 'https://www.horizons-decarbones.earth/', styleCode: '_horizonsDecarbones' },
+    600: { code: '2030Glorieuses', logo: 'logo_2030Glorieuses.webp', nom: 'Atelier 2030 Glorieuses', promoted: true, website: 'https://www.2030glorieuses.org/', styleCode: '_atelier2030Glorieuses' },
+    700: { code: 'FresqueRenovation', logo: 'logo_Fresque-de-la-renovation-noir.webp', nom: 'Fresque de la Rénovation', promoted: true, website: 'https://fresquedelarenovation.org/', styleCode: '_FresqueRenovation' },
 };
 
 export type CodeDepartement = string;
