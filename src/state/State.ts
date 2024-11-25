@@ -77,6 +77,7 @@ enum TypeAtelierEnum {
   "HorizonsDecarbones" = 501,
   "2030Glorieuses" = 600,
   "FresqueRenovation" = 700,
+  "FresqueEnergie" = 701,
 }
 
 export type TypeAtelier = keyof typeof TypeAtelierEnum;
@@ -123,6 +124,7 @@ export const ATELIERS: Record<number, Atelier> = {
     501: { code: 'HorizonsDecarbones', logo: 'logo_HD.webp', nom: 'Atelier Horizons Décarbonés', promoted: true, website: 'https://www.horizons-decarbones.earth/', styleCode: '_horizonsDecarbones' },
     600: { code: '2030Glorieuses', logo: 'logo_2030Glorieuses.webp', nom: 'Atelier 2030 Glorieuses', promoted: true, website: 'https://www.2030glorieuses.org/', styleCode: '_atelier2030Glorieuses' },
     700: { code: 'FresqueRenovation', logo: 'logo_Fresque-de-la-renovation-noir.webp', nom: 'Fresque de la Rénovation', promoted: true, website: 'https://fresquedelarenovation.org/', styleCode: '_FresqueRenovation' },
+    701: { code: 'FresqueEnergie', logo: 'logo_fresqueEnergie.png', nom: 'Fresque de l\'Énergie', promoted: true, website: 'https://fresquedelenergie.org/', styleCode: '_FresqueEnergie' },
 };
 
 export type CodeDepartement = string;
