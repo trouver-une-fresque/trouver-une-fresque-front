@@ -117,7 +117,7 @@ export const ATELIERS: Record<number, Atelier> = {
     15: { code: 'FresqueDesDechets', logo: 'logo_greenDonut.webp', nom: 'Fresque des Déchets', promoted: false, website: 'https://greendonut.org/', styleCode: '_fresqueDechets' },
     16: { code: 'PuzzleClimat', logo: 'logo_puzzleClimat.webp', nom: 'Puzzle Climat', promoted: true, website: 'https://www.puzzleclimat.org/', styleCode: '_puzzleClimat' },
     17: { code: 'FresqueFinance', logo: 'logo_fresqueFinance.webp', nom: 'Fresque de la finance', promoted: true, website: '', styleCode: '_fresqueFinance' },
-    18: { code: 'FresqueRSE', logo: 'logo_FresqueRSE.webp', nom: 'Fresque de la RSE', promoted: true, website: 'https://fresquedelarse.org/', styleCode: '_fresqueRSE' },
+    18: { code: 'FresqueRSE', logo: 'logo_fresqueRSE.webp', nom: 'Fresque de la RSE', promoted: true, website: 'https://fresquedelarse.org/', styleCode: '_fresqueRSE' },
     100: { code: '2tonnes', logo: 'logo_2tonnes.webp', nom: '2tonnes', promoted: true, website: 'https://www.2tonnes.org/', styleCode: '_2tonnes' },
     101: { code: 'AtelierCompteGouttes', logo: 'logo_atelier_compte_gouttes.avif', nom: 'AtelierCompteGouttes', promoted: true, website: 'https://compte-gouttes.fr/', styleCode: '_AtelierCompteGouttes' },
     200: { code: 'FresqueClimat', logo: 'logo_fresqueClimat.png', nom: 'Fresque du Climat', promoted: true, website: 'https://fresqueduclimat.org/', styleCode: '_fresqueClimat' },
