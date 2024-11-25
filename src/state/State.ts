@@ -79,6 +79,8 @@ enum TypeAtelierEnum {
   "FresqueRenovation" = 700,
   "FresqueEnergie" = 701,
   "FresqueDesPossibles" = 702,
+  "FresqueCommunication" = 703,
+  "ZooFresque" = 704,
 }
 
 export type TypeAtelier = keyof typeof TypeAtelierEnum;
@@ -128,6 +130,7 @@ export const ATELIERS: Record<number, Atelier> = {
     701: { code: 'FresqueEnergie', logo: 'logo_fresqueEnergie.png', nom: 'Fresque de l\'Énergie', promoted: true, website: 'https://fresquedelenergie.org/', styleCode: '_FresqueEnergie' },
     702: { code: 'FresqueDesPossibles', logo: 'logo_fresqueDesPossibles.png', nom: 'Fresque des Possibles', promoted: true, website: 'https://www.lelieudit.fr/la-fresque-des-possibles/', styleCode: '_FresqueDesPossibles' },
     703: { code: 'FresqueCommunication', logo: 'logo_fresqueCommunication.webp', nom: 'Fresque de la Communication', promoted: true, website: 'https://lafresquedelacommunication.wordpress.com/', styleCode: '_FresqueCommunication' },
+    704: { code: 'ZooFresque', logo: 'logo_zoofresque.webp', nom: 'ZooFresque', promoted: true, website: 'https://zoofresque.wordpress.com/', styleCode: '_ZooFresque' },
 };
 
 export type CodeDepartement = string;
