@@ -81,6 +81,9 @@ export class TufHomeView extends LitElement {
                               <img class="platforms-logo" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Ateliers ${atelier.nom}">
                             </a>
                             <figcaption>${atelier.nom}</figcaption>
+                            <p>
+                              ${atelier.description}
+                            </p>
                           </figure>
                         </div>
                       `
