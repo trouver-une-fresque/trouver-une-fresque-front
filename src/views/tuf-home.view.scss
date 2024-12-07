@@ -123,7 +123,6 @@
     }
 
     figure {
-        
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -144,112 +143,6 @@
         figcaption {
             margin-top: 1em;
             font-weight: bold;
-        }
-    }
-
-    &-logo {
-        &._fresqueClimat {
-            max-height: 6rem;
-        }
-        &._fresqueEcoCirc {
-            max-height: 10rem;
-        }
-        &._2tonnes {
-            max-height: 6rem;
-        }
-        &._FresqueBenevolat {
-            max-height: 6rem;
-        }
-        &._FresqueRenovation {
-            max-height: 6rem;
-        }
-        &._FresqueEnergie {
-            max-height: 6rem;
-        }
-        &._FresqueDesPossibles {
-            max-height: 6rem;
-        }
-        &._FresqueCommunication {
-            max-height: 6rem;
-        }
-        &._ZooFresque {
-            max-height: 6rem;
-        }
-        &._AtelierCompteGouttes {
-            max-height: 6rem;
-            background-color: #205673;
-            padding: 4px;
-        }
-
-        &._fresqueOceane {
-            max-height: 6rem;
-        }
-
-        &._fresqueBiodiversite {
-            max-height: 6rem;
-        }
-        &._fresqueAgriAlim {
-            max-height: 9.5rem;
-        }
-        &._fresqueNumerique {
-            max-height: 6rem;
-        }
-        &._fresqueNouveauRevits {
-            max-height: 6rem;
-        }
-        &._fresqueMobilite {
-            max-height: 6rem;
-        }
-        &._fresqueAlimentation {
-            max-height: 6rem;
-        }
-        &._logoOGRE {
-            max-height: 6rem;
-        }
-        &._fresqueConstruction {
-            max-height: 6rem;
-        }
-        &._fresqueSexisme {
-            max-height: 10rem;
-        }
-        &._atelierNVBC {
-            max-height: 6rem;
-        }
-        &._fresqueDeLeau {
-            max-height: 6rem;
-        }
-        &._futursProches {
-            max-height: 10rem;
-        }
-        &._fresqueDiversite {
-            max-height: 10rem;
-        }
-        &._fresqueTextile {
-            max-height: 10rem;
-        }
-        &._fresqueDechets {
-            max-height: 6rem;
-        }
-        &._fresqueFrontieresPlanetaires {
-            max-height: 6rem;
-        }
-        &._valwin {
-            max-height: 10rem;
-        }
-        &._horizonsDecarbones {
-            max-height: 6rem;
-        }
-        &._atelier2030Glorieuses {
-            max-height: 8rem;
-        }
-        &._puzzleClimat {
-            max-height: 6rem;
-        }
-        &._fresqueFinance {
-            max-height: 12rem;
-        }
-        &._fresqueRSE {
-            max-height: 8rem;
         }
     }
 }

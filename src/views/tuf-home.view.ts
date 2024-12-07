@@ -75,7 +75,7 @@ export class TufHomeView extends LitElement {
                 <div class="row">
                   ${Object.values(ATELIERS).filter(a => a.promoted).map(atelier => {
                       return html`
-                        <div class="text-center col-md-8 col-sm-16">
+                        <div class="text-center col-md-8 col-xs-16">
                           <figure>
                             <a href="${atelier.website}" class="platforms-link">
                               <img class="platforms-logo" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Ateliers ${atelier.nom}">
