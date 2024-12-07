@@ -156,7 +156,7 @@ export const ATELIERS: Record<number, Atelier> = {
   },
   5: {
     code: "FresqueAlimentation",
-    logo: "logo_fresqueAlimentation.svg",
+    logo: "logo_fresqueAlimentation.webp",
     nom: "Fresque de l'Alimentation",
     description: "",
     promoted: true,
@@ -183,7 +183,7 @@ export const ATELIERS: Record<number, Atelier> = {
   },
   8: {
     code: "FresqueSexisme",
-    logo: "logo_fresqueSexisme.png",
+    logo: "logo_fresqueSexisme.webp",
     nom: "Fresque du Sexisme",
     description: "Détricoter la mécanique sexiste et se projeter dans une société égalitaire",
     promoted: true,
@@ -237,7 +237,7 @@ export const ATELIERS: Record<number, Atelier> = {
   },
   15: {
     code: "FresqueDesDechets",
-    logo: "logo_greenDonut.webp",
+    logo: "logo_FresqueDechets.webp",
     nom: "Fresque des Déchets",
     description: "",
     promoted: true,
@@ -363,7 +363,7 @@ export const ATELIERS: Record<number, Atelier> = {
   },
   702: {
     code: "FresqueDesPossibles",
-    logo: "logo_fresqueDesPossibles.png",
+    logo: "logo_fresqueDesPossibles.webp",
     nom: "Fresque des Possibles",
     description: "",
     promoted: true,
