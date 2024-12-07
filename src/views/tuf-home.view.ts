@@ -72,13 +72,16 @@ export class TufHomeView extends LitElement {
             </div>
 
             <div class="platforms mt-5">
-                <div class="row justify-content-center align-items-center">
+                <div class="row">
                   ${Object.values(ATELIERS).filter(a => a.promoted).map(atelier => {
                       return html`
-                        <div class="col-auto">
-                          <a href="${atelier.website}" class="platforms-link">
-                            <img class="platforms-logo ${atelier.styleCode}" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Ateliers ${atelier.nom}">
-                          </a>
+                        <div class="text-center col-md-8 col-sm-16">
+                          <figure>
+                            <a href="${atelier.website}" class="platforms-link">
+                              <img class="platforms-logo" src="${Router.basePath}assets/images/logo/${atelier.logo}" alt="Ateliers ${atelier.nom}">
+                            </a>
+                            <figcaption>${atelier.nom}</figcaption>
+                          </figure>
                         </div>
                       `
                   })}

@@ -112,15 +112,42 @@
 }
 
 .platforms {
-    &-logo {
-        margin: {
-            top: 1.6rem;
-            right: 3.2rem;
-            bottom: 1.6rem;
-            left: 3.2rem;
-        };
-        max-width: 75vw;
+    .row {
+        display: flex;
+        flex-wrap: wrap;
 
+        & > [class*='col-'] {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    figure {
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        text-align: center;
+        border: 3px solid;
+        border-image: linear-gradient(45deg, rgb(156, 215, 240), rgb(195, 219, 169)) 1;
+        margin-bottom: 40px;
+        padding: 20px;
+
+        img {
+            max-width: 50%;
+            max-height: 130px;
+            height: auto;
+        }
+
+        figcaption {
+            margin-top: 1em;
+            font-weight: bold;
+        }
+    }
+
+    &-logo {
         &._fresqueClimat {
             max-height: 6rem;
         }
