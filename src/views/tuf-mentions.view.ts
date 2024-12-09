@@ -21,8 +21,12 @@ export class TufMentionsComponent extends LitElement {
             <div class="container">
                 <h3>Mentions légales</h3>
                 <p>Le présent site est édité par <a href="https://github.com/thomas-bouvier">Thomas Bouvier</a> et <a href="https://github.com/TimotF">Timothé Frignac</a> et hébergé par la société Hostinger, dont le siège social est situé HOSTINGER INTERNATIONAL LTD, 61 Lordou Vironos Street, 6023 Larnaca, Chypre, joignable par le moyen suivant : <a href="https://www.hostinger.fr/contact">https://www.hostinger.fr/contact</a>.</p>
-                <p>Tous doits réservés</p>
                 <br>
+
+                <h4>Licence</h4>
+                <p>Le code de ce site web est publié sous licence <a href="https://github.com/trouver-une-fresque/trouver-une-fresque-front/blob/main/LICENSE">(CC BY-NC-SA 4.0)</a>.</p>
+                <br>
+
                 <h4>Données personnelles</h4>
                 <p>Votre adresse IP et la référence de la page visitée font partie des informations personnelles enregistrées sur le serveur qui héberge ce site.</p>
                 <p>Ces données peuvent éventuellement servir à diagnostiquer un problème, mais elles ne seront jamais transmises à des tiers et elles sont supprimées automatiquement.</p>

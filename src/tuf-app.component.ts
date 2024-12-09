@@ -42,7 +42,10 @@ export class TufAppComponent extends LitElement {
                     <div class="col">
                         <div class="row justify-content-end gx-5">
                             <div class="col-auto">
-                                <a href="${Router.basePath}carte">Carte</a>
+                                <a href="https://www.linkedin.com/company/trouver-une-fresque">Actualités</a>
+                            </div>
+                            <div class="col-auto">
+                                <a href="${Router.basePath}carte">Carte des fresques</a>
                             </div>
                             <div class="col-auto">
                                 <a href="${Router.basePath}apropos">À propos</a>
@@ -73,6 +76,9 @@ export class TufAppComponent extends LitElement {
                     </div>
                     <div class="col-auto">
                         <div class="row">
+                            <div class="col-auto">
+                                <a href="https://www.linkedin.com/company/trouver-une-fresque">LinkedIn</a>
+                            </div>
                             <div class="col-auto">
                                 <a href="${Router.basePath}mentions-legales">Mentions légales</a>
                             </div>
