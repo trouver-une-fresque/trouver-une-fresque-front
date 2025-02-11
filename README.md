@@ -1,18 +1,21 @@
+# trouver-une-fresque-front
+
 ![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)
 
-# Contribuer
+📝 **Note:** This project has been rewritten using Vue 3. The new version can be found [here](https://github.com/trouver-une-fresque/multiworkshop-taskforce-front). This repository is now archived.
+## Contribuer
 
 Merci :) Ton aide est la bienvenue !
 
 Le guide de contribution se trouve dans le fichier [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-# Requirements
+## Requirements
 
 You need minimum `node@12` to be able to properly run `ViteJS`
 
 Don't hesitate to install multiple `node` version in your dev environment using [n](https://www.npmjs.com/package/n)
 
-# Boostrap
+## Boostrap
 
 Install dependencies :
 `npm ci`
@@ -25,13 +28,13 @@ and enjoy live reload / on-the-fly typescript compilation
 
 You can also click on [this link](https://gitpod.io/#https://github.com/trouver-une-fresque/trouver-une-fresque-front) in order to open a Gitpod workspace with everything loaded in it.
 
-## Alternative: Running with docker
+### Alternative: Running with docker
 If you don't want to install node.js on your machine, you can isolate it with [docker](https://www.docker.com/get-started):
 
 Start docker container (that executes `npm run dev`) :
 `docker-compose up`
 
-### Docker how-to
+#### Docker how-to
 The first time `docker-compose up` is run, it will build the `base` docker image with `npm install` inside `node:14` docker image.
 
 When the `package*.json` have changed, you need to rebuild the base image:
@@ -44,19 +47,14 @@ docker-compose build
 
 To inspect what happens inside : `docker-compose exec frontend bash`
 
-# Production
+## Production
 
 Package for production with `vite build` : `dist` directory will contain minified assets for production
 
 For debug purposes, if you want to generate sourcemaps for production build, you can configure
 `vite.config.ts` file by changing the `build.sourcemap` config property to `true`
 
-# Mobile apps
-
-TODO
-<!-- See [vitemadose-android](https://github.com/CovidTrackerFr/vitemadose-android) and [vitemadose-ios](https://github.com/CovidTrackerFr/vitemadose-ios). -->
-
-# Development workflow
+## Development workflow
 
 - `main` is automatically deployed on TODO
 
@@ -67,7 +65,7 @@ TODO
   We generally try to create dedicated feature branches with issue number in it, except when the
   commit is really small
 
-# Stack pointers
+## Stack pointers
 
 We're using :
 
@@ -78,6 +76,6 @@ We're using :
   - **SASS** as CSS transpiler => [documentation](https://sass-lang.com/documentation)
   - **ViteJS** for the development/production build toolchain => [guide](https://vitejs.dev/guide/)
 
-# Crédits
+## Crédits
 
 [Terre icônes créées par Freepik - Flaticon](https://www.flaticon.com/fr/icones-gratuites/terre)
